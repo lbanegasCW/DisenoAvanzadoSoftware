@@ -1,0 +1,279 @@
+# API INDEC - Documentación
+
+## Descripción General
+API REST que proporciona información sobre localidades, supermercados y productos en Argentina y países limítrofes. La API está construida con Spring Boot y utiliza una base de datos SQL Server.
+
+## Base URL
+```
+/api/v1
+```
+
+## Endpoints
+
+### Países
+
+#### Obtener todos los países
+```http
+GET /paises
+```
+Retorna una lista de todos los países registrados.
+
+**Respuesta**
+```json
+[
+  {
+    "codPais": "string",
+    "nomPais": "string",
+    "local": boolean
+  }
+]
+```
+
+#### Obtener país por código
+```http
+GET /paises/{cod_pais}
+```
+Retorna la información de un país específico.
+
+**Parámetros URL**
+- `cod_pais` (requerido): Código del país (ejemplo: "ARG")
+
+### Provincias
+
+#### Obtener todas las provincias
+```http
+GET /provincias
+```
+Retorna una lista de todas las provincias registradas.
+
+**Respuesta**
+```json
+[
+  {
+    "codProvincia": "string",
+    "nomProvincia": "string",
+    "codPais": "string",
+    "nomPais": "string"
+  }
+]
+```
+
+#### Obtener provincia por código
+```http
+GET /provincias/{cod_provincia}?codPais={cod_pais}
+```
+Retorna la información de una provincia específica.
+
+**Parámetros**
+- `cod_provincia` (requerido): Código de la provincia
+- `codPais` (requerido): Código del país
+
+#### Obtener provincias por país
+```http
+GET /paises/{cod_pais}/provincias
+```
+Retorna todas las provincias de un país específico.
+
+### Localidades
+
+#### Obtener todas las localidades
+```http
+GET /localidades
+```
+Retorna una lista de todas las localidades registradas.
+
+**Respuesta**
+```json
+[
+  {
+    "nroLocalidad": int,
+    "nomLocalidad": "string",
+    "codProvincia": "string",
+    "nomProvincia": "string",
+    "codPais": "string",
+    "nomPais": "string"
+  }
+]
+```
+
+#### Obtener localidad por ID
+```http
+GET /localidades/{nro_localidad}
+```
+Retorna la información de una localidad específica.
+
+#### Obtener localidades por provincia
+```http
+GET /provincias/{cod_provincia}/localidades?codPais={cod_pais}
+```
+Retorna todas las localidades de una provincia específica.
+
+### Supermercados
+
+#### Obtener todos los supermercados
+```http
+GET /supermercados
+```
+Retorna una lista de todos los supermercados registrados.
+
+**Respuesta**
+```json
+[
+  {
+    "nroSupermercado": int,
+    "razonSocial": "string",
+    "urlServicio": "string",
+    "tipoServicio": "string",
+    "estadoServicio": boolean
+  }
+]
+```
+
+#### Obtener supermercado por ID
+```http
+GET /supermercados/{nro_supermercado}
+```
+Retorna la información de un supermercado específico.
+
+### Sucursales
+
+#### Obtener sucursales con filtros
+```http
+GET /sucursales
+```
+Retorna una lista de sucursales con filtros opcionales.
+
+**Parámetros Query**
+- `supermercadoId` (opcional): ID del supermercado
+- `localidadId` (opcional): ID de la localidad
+- `provinciaId` (opcional): Código de la provincia
+- `paisId` (opcional): Código del país
+
+**Respuesta**
+```json
+[
+  {
+    "nroSupermercado": int,
+    "nroSucursal": int,
+    "nomSucursal": "string",
+    "calle": "string",
+    "nroCalle": "string",
+    "telefonos": "string",
+    "coordLatitud": double,
+    "coordLongitud": double,
+    "horarioSucursal": "string",
+    "serviciosDisponibles": "string",
+    "habilitada": boolean,
+    "razonSocial": "string",
+    "nroLocalidad": int,
+    "nomLocalidad": "string",
+    "codProvincia": "string",
+    "nomProvincia": "string",
+    "codPais": "string",
+    "nomPais": "string"
+  }
+]
+```
+
+#### Obtener sucursal por ID
+```http
+GET /sucursales/{nro_sucursal}?supermercadoId={nro_supermercado}
+```
+Retorna la información de una sucursal específica.
+
+#### Obtener sucursales por supermercado
+```http
+GET /supermercados/{nro_supermercado}/sucursales
+```
+Retorna todas las sucursales de un supermercado específico.
+
+**Parámetros Query**
+- `provincia` (opcional): Código de la provincia para filtrar
+
+#### Obtener sucursales cercanas
+```http
+GET /sucursales/cerca
+```
+Retorna las sucursales cercanas a una ubicación específica.
+
+**Parámetros Query**
+- `lat` (requerido): Latitud
+- `lon` (requerido): Longitud
+- `radio` (requerido): Radio en kilómetros
+
+### Servicios
+
+#### Actualizar servicios de supermercados
+```http
+POST /sucursales/actualizar
+```
+Actualiza el estado de los servicios de los supermercados.
+
+**Respuesta**
+```json
+{
+  "mensaje": "string"
+}
+```
+
+### Idiomas
+
+#### Obtener idiomas disponibles
+```http
+GET /idiomas
+```
+Retorna una lista de todos los idiomas disponibles.
+
+**Respuesta**
+```json
+[
+  {
+    "codIdioma": "string",
+    "nomIdioma": "string"
+  }
+]
+```
+
+## Códigos de Respuesta
+
+- `200 OK`: La solicitud se completó exitosamente
+- `404 Not Found`: El recurso solicitado no existe
+- `500 Internal Server Error`: Error interno del servidor
+
+## Estructura de Error
+```json
+{
+  "error": {
+    "code": "string",
+    "message": "string",
+    "details": "string"
+  }
+}
+```
+
+## Consideraciones
+
+1. Todas las rutas están prefijadas con `/api/v1`
+2. Los códigos de país son de 3 caracteres (ejemplo: "ARG")
+3. Los códigos de provincia son de 2-3 caracteres (ejemplo: "CBA")
+4. Las coordenadas geográficas utilizan el sistema decimal
+5. El radio para búsqueda de sucursales cercanas se especifica en kilómetros
+6. Las sucursales deshabilitadas no se incluyen en las respuestas
+7. Los servicios de supermercados se actualizan automáticamente cada 24 horas
+
+## Ejemplos de Uso
+
+### Obtener todas las sucursales de un supermercado en una provincia
+```http
+GET /api/v1/supermercados/1/sucursales?provincia=CBA
+```
+
+### Buscar sucursales cercanas
+```http
+GET /api/v1/sucursales/cerca?lat=-31.4201&lon=-64.1888&radio=5
+```
+
+### Obtener localidades de una provincia
+```http
+GET /api/v1/provincias/CBA/localidades?codPais=ARG
+```

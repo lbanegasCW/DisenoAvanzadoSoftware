@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  api-indec:
+    build:
+      context: ../../api-indec
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    depends_on:
+      - sqlserver
+    env_file:
+      - ./.env/api-indec.env
+    volumes:
+      - ../../api-indec:/app:rw
+      - cache_indec:/root/.m2
+    working_dir: /app
+
+  api-super1:
+    build:
+      context: ../../api-super1
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8081:8081"
+      - "5006:5005"
+    depends_on:
+      - sqlserver
+    env_file:
+      - ./.env/api-super1.env
+    volumes:
+      - ../../api-super1:/app:rw
+      - cache_super1:/root/.m2
+    working_dir: /app
+
+  api-super2:
+    build:
+      context: ../../api-super2
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8082:8082"
+      - "5007:5005"
+    depends_on:
+      - sqlserver
+    env_file:
+      - ./.env/api-super2.env
+    volumes:
+      - ../../api-super2:/app:rw
+      - cache_super2:/root/.m2
+    working_dir: /app
+
+  client:
+    build:
+      context: ../../client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api-indec
+    volumes:
+      - ../../client:/app:rw
+      - /app/node_modules
+    working_dir: /app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    platform: linux/amd64
+    command: ["ng", "serve", "--host", "0.0.0.0", "--poll=2000"]
+
+  sqlserver:
+    build:
+      context: ../../db
+    env_file:
+      - ./.env/sqlserver.env
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  sqlserver_data:
+  cache_indec:
+  cache_super1:
+  cache_super2:

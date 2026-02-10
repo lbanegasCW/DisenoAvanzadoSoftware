@@ -1,0 +1,45 @@
+<nav class="bg-blue-600">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <!-- IZQUIERDA: brand + links -->
+      <div class="flex items-center gap-4">
+        <a routerLink="/" class="text-white font-semibold">INDEC App</a>
+
+        <a routerLink="/supermercados"
+           routerLinkActive="bg-blue-700"
+           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+          Supermercados
+        </a>
+
+        <a routerLink="/catalogo"
+           routerLinkActive="bg-blue-700"
+           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+          Productos
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Provincia -->
+        <select class="bg-white text-gray-800 text-sm rounded-md px-2 py-1"
+                [ngModel]="codProvinciaSel"
+                (ngModelChange)="onProvinciaChange($event)">
+          <option [ngValue]="null">Provincia...</option>
+          <option *ngFor="let p of provincias" [value]="p.codProvincia">
+            {{ p.nomProvincia }}
+          </option>
+        </select>
+
+        <!-- Localidad -->
+        <select class="bg-white text-gray-800 text-sm rounded-md px-2 py-1"
+                [disabled]="!codProvinciaSel"
+                [ngModel]="nroLocalidadSel"
+                (ngModelChange)="onLocalidadChange($event)">
+          <option [ngValue]="null">Localidad...</option>
+          <option *ngFor="let l of localidades" [value]="l.nroLocalidad">
+            {{ l.nomLocalidad }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>

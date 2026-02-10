@@ -1,0 +1,181 @@
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {Observable, catchError, throwError, map} from 'rxjs';
+
+const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080',
+  defaultLanguage: 'es',
+  supportedLanguages: ['es', 'en'],
+};
+
+export interface Provincia {
+  codProvincia: string;
+  nomProvincia: string;
+  codPais: string;
+  nomPais: string;
+}
+
+export interface Localidad {
+  nroLocalidad: number;
+  nomLocalidad: string;
+  codProvincia: string;
+  nomProvincia: string;
+  codPais: string;
+  nomPais: string;
+}
+
+export interface Supermercado {
+  nroSupermercado: number;
+  razonSocial: string;
+  urlServicio: string;
+  tipoServicio: string;
+  estadoServicio: boolean;
+}
+
+export interface Sucursal {
+  nroSupermercado: number;
+  nroSucursal: number;
+  nomSucursal: string;
+  calle: string;
+  nroCalle: string;
+  telefonos: string;
+  coordLatitud: number;
+  coordLongitud: number;
+  horarioSucursal: string;
+  serviciosDisponibles: string;
+  habilitada: boolean;
+  razonSocial: string;
+  nroLocalidad: number;
+  nomLocalidad: string;
+  codProvincia: string;
+  nomProvincia: string;
+}
+
+export interface ComparadorOferta {
+  nroSupermercado: number;
+  precio: number;
+}
+export interface ComparadorRow {
+  codBarra: string;
+  nomProducto: string;
+  nomCategoria: string;
+  fechaUltActualizacion: string;
+  ofertas: ComparadorOferta[];
+}
+
+export interface Producto {
+  codBarra: string;
+  nomProducto: string;
+  descProducto: string | null;
+  imagen?: string | null;
+  nomMarca: string | null;
+  nroCategoria: number;
+  nomCategoria: string;
+  nroRubro: number;
+  nomRubro: string;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class IndecService {
+  private readonly API_URL = environment.apiUrl + '/api/v1';
+
+  constructor(private http: HttpClient) {}
+
+  getProvincias(): Observable<Provincia[]> {
+    return this.http
+      .get<Provincia[]>(`${this.API_URL}/provincias?codPais=ARG`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getLocalidades(codProvincia: string): Observable<Localidad[]> {
+    return this.http
+      .get<Localidad[]>(
+        `${this.API_URL}/provincias/${codProvincia}/localidades?codPais=ARG`
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getSupermercados(): Observable<Supermercado[]> {
+    return this.http
+      .get<Supermercado[]>(`${this.API_URL}/supermercados`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getSucursales(
+    params: Record<string, string | number>
+  ): Observable<Sucursal[]> {
+    return this.http
+      .get<Sucursal[]>(`${this.API_URL}/sucursales`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getProductosCatalogo() {
+    return this.http
+      .get<Producto[]>(`${this.API_URL}/productos`)
+      .pipe(catchError(this.handleError));
+  }
+
+  private parseOfertas(json: string | null | undefined): ComparadorOferta[] {
+    try {
+      if (!json) return [];
+      const arr = JSON.parse(json);
+      if (!Array.isArray(arr)) return [];
+      return arr.map((o: any) => ({
+        nroSupermercado: Number(o.nroSupermercado),
+        precio: Number(o.precio),
+      }));
+    } catch {
+      return [];
+    }
+  }
+
+  compareByLocalidad(nroLocalidad: number, codigos: string[]) {
+    const body = { nroLocalidad, codigos };
+
+    return this.http.post<any[]>(
+      `${this.API_URL}/productosPrecios`,
+      body
+    ).pipe(
+      map(rows => {
+        console.log('[SERVICE] raw rows del backend:', rows);
+
+        const mapped = (rows ?? []).map(r => {
+          console.log('[SERVICE] preciosPorSupermercado raw:', r.preciosPorSupermercado);
+
+          const ofertas = this.parseOfertas(r.preciosPorSupermercado);
+
+          console.log('[SERVICE] ofertas parseadas:', ofertas);
+
+          return {
+            codBarra: r.codBarra,
+            nomProducto: r.nomProducto,
+            nomCategoria: r.nomCategoria,
+            fechaUltActualizacion: r.fechaUltActualizacion,
+            ofertas,
+          } as ComparadorRow;
+        });
+
+        console.log('[SERVICE] rows finales:', mapped);
+        return mapped;
+      })
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Ha ocurrido un error en la aplicación';
+
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error ${error.status}: ${
+        error.error?.message || 'Error del servidor'
+      }`;
+    }
+
+    return throwError(() => new Error(errorMessage));
+  }
+
+}

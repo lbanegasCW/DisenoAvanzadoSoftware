@@ -1,0 +1,43 @@
+# LLAMADA DE EJEMPLO SUCURSALES
+http://localhost:8081/ws/sucursales.wsdl
+
+<soapenv:Envelope
+    xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:web="http://services.super1.das.ubp.edu.ar/"
+    xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <soapenv:Header>
+        <wsse:Security>
+            <wsse:UsernameToken>
+                <wsse:Username>carrefour</wsse:Username>
+                <wsse:Password>a5s1d7fg4</wsse:Password>
+            </wsse:UsernameToken>
+        </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <web:obtenerSucursales>
+      </web:obtenerSucursales>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+
+# LLAMADA DE EJEMPLO PRODUCTOS
+http://localhost:8081/ws/productos.wsdl
+
+<soapenv:Envelope
+    xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:web="http://services.super1.das.ubp.edu.ar/"
+    xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <soapenv:Header>
+        <wsse:Security>
+            <wsse:UsernameToken>
+                <wsse:Username>carrefour</wsse:Username>
+                <wsse:Password>a5s1d7fg4</wsse:Password>
+            </wsse:UsernameToken>
+        </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <web:obtenerProductos>
+        <nroSucursal>1</nroSucursal>
+      </web:obtenerProductos>
+   </soapenv:Body>
+</soapenv:Envelope>
