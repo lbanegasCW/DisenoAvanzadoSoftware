@@ -1,7 +1,5 @@
 package ar.edu.ubp.das.api.beans;
 
-import ar.edu.ubp.das.api.batch.beans.SucursalSupermercadoBean;
-
 public class SucursalBean {
     private Integer nroSupermercado;
     private Integer nroSucursal;
@@ -23,29 +21,6 @@ public class SucursalBean {
     private String nomPais;
 
     public SucursalBean() {
-    }
-
-    public SucursalBean(int nroSupermercado,
-                        SucursalSupermercadoBean sucursal,
-                        String horarioSucursal, String serviciosDisponibles) {
-        this.nroSupermercado = nroSupermercado;
-        this.nroSucursal = sucursal.getNroSucursal();
-        this.nomSucursal = sucursal.getNomSucursal();
-        this.calle = sucursal.getCalle();
-        this.nroCalle = sucursal.getCalle();
-        this.telefonos = sucursal.getTelefonos();
-        this.coordLatitud = sucursal.getCoordLatitud();
-        this.coordLongitud = sucursal.getCoordLongitud();
-        this.horarioSucursal = horarioSucursal;
-        this.serviciosDisponibles = serviciosDisponibles;
-        this.habilitada = sucursal.isHabilitada();
-        this.razonSocial = sucursal.getCalle();
-        this.nroLocalidad = sucursal.getNroLocalidad();
-        this.nomLocalidad = sucursal.getNomLocalidad();
-        this.codProvincia = sucursal.getCodProvincia();
-        this.nomProvincia = sucursal.getNomProvincia();
-        this.codPais = sucursal.getCodPais();
-        this.nomPais = sucursal.getNomPais();
     }
 
     // Getters y Setters

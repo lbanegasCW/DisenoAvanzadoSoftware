@@ -49,6 +49,38 @@ services:
       - cache_super2:/root/.m2
     working_dir: /app
 
+  api-super3:
+    build:
+      context: ../../api-super3
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8083:8083"
+      - "5008:5005"
+    depends_on:
+      - sqlserver
+    env_file:
+      - ./.env/api-super3.env
+    volumes:
+      - ../../api-super3:/app:rw
+      - cache_super3:/root/.m2
+    working_dir: /app
+
+  api-super4:
+    build:
+      context: ../../api-super4
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8084:8084"
+      - "5009:5005"
+    depends_on:
+      - sqlserver
+    env_file:
+      - ./.env/api-super4.env
+    volumes:
+      - ../../api-super4:/app:rw
+      - cache_super4:/root/.m2
+    working_dir: /app
+
   client:
     build:
       context: ../../client
@@ -87,3 +119,5 @@ volumes:
   cache_indec:
   cache_super1:
   cache_super2:
+  cache_super3:
+  cache_super4:

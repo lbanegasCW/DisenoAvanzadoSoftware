@@ -10,7 +10,7 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>ar.edu.ubp.das</groupId>
-	<artifactId>super2</artifactId>
+	<artifactId>super4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>super2</name>
 	<description>super2</description>

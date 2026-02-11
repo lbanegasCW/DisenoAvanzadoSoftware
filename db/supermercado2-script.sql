@@ -195,13 +195,14 @@ GO
 /* -------------------------------------
   Procedimientos almacenados
   ------------------------------------- */
-CREATE OR ALTER PROCEDURE dbo.sp_get_sucursales
+CREATE   PROCEDURE dbo.sp_get_sucursales
 AS
 BEGIN
     SET NOCOUNT ON;
     SELECT (
                SELECT
                    s.nro_sucursal,
+                   s.nom_sucursal,
                    s.calle,
                    s.nro_calle,
                    s.telefonos,
@@ -244,7 +245,6 @@ BEGIN
                                  AND p.cod_pais      = l.cod_pais
                         JOIN dbo.paises pa
                              ON pa.cod_pais = p.cod_pais
-               WHERE s.habilitada = 1
                ORDER BY s.nom_sucursal
                FOR JSON PATH, ROOT('sucursales')
            ) AS json;
@@ -271,7 +271,8 @@ BEGIN
                    m.nom_marca,
                    t.nro_tipo_producto,
                    t.nom_tipo_producto,
-                   ps.precio
+                   ps.precio,
+                   ps.vigente
                FROM dbo.productos_sucursales ps
                         JOIN dbo.productos p
                              ON ps.cod_barra = p.cod_barra
@@ -285,8 +286,7 @@ BEGIN
                              ON p.nro_tipo_producto = t.nro_tipo_producto
                         JOIN dbo.sucursales s
                              ON ps.nro_sucursal = s.nro_sucursal
-               WHERE ps.vigente = 1
-                 AND p.vigente  = 1
+               WHERE p.vigente  = 1
                  AND c.vigente  = 1
                  AND r.vigente  = 1
                  AND s.habilitada = 1
@@ -300,382 +300,381 @@ GO
    DATOS INICIALES (PAÍSES/PROVINCIAS/LOCALIDADES/SUCURSALES/SERVICIOS)
 ============================ */
 BEGIN TRY
-BEGIN TRANSACTION;
+    BEGIN TRANSACTION;
 
-INSERT INTO dbo.paises (cod_pais, nom_pais, local) VALUES
-       ('ARG','Argentina',1),('CHL','Chile',0),('BRA','Brazil',0);
+    INSERT INTO dbo.paises (cod_pais, nom_pais, local) VALUES
+                                                           ('ARG','Argentina',1),('CHL','Chile',0),('BRA','Brazil',0);
 
-INSERT INTO dbo.provincias (cod_pais, cod_provincia, nom_provincia) VALUES
-        ('ARG','BA','Buenos Aires'),('ARG','CBA','Córdoba'),('ARG','SF','Santa Fe'),
-        ('CHL','RM','Región Metropolitana'),('CHL','V','Valparaíso'),
-        ('BRA','SP','São Paulo'),('BRA','RJ','Rio de Janeiro');
+    INSERT INTO dbo.provincias (cod_pais, cod_provincia, nom_provincia) VALUES
+                                                                            ('ARG','BA','Buenos Aires'),('ARG','CBA','Córdoba'),('ARG','SF','Santa Fe'),
+                                                                            ('CHL','RM','Región Metropolitana'),('CHL','V','Valparaíso'),
+                                                                            ('BRA','SP','São Paulo'),('BRA','RJ','Rio de Janeiro');
 
-INSERT INTO dbo.localidades (cod_pais, cod_provincia, nom_localidad) VALUES
-         ('ARG','BA','Ciudad Autónoma de Buenos Aires'),
-         ('ARG','BA','La Plata'),
-         ('ARG','BA','Mar del Plata'),
-         ('ARG','CBA','Córdoba'),
-         ('ARG','SF','Rosario'),
-         ('ARG','SF','Santa Fe'),
-         ('CHL','RM','Santiago'),
-         ('CHL','RM','Providencia'),
-         ('CHL','V','Valparaíso'),
-         ('BRA','SP','São Paulo'),
-         ('BRA','RJ','Rio de Janeiro');
+    INSERT INTO dbo.localidades (cod_pais, cod_provincia, nom_localidad) VALUES
+                                                                             ('ARG','BA','Ciudad Autónoma de Buenos Aires'),
+                                                                             ('ARG','BA','La Plata'),
+                                                                             ('ARG','BA','Mar del Plata'),
+                                                                             ('ARG','CBA','Córdoba'),
+                                                                             ('ARG','SF','Rosario'),
+                                                                             ('ARG','SF','Santa Fe'),
+                                                                             ('CHL','RM','Santiago'),
+                                                                             ('CHL','RM','Providencia'),
+                                                                             ('CHL','V','Valparaíso'),
+                                                                             ('BRA','SP','São Paulo'),
+                                                                             ('BRA','RJ','Rio de Janeiro');
 
-INSERT INTO dbo.supermercado (cuit, razon_social, calle, nro_calle, telefonos) VALUES
-        ('30-63986527-2','ChangoMas Argentina S.A.','Avenida San Martín',4560,'011-4632-5487');
+    INSERT INTO dbo.supermercado (cuit, razon_social, calle, nro_calle, telefonos) VALUES
+        ('30-71191539-7','Chango Mas','Avenida San Martín',4560,'011-4632-5487');
 
-INSERT INTO dbo.tipos_servicios_supermercado (nom_tipo_servicio) VALUES
-         ('DELIVERY'),
-         ('PICKUP'),
-         ('PAGO ONLINE'),
-         ('PARKING'),
-         ('ACCESO ESPECIAL'),
-         ('ATENCIÓN AL CLIENTE'),
-         ('FARMACIA'),
-         ('AUTOSERVICIO'),
-         ('CARGA DE SUBE'),
-         ('CAJA RÁPIDA');
+    INSERT INTO dbo.tipos_servicios_supermercado (nom_tipo_servicio) VALUES
+                                                                         ('DELIVERY'),
+                                                                         ('PICKUP'),
+                                                                         ('PAGO ONLINE'),
+                                                                         ('PARKING'),
+                                                                         ('ACCESO ESPECIAL'),
+                                                                         ('ATENCIÓN AL CLIENTE'),
+                                                                         ('FARMACIA'),
+                                                                         ('AUTOSERVICIO'),
+                                                                         ('CARGA DE SUBE'),
+                                                                         ('CAJA RÁPIDA');
 
-INSERT INTO dbo.sucursales (nom_sucursal, calle, nro_calle, telefonos, coord_latitud, coord_longitud, nro_localidad) VALUES
-        ('ChangoMas La Plata', 'Calle 32', 1200, '0221-455-7896', -34.9214, -57.9544, 2),
-        ('ChangoMas Mar del Plata', 'Avenida Independencia', 4500, '0223-472-1234', -37.9977, -57.5491, 3),
-        ('ChangoMas Córdoba', 'Avenida Rafael Núñez', 5200, '0351-478-9012', -31.4135, -64.1811, 4),
-        ('ChangoMas Rosario', 'Boulevard Oroño', 5300, '0341-467-2345', -32.9442, -60.6505, 5),
-        ('ChangoMas Buenos Aires', 'Avenida Cabildo', 1234, '011-4785-6789', -34.5683, -58.4488, 1);
+    INSERT INTO dbo.sucursales (nom_sucursal, calle, nro_calle, telefonos, coord_latitud, coord_longitud, nro_localidad) VALUES
+                                                                                                                             ('ChangoMas La Plata', 'Calle 32', 1200, '0221-455-7896', -34.9214, -57.9544, 2),
+                                                                                                                             ('ChangoMas Mar del Plata', 'Avenida Independencia', 4500, '0223-472-1234', -37.9977, -57.5491, 3),
+                                                                                                                             ('ChangoMas Córdoba', 'Avenida Rafael Núñez', 5200, '0351-478-9012', -31.4135, -64.1811, 4),
+                                                                                                                             ('ChangoMas Rosario', 'Boulevard Oroño', 5300, '0341-467-2345', -32.9442, -60.6505, 5),
+                                                                                                                             ('ChangoMas Buenos Aires', 'Avenida Cabildo', 1234, '011-4785-6789', -34.5683, -58.4488, 1);
 
-INSERT INTO dbo.horarios_sucursales (nro_sucursal, dia_semana, hora_desde, hora_hasta) VALUES
-       (1, 1, '08:00', '22:00'), (1, 2, '08:00', '22:00'), (1, 3, '08:00', '22:00'),
-       (1, 4, '08:00', '22:00'), (1, 5, '08:00', '22:00'), (1, 6, '08:00', '14:00'),
-       (2, 1, '08:00', '22:00'), (2, 2, '08:00', '22:00'), (2, 3, '08:00', '22:00'),
-       (2, 4, '08:00', '22:00'), (2, 5, '08:00', '22:00'), (2, 6, '08:00', '15:00'),
-       (3, 1, '08:00', '22:00'), (3, 2, '08:00', '22:00'), (3, 3, '08:00', '22:00'),
-       (3, 4, '08:00', '22:00'), (3, 5, '08:00', '22:00'), (3, 6, '08:00', '13:00'),
-       (4, 1, '08:00', '22:00'), (4, 2, '08:00', '22:00'), (4, 3, '08:00', '22:00'),
-       (4, 4, '08:00', '22:00'), (4, 5, '08:00', '22:00'), (4, 6, '08:00', '13:00'),
-       (5, 1, '08:00', '22:00'), (5, 2, '08:00', '22:00'), (5, 3, '08:00', '22:00'),
-       (5, 4, '08:00', '22:00'), (5, 5, '08:00', '22:00'), (5, 6, '08:00', '13:00');
+    INSERT INTO dbo.horarios_sucursales (nro_sucursal, dia_semana, hora_desde, hora_hasta) VALUES
+                                                                                               (1, 1, '08:00', '22:00'), (1, 2, '08:00', '22:00'), (1, 3, '08:00', '22:00'),
+                                                                                               (1, 4, '08:00', '22:00'), (1, 5, '08:00', '22:00'), (1, 6, '08:00', '14:00'),
+                                                                                               (2, 1, '08:00', '22:00'), (2, 2, '08:00', '22:00'), (2, 3, '08:00', '22:00'),
+                                                                                               (2, 4, '08:00', '22:00'), (2, 5, '08:00', '22:00'), (2, 6, '08:00', '15:00'),
+                                                                                               (3, 1, '08:00', '22:00'), (3, 2, '08:00', '22:00'), (3, 3, '08:00', '22:00'),
+                                                                                               (3, 4, '08:00', '22:00'), (3, 5, '08:00', '22:00'), (3, 6, '08:00', '13:00'),
+                                                                                               (4, 1, '08:00', '22:00'), (4, 2, '08:00', '22:00'), (4, 3, '08:00', '22:00'),
+                                                                                               (4, 4, '08:00', '22:00'), (4, 5, '08:00', '22:00'), (4, 6, '08:00', '13:00'),
+                                                                                               (5, 1, '08:00', '22:00'), (5, 2, '08:00', '22:00'), (5, 3, '08:00', '22:00'),
+                                                                                               (5, 4, '08:00', '22:00'), (5, 5, '08:00', '22:00'), (5, 6, '08:00', '13:00');
 
-INSERT INTO dbo.tipos_servicios_sucursales (nro_sucursal, nro_tipo_servicio, vigente) VALUES
-      (1, 1, 1),(1, 2, 1),(1, 3, 1),(1, 4, 1),(1, 10, 1),
-      (2, 1, 1),(2, 2, 1),(2, 5, 1),(2, 9, 1),
-      (3, 1, 1),(3, 4, 1),(3, 7, 1),
-      (4, 3, 1),(4, 4, 1),(4, 6, 1),
-      (5, 1, 1),(5, 2, 1),(5, 8, 1);
+    INSERT INTO dbo.tipos_servicios_sucursales (nro_sucursal, nro_tipo_servicio, vigente) VALUES
+                                                                                              (1, 1, 1),(1, 2, 1),(1, 3, 1),(1, 4, 1),(1, 10, 1),
+                                                                                              (2, 1, 1),(2, 2, 1),(2, 5, 1),(2, 9, 1),
+                                                                                              (3, 1, 1),(3, 4, 1),(3, 7, 1),
+                                                                                              (4, 3, 1),(4, 4, 1),(4, 6, 1),
+                                                                                              (5, 1, 1),(5, 2, 1),(5, 8, 1);
 
-COMMIT TRANSACTION;
+    COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
-ROLLBACK TRANSACTION;
+    ROLLBACK TRANSACTION;
     THROW;
 END CATCH;
 GO
 
 BEGIN TRY
-BEGIN TRANSACTION;
+    BEGIN TRANSACTION;
 
-INSERT INTO dbo.rubros_productos(nom_rubro) VALUES
-            ('Alimentos'),('Bebidas'),('Limpieza'),('Higiene Personal'),('Electrónica');
+    -- ============================
+-- RUBROS (IDs esperados: 1..5)
+-- ============================
+    INSERT INTO dbo.rubros_productos(nom_rubro) VALUES
+                                                    ('Alimentos'),
+                                                    ('Bebidas sin alcohol'),
+                                                    ('Limpieza'),
+                                                    ('Higiene Personal'),
+                                                    ('Otros Esenciales');
 
-INSERT INTO dbo.categorias_productos(nom_categoria, nro_rubro) VALUES
-           ('Lácteos',1),('Fiambres',1),('Snacks',1),('Galletitas',1),('Pastas Secas',1),
-           ('Bebidas sin alcohol',2),('Bebidas alcohólicas',2),('Jugos',2),('Cerveza',2),('Vinos',2),
-           ('Limpieza Hogar',3),('Lavandería',3),
-           ('Cuidado Personal',4),('Perfumería',4),
-           ('Electrodomésticos',5);
+    -- ============================
+-- CATEGORÍAS (IDs esperados: 1..15)
+-- ============================
+    INSERT INTO dbo.categorias_productos(nom_categoria, nro_rubro) VALUES
+                                                                       ('Panificados',1),
+                                                                       ('Harinas y Cereales',1),
+                                                                       ('Pastas y Legumbres',1),
+                                                                       ('Carnes',1),
+                                                                       ('Lácteos y Huevos',1),
+                                                                       ('Frutas y Verduras',1),
+                                                                       ('Azúcar y Dulces',1),
+                                                                       ('Aceites y Grasas',1),
+                                                                       ('Infusiones',2),
+                                                                       ('Bebidas sin alcohol',2),
+                                                                       ('Limpieza Hogar',3),
+                                                                       ('Lavandería',3),
+                                                                       ('Cuidado Personal',4),
+                                                                       ('Papel e Higiene',4),
+                                                                       ('Condimentos y Básicos',5);
 
-INSERT INTO dbo.marcas_productos(nom_marca) VALUES
-            ('La Serenísima'),('Sancor'),('Coca-Cola'),('Pepsi'),('Manaos'),
-            ('Terrabusi'),('Arcor'),('Lucchetti'),('Knorr'),
-            ('Quilmes'),('Stella Artois'),('Trapiche'),
-            ('Nivea'),('Colgate'),('Procter & Gamble'),
-            ('Philips'),('Samsung'),('LG'),('Sony'),('P&G');
+    -- ============================
+-- MARCAS (IDs esperados: 1..20)
+-- ============================
+    INSERT INTO dbo.marcas_productos(nom_marca) VALUES
+                                                    ('La Serenísima'),
+                                                    ('Sancor'),
+                                                    ('Arcor'),
+                                                    ('Ledesma'),
+                                                    ('Molinos'),
+                                                    ('Lucchetti'),
+                                                    ('Matarazzo'),
+                                                    ('Gallo'),
+                                                    ('Marolio'),
+                                                    ('Natura'),
+                                                    ('Cocinero'),
+                                                    ('Amanda'),
+                                                    ('Taragüi'),
+                                                    ('La Virginia'),
+                                                    ('CBSé'),
+                                                    ('Ala'),
+                                                    ('Ayudín'),
+                                                    ('Poett'),
+                                                    ('Higienol'),
+                                                    ('Colgate');
 
-INSERT INTO dbo.tipos_productos(nom_tipo_producto) VALUES
-           ('Bebida'),('Alimento'),('Higiene'),('Limpieza'),('Electrónica');
+    -- ============================
+-- TIPOS (IDs esperados: 1..5)
+-- ============================
+    INSERT INTO dbo.tipos_productos(nom_tipo_producto) VALUES
+                                                           ('Alimento'),
+                                                           ('Bebida'),
+                                                           ('Limpieza'),
+                                                           ('Higiene'),
+                                                           ('Otros');
 
-INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
-SELECT nro_marca, 2 FROM dbo.marcas_productos WHERE nom_marca IN ('La Serenísima','Sancor','Arcor','Lucchetti','Knorr','Terrabusi');
-INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
-SELECT nro_marca, 1 FROM dbo.marcas_productos WHERE nom_marca IN ('Coca-Cola','Pepsi','Manaos','Quilmes','Stella Artois','Trapiche');
-INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
-SELECT nro_marca, 3 FROM dbo.marcas_productos WHERE nom_marca IN ('Nivea','Colgate','Procter & Gamble','P&G');
-INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
-SELECT nro_marca, 4 FROM dbo.marcas_productos WHERE nom_marca = 'Procter & Gamble';
-INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
-SELECT nro_marca, 5 FROM dbo.marcas_productos WHERE nom_marca IN ('Philips','Samsung','LG','Sony');
+    -- ============================
+-- VINCULACIÓN Marca-Tipo (ajustada a canasta)
+-- ============================
+-- Alimentos
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 1 FROM dbo.marcas_productos
+    WHERE nom_marca IN ('La Serenísima','Sancor','Arcor','Ledesma','Molinos','Lucchetti','Matarazzo','Gallo','Marolio','Natura','Cocinero');
 
-COMMIT TRANSACTION;
+-- Bebidas / Infusiones (ACÁ sumo Arcor por el jugo en polvo)
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 2 FROM dbo.marcas_productos
+    WHERE nom_marca IN ('Amanda','Taragüi','La Virginia','CBSé','Marolio','Arcor','Sancor');
+
+-- Limpieza
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 3 FROM dbo.marcas_productos
+    WHERE nom_marca IN ('Ala','Ayudín','Poett');
+
+-- Higiene
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 4 FROM dbo.marcas_productos
+    WHERE nom_marca IN ('Higienol','Colgate');
+
+-- Extras para cubrir combinaciones usadas por PRODUCTOS (evita FK productos -> tipos_productos_marcas)
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 3 FROM dbo.marcas_productos WHERE nom_marca IN ('Marolio');
+
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 4 FROM dbo.marcas_productos WHERE nom_marca IN ('Marolio');
+
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 5 FROM dbo.marcas_productos WHERE nom_marca IN ('Marolio');
+
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 5 FROM dbo.marcas_productos WHERE nom_marca IN ('Arcor');
+
+    INSERT INTO dbo.tipos_productos_marcas(nro_marca, nro_tipo_producto)
+    SELECT nro_marca, 5 FROM dbo.marcas_productos WHERE nom_marca IN ('Molinos');
+
+    COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
-ROLLBACK TRANSACTION;
+    ROLLBACK TRANSACTION;
     THROW;
 END CATCH;
 GO
 
+
 BEGIN TRY
-BEGIN TRANSACTION;
+    BEGIN TRANSACTION;
 
-/* LÁCTEOS (1) */
-INSERT INTO dbo.productos VALUES
-           ('100000000001','Leche entera 1L La Serenísima','Leche UAT entera 1L',1,'leche_entera_ls.jpg',1,2,1),
-           ('100000000002','Leche descremada 1L Sancor','Leche UAT descremada 1L',1,'leche_descremada_sc.jpg',2,2,1),
-           ('100000000003','Yogur firme vainilla 190g La Serenísima','Yogur firme sabor vainilla',1,'yogur_vainilla_ls.jpg',1,2,1),
-           ('100000000004','Yogur bebible frutilla 1L Sancor','Yogur bebible sabor frutilla',1,'yogur_bebible_sc.jpg',2,2,1),
-           ('100000000005','Queso cremoso 1Kg La Serenísima','Queso blando cremoso',1,'queso_cremoso_ls.jpg',1,2,1),
-           ('100000000006','Queso tybo 1Kg Sancor','Queso semiduro tybo',1,'queso_tybo_sc.jpg',2,2,1),
-           ('100000000007','Manteca 200g La Serenísima','Manteca clásica 200g',1,'manteca_ls.jpg',1,2,1),
-           ('100000000008','Crema de leche 200cc Sancor','Crema clásica 200cc',1,'crema_sc.jpg',2,2,1);
+-- (1) PANIFICADOS
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000001','Pan francés 1Kg','Pan común a granel',1,'pan_frances.jpg',9,1,1),
+                                  ('100000000002','Pan lactal 550g Molinos','Pan de molde',1,'pan_lactal.jpg',5,1,1),
+                                  ('100000000003','Galletitas de agua 303g Arcor','Galletitas saladas',1,'galletitas_agua.jpg',3,1,1),
+                                  ('100000000004','Bizcochos 200g Arcor','Bizcochos para mate',1,'bizcochos.jpg',3,1,1),
+                                  ('100000000005','Pan rallado 500g','Rebozador',1,'pan_rallado.jpg',5,1,1);
 
-/* FIAMBRES (2) */
-INSERT INTO dbo.productos VALUES
-          ('100000000009','Jamón cocido feteado 200g Arcor','Jamón cocido',2,'jamon_cocido_arcor.jpg',7,2,1),
-          ('100000000010','Salame milán 200g Arcor','Fiambre salame tipo milán',2,'salame_arcor.jpg',7,2,1),
-          ('100000000011','Mortadela 200g Arcor','Mortadela feteada',2,'mortadela_arcor.jpg',7,2,1),
-          ('100000000012','Pechuga de pavo 200g Arcor','Feteado de pavo',2,'pavo_arcor.jpg',7,2,1),
-          ('100000000013','Queso sandwich feteado 200g La Serenísima','Queso feteado',2,'queso_feteado_ls.jpg',1,2,1);
+-- (2) HARINAS Y CEREALES
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000006','Harina 000 1Kg Molinos','Harina de trigo',2,'harina_000.jpg',5,1,1),
+                                  ('100000000007','Harina leudante 1Kg Molinos','Harina con leudante',2,'harina_leudante.jpg',5,1,1),
+                                  ('100000000008','Arroz largo fino 1Kg Gallo','Arroz largo fino',2,'arroz_gallo.jpg',8,1,1),
+                                  ('100000000009','Polenta 500g Molinos','Harina de maíz',2,'polenta.jpg',5,1,1),
+                                  ('100000000010','Avena 500g Molinos','Avena arrollada',2,'avena.jpg',5,1,1),
+                                  ('100000000011','Sémola 500g','Sémola de trigo',2,'semola.jpg',9,1,1),
+                                  ('100000000012','Harina de maíz 1Kg','Harina de maíz',2,'harina_maiz.jpg',9,1,1);
 
-/* SNACKS (3) */
-INSERT INTO dbo.productos VALUES
-          ('100000000014','Papas fritas clásicas 90g Arcor','Snack de papa clásico',3,'papas_arcor.jpg',7,2,1),
-          ('100000000015','Papas fritas onduladas 90g Arcor','Snack ondulado',3,'papas_ond_arcor.jpg',7,2,1),
-          ('100000000016','Maní salado 150g Arcor','Maní tostado salado',3,'mani_arcor.jpg',7,2,1),
-          ('100000000017','Palitos salados 100g Terrabusi','Snack salado',3,'palitos_terrabusi.jpg',6,2,1),
-          ('100000000018','Nachos 150g Arcor','Triángulos de maíz',3,'nachos_arcor.jpg',7,2,1);
+-- (3) PASTAS Y LEGUMBRES
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000013','Fideos secos spaghetti 500g Lucchetti','Pasta seca larga',3,'spaghetti_lucchetti.jpg',6,1,1),
+                                  ('100000000014','Fideos secos tirabuzón 500g Matarazzo','Pasta seca corta',3,'tirabuzon_matarazzo.jpg',7,1,1),
+                                  ('100000000015','Fideos secos mostachol 500g Matarazzo','Pasta seca corta',3,'mostachol_lucchetti.jpg',7,1,1),
+                                  ('100000000016','Lentejas secas 400g','Legumbre seca',3,'lentejas.jpg',9,1,1),
+                                  ('100000000017','Arvejas secas 400g','Legumbre seca',3,'arvejas.jpg',9,1,1),
+                                  ('100000000018','Porotos secos 400g','Legumbre seca',3,'porotos.jpg',9,1,1),
+                                  ('100000000019','Purè de tomate 520g Arcor','Tomate triturado',3,'pure_tomate.jpg',3,1,1),
+                                  ('100000000020','Salsa de tomate 340g Arcor','Salsa lista',3,'salsa_tomate.jpg',3,1,1);
 
-/* GALLETITAS (4) */
-INSERT INTO dbo.productos VALUES
-          ('100000000019','Oreo 117g Terrabusi','Galletitas con crema',4,'oreo_terrabusi.jpg',6,2,1),
-          ('100000000020','Chocolinas 170g Arcor','Galletitas de chocolate',4,'chocolinas_arcor.jpg',7,2,1),
-          ('100000000021','Criollitas 100g Arcor','Galletitas de agua',4,'criollitas_arcor.jpg',7,2,1),
-          ('100000000022','Sonrisas 118g Terrabusi','Galletitas rellenas',4,'sonrisas_terrabusi.jpg',6,2,1),
-          ('100000000023','Melba 170g Terrabusi','Galletitas dulces',4,'melba_terrabusi.jpg',6,2,1);
+-- (4) CARNES
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000021','Carne picada 1Kg','Carne vacuna picada',4,'carne_picada.jpg',9,1,1),
+                                  ('100000000022','Carne para milanesa 1Kg','Nalga/cuadrada',4,'milanesa.jpg',9,1,1),
+                                  ('100000000023','Pollo entero 1Kg','Pollo fresco',4,'pollo_entero.jpg',9,1,1),
+                                  ('100000000024','Pescado congelado 1Kg','Filet congelado',4,'pescado.jpg',9,1,1),
+                                  ('100000000025','Carne para guiso 1Kg','Osobuco/paleta',4,'carne_guiso.jpg',9,1,1);
 
-/* PASTAS SECAS (5) */
-INSERT INTO dbo.productos VALUES
-          ('100000000024','Spaghetti 500g Lucchetti','Pasta seca larga',5,'spaghetti_lucchetti.jpg',8,2,1),
-          ('100000000025','Mostachol 500g Lucchetti','Pasta seca corta',5,'mostachol_lucchetti.jpg',8,2,1),
-          ('100000000026','Tirabuzón 500g Lucchetti','Pasta seca corta',5,'tirabuzon_lucchetti.jpg',8,2,1),
-          ('100000000027','Fideos al huevo 500g Lucchetti','Pasta con huevo',5,'huevo_lucchetti.jpg',8,2,1),
-          ('100000000028','Salsa boloñesa 340g Knorr','Salsa lista',5,'bolonesa_knorr.jpg',9,2,1),
-          ('100000000029','Salsa fileto 340g Knorr','Salsa lista',5,'fileto_knorr.jpg',9,2,1);
+-- (5) LÁCTEOS Y HUEVOS
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000026','Leche entera 1L La Serenísima','Leche UAT entera',5,'leche_entera_ls.jpg',1,1,1),
+                                  ('100000000027','Leche descremada 1L La Serenísima','Leche UAT descremada',5,'leche_descremada_sc.jpg',1,1,1),
+                                  ('100000000028','Yogur firme 190g Sancor','Yogur firme',5,'yogur_firme.jpg',2,1,1),
+                                  ('100000000029','Queso cremoso 1Kg La Serenísima','Queso blando',5,'queso_cremoso.jpg',1,1,1),
+                                  ('100000000030','Manteca 200g Sancor','Manteca',5,'manteca.jpg',2,1,1),
+                                  ('100000000031','Crema de leche 200cc La Serenísima','Crema',5,'crema.jpg',1,1,1),
+                                  ('100000000032','Huevos docena','Huevos',5,'huevos.jpg',9,1,1);
 
-/* BEBIDAS SIN ALCOHOL (6) */
-INSERT INTO dbo.productos VALUES
-          ('100000000030','Coca-Cola 2.25L','Gaseosa cola 2.25L',6,'coca225.jpg',3,1,1),
-          ('100000000031','Coca-Cola Zero 2.25L','Gaseosa sin azúcar',6,'cocazero225.jpg',3,1,1),
-          ('100000000032','Pepsi 2.25L','Gaseosa cola 2.25L',6,'pepsi225.jpg',4,1,1),
-          ('100000000033','Manaos Cola 2.25L','Gaseosa económica',6,'manaos_cola225.jpg',5,1,1),
-          ('100000000034','Manaos Naranja 2.25L','Gaseosa sabor naranja',6,'manaos_naranja225.jpg',5,1,1);
+-- (6) FRUTAS Y VERDURAS
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000033','Papa 1Kg','Papa',6,'papa.jpg',9,1,1),
+                                  ('100000000034','Cebolla 1Kg','Cebolla',6,'cebolla.jpg',9,1,1),
+                                  ('100000000035','Tomate 1Kg','Tomate',6,'tomate.jpg',9,1,1),
+                                  ('100000000036','Zanahoria 1Kg','Zanahoria',6,'zanahoria.jpg',9,1,1),
+                                  ('100000000037','Lechuga unidad','Lechuga',6,'lechuga.jpg',9,1,1),
+                                  ('100000000038','Manzana 1Kg','Manzana',6,'manzana.jpg',9,1,1),
+                                  ('100000000039','Banana 1Kg','Banana',6,'banana.jpg',9,1,1),
+                                  ('100000000040','Naranja 1Kg','Naranja',6,'naranja.jpg',9,1,1);
 
-/* JUGOS (8) */
-INSERT INTO dbo.productos VALUES
-          ('100000000035','Jugo en polvo BC Naranja 15g Arcor','Polvo para preparar 1L',8,'bc_naranja_arcor.jpg',7,2,1),
-          ('100000000036','Jugo en polvo BC Manzana 15g Arcor','Polvo para preparar 1L',8,'bc_manzana_arcor.jpg',7,2,1),
-          ('100000000037','Jugo en polvo BC Pomelo 15g Arcor','Polvo para preparar 1L',8,'bc_pomelo_arcor.jpg',7,2,1);
+-- (7) AZÚCAR Y DULCES
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000041','Azúcar 1Kg Ledesma','Azúcar común',7,'azucar_ledesma.jpg',4,1,1),
+                                  ('100000000042','Dulce de leche 400g Sancor','Dulce de leche',7,'ddl.jpg',2,1,1),
+                                  ('100000000043','Mermelada 454g Arcor','Mermelada',7,'mermelada.jpg',3,1,1),
+                                  ('100000000044','Galletitas dulces 300g Arcor','Galletitas dulces',7,'galletitas_dulces.jpg',3,1,1),
+                                  ('100000000045','Cacao en polvo 180g Arcor','Cacao',7,'cacao.jpg',3,1,1);
 
-/* CERVEZA (9) */
-INSERT INTO dbo.productos VALUES
-          ('100000000038','Cerveza Quilmes 1L','Rubia retornable',9,'quilmes1l.jpg',10,1,1),
-          ('100000000039','Cerveza Quilmes lata 473ml','Rubia lata',9,'quilmes_lata.jpg',10,1,1),
-          ('100000000040','Cerveza Stella Artois 1L','Premium rubia',9,'stella1l.jpg',11,1,1),
-          ('100000000041','Cerveza Stella Artois lata 473ml','Premium lata',9,'stella_lata.jpg',11,1,1),
-          ('100000000042','Cerveza Quilmes Bock 1L','Bock',9,'quilmes_bock.jpg',10,1,1);
+-- (8) ACEITES Y GRASAS
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000046','Aceite mezcla 1.5L Cocinero','Aceite vegetal',8,'aceite_cocinero.jpg',11,1,1),
+                                  ('100000000047','Aceite girasol 1.5L Natura','Aceite de girasol',8,'aceite_natura.jpg',10,1,1),
+                                  ('100000000048','Grasa vacuna 500g','Grasa',8,'grasa.jpg',9,1,1),
+                                  ('100000000049','Margarina 200g Arcor','Margarina',8,'margarina.jpg',3,1,1);
 
-/* VINOS (10) */
-INSERT INTO dbo.productos VALUES
-          ('100000000043','Vino Trapiche Malbec 750ml','Tinto Malbec',10,'trapiche_malbec.jpg',12,1,1),
-          ('100000000044','Vino Trapiche Cabernet 750ml','Tinto Cabernet',10,'trapiche_cab.jpg',12,1,1),
-          ('100000000045','Vino Trapiche Chardonnay 750ml','Blanco Chardonnay',10,'trapiche_chard.jpg',12,1,1),
-          ('100000000046','Vino Trapiche Reserva Malbec 750ml','Tinto Reserva',10,'trapiche_reserva.jpg',12,1,1);
+-- (9) INFUSIONES
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000050','Yerba mate 1Kg Taragüi','Yerba mate',9,'yerba_taraguei.jpg',13,2,1),
+                                  ('100000000051','Yerba mate 1Kg CBSé','Yerba mate',9,'yerba_amanda.jpg',15,2,1),
+                                  ('100000000052','Té 50 saquitos CBSé','Té negro',9,'te.jpg',15,2,1),
+                                  ('100000000053','Café molido 250g La Virginia','Café',9,'cafe_lavirginia.jpg',14,2,1),
+                                  ('100000000054','Mate cocido 25 saquitos Taragüi','Mate cocido',9,'mate_cocido.jpg',13,2,1);
 
-/* LIMPIEZA HOGAR (11) */
-INSERT INTO dbo.productos VALUES
-          ('100000000047','Lavandina 1L P&G','Desinfectante hogar',11,'lavandina_pg.jpg',15,4,1),
-          ('100000000048','Limpiador multiuso 900ml P&G','Multiuso',11,'multiuso_pg.jpg',15,4,1),
-          ('100000000049','Desodorante de ambientes 360ml P&G','Aerosol',11,'ambientes_pg.jpg',15,4,1),
-          ('100000000050','Limpiavidrios 500ml P&G','Vidrios/espejos',11,'vidrios_pg.jpg',15,4,1);
+-- (10) BEBIDAS SIN ALCOHOL
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000055','Agua mineral 2L','Agua sin gas',10,'agua_2l.jpg',9,2,1),
+                                  ('100000000056','Agua mineral 500ml','Agua sin gas',10,'agua_500.jpg',9,2,1),
+                                  ('100000000057','Jugo en polvo 18g Arcor','Jugo en polvo',10,'jugo_polvo.jpg',3,2,1),
+                                  ('100000000058','Gaseosa cola 2.25L','Gaseosa',10,'gaseosa_cola.jpg',9,2,1),
+                                  ('100000000059','Gaseosa naranja 2.25L','Gaseosa',10,'gaseosa_naranja.jpg',9,2,1);
 
-/* LAVANDERÍA (12) */
-INSERT INTO dbo.productos VALUES
-          ('100000000051','Jabón en polvo 800g P&G','Ropa blanca/color',12,'jabonpolvo_pg.jpg',15,4,1),
-          ('100000000052','Detergente líquido 3L P&G','Detergente para ropa',12,'detergenteliq_pg.jpg',15,4,1),
-          ('100000000053','Suavizante 1L P&G','Aroma y suavidad',12,'suavizante_pg.jpg',15,4,1),
-          ('100000000054','Quita manchas 450ml P&G','Ropa con manchas difíciles',12,'quitamanchas_pg.jpg',15,4,1);
+-- (11) LIMPIEZA HOGAR
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000060','Lavandina 1L Ayudín','Lavandina',11,'lavandina_ayudin.jpg',17,3,1),
+                                  ('100000000061','Desinfectante 1L Ayudín','Desinfectante',11,'desinfectante.jpg',17,3,1),
+                                  ('100000000062','Limpiador piso 900ml Poett','Limpieza pisos',11,'poett.jpg',18,3,1),
+                                  ('100000000063','Detergente cocina 750ml','Lavavajillas',11,'detergente.jpg',9,3,1),
+                                  ('100000000064','Esponja de cocina','Esponja',11,'esponja.jpg',9,3,1),
+                                  ('100000000065','Limpiavidrios 500ml Poett','Vidrios',11,'limpiavidrios.jpg',18,3,1);
 
-/* CUIDADO PERSONAL (13) */
-INSERT INTO dbo.productos VALUES
-          ('100000000055','Shampoo Nivea 400ml','Cuidado cabello',13,'shampoo_nivea.jpg',13,3,1),
-          ('100000000056','Acondicionador Nivea 400ml','Cuidado cabello',13,'acond_nivea.jpg',13,3,1),
-          ('100000000057','Jabón de tocador 125g P&G','Higiene personal',13,'jabon_tocador_pg.jpg',15,3,1),
-          ('100000000058','Pasta dental Colgate Total 90g','Protección completa',13,'colgate_total.jpg',14,3,1),
-          ('100000000059','Cepillo dental Colgate medio','Cepillo dental',13,'cepillo_colgate.jpg',14,3,1),
-          ('100000000060','Enjuague bucal Colgate 500ml','Anticaries',13,'enjuague_colgate.jpg',14,3,1);
+-- (12) LAVANDERÍA
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000066','Jabón en polvo 800g Ala','Jabón en polvo',12,'ala_800.jpg',16,3,1),
+                                  ('100000000067','Jabón líquido ropa 3L Ala','Jabón líquido',12,'jabon_liquido_3l.jpg',16,3,1),
+                                  ('100000000068','Suavizante 1L Ala','Suavizante',12,'suavizante_1l.jpg',16,3,1),
+                                  ('100000000069','Quitamanchas 450ml Ala','Quitamanchas',12,'quitamanchas.jpg',16,3,1),
+                                  ('100000000070','Lavandina concentrada 2L Ayudín','Lavandina concentrada',12,'lavandina_2l.jpg',17,3,1);
 
-/* PERFUMERÍA (14) */
-INSERT INTO dbo.productos VALUES
-          ('100000000061','Desodorante Nivea Men aerosol 150ml','Antitranspirante',14,'deso_nivea_men.jpg',13,3,1),
-          ('100000000062','Desodorante Nivea Women aerosol 150ml','Antitranspirante',14,'deso_nivea_women.jpg',13,3,1),
-          ('100000000063','Crema corporal Nivea 250ml','Hidratación',14,'crema_corporal_nivea.jpg',13,3,1),
-          ('100000000064','Crema de manos Nivea 100ml','Hidratación manos',14,'crema_manos_nivea.jpg',13,3,1);
+-- (13) CUIDADO PERSONAL
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000071','Jabón tocador 3x90g','Jabón de tocador',13,'jabon_tocador.jpg',9,4,1),
+                                  ('100000000072','Shampoo 400ml','Shampoo',13,'shampoo.jpg',9,4,1),
+                                  ('100000000073','Acondicionador 400ml','Acondicionador',13,'acondicionador.jpg',9,4,1),
+                                  ('100000000074','Pasta dental 90g Colgate','Pasta dental',13,'colgate_90.jpg',20,4,1),
+                                  ('100000000075','Cepillo dental Colgate','Cepillo dental',13,'cepillo.jpg',20,4,1),
+                                  ('100000000076','Desodorante aerosol 150ml','Desodorante',13,'desodorante.jpg',9,4,1),
+                                  ('100000000077','Toallitas femeninas','Higiene femenina',13,'toallitas.jpg',19,4,1);
 
-/* ELECTRODOMÉSTICOS / ELECTRÓNICA (15) */
-INSERT INTO dbo.productos VALUES
-          ('100000000065','Smart TV Samsung 50" UHD','Televisor 4K 50"',15,'tv_samsung_50.jpg',17,5,1),
-          ('100000000066','Smart TV LG 55" UHD','Televisor 4K 55"',15,'tv_lg_55.jpg',18,5,1),
-          ('100000000067','Smart TV Sony 65" UHD','Televisor 4K 65"',15,'tv_sony_65.jpg',19,5,1),
-          ('100000000068','Barra de sonido Samsung 2.1','Soundbar',15,'soundbar_samsung.jpg',17,5,1),
-          ('100000000069','Auriculares Sony on-ear','Auriculares cableados',15,'auris_sony.jpg',19,5,1),
-          ('100000000070','Auriculares Philips in-ear','In-ear cableados',15,'auris_philips.jpg',16,5,1),
-          ('100000000071','Batidora Philips 400W','Batidora de mano',15,'batidora_philips.jpg',16,5,1),
-          ('100000000072','Licuadora Philips 600W','Jarra plástica',15,'licuadora_philips.jpg',16,5,1);
+-- (14) PAPEL E HIGIENE
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000078','Papel higiénico 4 rollos Higienol','Papel higiénico',14,'higienol_4.jpg',19,4,1),
+                                  ('100000000079','Papel higiénico 6 rollos Higienol','Papel higiénico',14,'higienol_6.jpg',19,4,1),
+                                  ('100000000080','Servilletas 200u Higienol','Servilletas',14,'servilletas.jpg',19,4,1),
+                                  ('100000000081','Pañuelos descartables Higienol','Pañuelos',14,'panuelos.jpg',19,4,1),
+                                  ('100000000082','Toalla de papel Higienol','Rollo cocina',14,'toalla_papel.jpg',19,4,1);
 
-/* MÁS LÁCTEOS / ALIMENTOS PARA COMPLETAR HASTA 100 */
-INSERT INTO dbo.productos VALUES
-          ('100000000073','Leche chocolatada 1L La Serenísima','Bebida láctea chocolate',1,'chocolatada_ls.jpg',1,2,1),
-          ('100000000074','Queso rallado 40g Sancor','Rallado en sobre',1,'rallado_sc.jpg',2,2,1),
-          ('100000000075','Dulce de leche 400g La Serenísima','Clásico',1,'ddl_ls.jpg',1,2,1),
-          ('100000000076','Ricota 500g Sancor','Ricota fresca',1,'ricota_sc.jpg',2,2,1),
-          ('100000000077','Postre vainilla 120g La Serenísima','Postre lácteo',1,'postre_vainilla_ls.jpg',1,2,1),
-          ('100000000078','Muzzarella 500g Sancor','Queso mozzarella',1,'muza_sc.jpg',2,2,1);
+-- (15) CONDIMENTOS Y BÁSICOS
+    INSERT INTO dbo.productos VALUES
+                                  ('100000000083','Sal fina 500g','Sal de mesa',15,'sal.jpg',9,5,1),
+                                  ('100000000084','Vinagre alcohol 1L','Vinagre',15,'vinagre.jpg',9,5,1),
+                                  ('100000000085','Caldo cubitos Arcor','Caldo',15,'caldo.jpg',3,5,1),
+                                  ('100000000086','Purè instantáneo 125g Molinos','Purè instantáneo',15,'pure_inst.jpg',5,5,1),
+                                  ('100000000087','Mayonesa 500g Arcor','Mayonesa',15,'mayonesa.jpg',3,5,1),
+                                  ('100000000088','Mostaza 250g Arcor','Mostaza',15,'mostaza.jpg',3,5,1),
+                                  ('100000000089','Fideos guiseros 500g Lucchetti','Pasta corta',3,'fideos_guiseros.jpg',6,1,1),
+                                  ('100000000090','Arroz parboil 1Kg Gallo','Arroz',2,'arroz_parboil.jpg',8,1,1),
+                                  ('100000000091','Azúcar 1Kg (económica)','Azúcar',7,'azucar_econo.jpg',9,1,1),
+                                  ('100000000092','Aceite 900ml Cocinero','Aceite',8,'aceite_900.jpg',11,1,1),
+                                  ('100000000093','Leche en polvo 400g La Serenísima','Leche en polvo',5,'leche_polvo.jpg',1,1,1),
+                                  ('100000000094','Queso rallado 40g La Serenísima','Queso rallado',5,'queso_rallado.jpg',1,1,1),
+                                  ('100000000095','Tomate triturado 520g','Triturado',3,'triturado.jpg',9,1,1),
+                                  ('100000000096','Atún en lata 170g','Atún',3,'atun.jpg',9,1,1),
+                                  ('100000000097','Fideos moñitos 500g Matarazzo','Pasta corta',3,'monitos.jpg',7,1,1),
+                                  ('100000000098','Arvejas en lata 300g','Arvejas',3,'arvejas_lata.jpg',9,1,1),
+                                  ('100000000099','Levadura seca 10g','Levadura',1,'levadura.jpg',9,5,1),
+                                  ('100000000100','Leche chocolatada 1L Sancor','Bebida láctea',10,'chocolatada.jpg',2,2,1);
 
-/* MÁS PASTAS / SALSAS */
-INSERT INTO dbo.productos VALUES
-          ('100000000079','Mostachol 1Kg Lucchetti','Pasta seca 1Kg',5,'mostachol1kg_lucchetti.jpg',8,2,1),
-          ('100000000080','Capelettini 500g Lucchetti','Pasta seca rellena',5,'capelettini_lucchetti.jpg',8,2,1),
-          ('100000000081','Salsa 4 quesos 340g Knorr','Salsa lista',5,'4quesos_knorr.jpg',9,2,1),
-          ('100000000082','Salsa tuco 340g Knorr','Salsa lista',5,'tuco_knorr.jpg',9,2,1);
+    -- ============================
+-- PRECIOS (variación fuerte)
+-- ============================
+    DECLARE @precios TABLE(cod_barra varchar(50) PRIMARY KEY, precio decimal(10,2));
 
-/* MÁS GALLETITAS / SNACKS */
-INSERT INTO dbo.productos VALUES
-          ('100000000083','Express 170g Terrabusi','Galletitas agua',4,'express_terrabusi.jpg',6,2,1),
-          ('100000000084','Mini Oreo 50g Terrabusi','Galletitas mini',4,'minioro_terrabusi.jpg',6,2,1),
-          ('100000000085','Bizcochos de grasa 200g Arcor','Bizcochos',4,'bizcochos_arcor.jpg',7,2,1),
-          ('100000000086','Maní japonés 120g Arcor','Snack crocante',3,'mani_jap_arcor.jpg',7,2,1),
-          ('100000000087','Palitos de maíz 90g Arcor','Snack maíz',3,'palitos_maiz_arcor.jpg',7,2,1);
+    INSERT INTO @precios(cod_barra, precio) VALUES
+                                                ('100000000001', 2950.00),('100000000002', 3990.00),('100000000003', 2450.00),('100000000004', 2190.00),('100000000005', 2890.00),
+                                                ('100000000006', 2490.00),('100000000007', 2790.00),('100000000008', 3290.00),('100000000009', 2390.00),('100000000010', 2990.00),
+                                                ('100000000011', 2290.00),('100000000012', 2790.00),
+                                                ('100000000013', 2390.00),('100000000014', 2550.00),('100000000015', 2450.00),('100000000016', 3390.00),('100000000017', 3290.00),
+                                                ('100000000018', 3690.00),('100000000019', 2790.00),('100000000020', 3090.00),
+                                                ('100000000021', 11900.00),('100000000022', 13900.00),('100000000023', 8900.00),('100000000024', 10500.00),('100000000025', 12890.00),
+                                                ('100000000026', 2890.00),('100000000027', 2990.00),('100000000028', 1750.00),('100000000029', 14500.00),('100000000030', 3590.00),
+                                                ('100000000031', 3190.00),('100000000032', 4590.00),
+                                                ('100000000033', 2490.00),('100000000034', 2290.00),('100000000035', 3590.00),('100000000036', 2690.00),('100000000037', 2190.00),
+                                                ('100000000038', 3190.00),('100000000039', 3690.00),('100000000040', 3390.00),
+                                                ('100000000041', 3390.00),('100000000042', 5890.00),('100000000043', 4590.00),('100000000044', 3290.00),('100000000045', 3990.00),
+                                                ('100000000046', 7990.00),('100000000047', 8290.00),('100000000048', 3890.00),('100000000049', 2890.00),
+                                                ('100000000050', 9790.00),('100000000051', 9390.00),('100000000052', 3390.00),('100000000053', 6890.00),('100000000054', 3990.00),
+                                                ('100000000055', 2190.00),('100000000056', 1590.00),('100000000057', 1490.00),('100000000058', 6990.00),('100000000059', 6990.00),
+                                                ('100000000060', 2890.00),('100000000061', 3890.00),('100000000062', 4290.00),('100000000063', 3290.00),('100000000064', 1990.00),
+                                                ('100000000065', 3490.00),
+                                                ('100000000066', 7890.00),('100000000067', 14900.00),('100000000068', 5990.00),('100000000069', 6490.00),('100000000070', 4890.00),
+                                                ('100000000071', 2890.00),('100000000072', 4390.00),('100000000073', 4390.00),('100000000074', 3990.00),('100000000075', 2890.00),
+                                                ('100000000076', 5290.00),('100000000077', 4390.00),
+                                                ('100000000078', 5990.00),('100000000079', 8690.00),('100000000080', 3690.00),('100000000081', 3390.00),('100000000082', 3990.00),
+                                                ('100000000083', 1590.00),('100000000084', 2390.00),('100000000085', 1990.00),('100000000086', 2490.00),('100000000087', 4890.00),
+                                                ('100000000088', 3090.00),('100000000089', 2790.00),('100000000090', 3890.00),('100000000091', 3290.00),('100000000092', 6990.00),
+                                                ('100000000093', 12900.00),('100000000094', 2790.00),('100000000095', 3190.00),('100000000096', 5290.00),('100000000097', 2490.00),
+                                                ('100000000098', 3890.00),('100000000099', 1290.00),('100000000100', 4590.00);
 
-/* MÁS BEBIDAS SIN ALCOHOL / JUGOS */
-INSERT INTO dbo.productos VALUES
-          ('100000000088','Coca-Cola 1.5L','Gaseosa cola 1.5L',6,'coca15.jpg',3,1,1),
-          ('100000000089','Pepsi 1.5L','Gaseosa cola 1.5L',6,'pepsi15.jpg',4,1,1),
-          ('100000000090','Manaos Limón 2.25L','Gaseosa sabor limón',6,'manaos_limon225.jpg',5,1,1),
-          ('100000000091','BC Naranja 30g Arcor','Jugo en polvo 2L',8,'bc_2l_naranja_arcor.jpg',7,2,1),
-          ('100000000092','BC Pomelo 30g Arcor','Jugo en polvo 2L',8,'bc_2l_pomelo_arcor.jpg',7,2,1);
+    INSERT INTO dbo.productos_sucursales(nro_sucursal, cod_barra, precio)
+    SELECT s.nro_sucursal, p.cod_barra, p.precio
+    FROM dbo.sucursales s CROSS JOIN @precios p;
 
-/* MÁS CERVEZA / VINOS */
-INSERT INTO dbo.productos VALUES
-          ('100000000093','Cerveza Quilmes Stout lata 473ml','Negra',9,'quilmes_stout_lata.jpg',10,1,1),
-          ('100000000094','Cerveza Stella Noire lata 473ml','Edición especial',9,'stella_noire_lata.jpg',11,1,1),
-          ('100000000095','Vino Trapiche Rosé 750ml','Rosado',10,'trapiche_rose.jpg',12,1,1);
-
-/* MÁS LIMPIEZA / LAVANDERÍA */
-INSERT INTO dbo.productos VALUES
-          ('100000000096','Lavandina concentrada 2L P&G','Desinfectante concentrado',11,'lavandina2l_pg.jpg',15,4,1),
-          ('100000000097','Detergente platos 750ml P&G','Lavavajillas',11,'platos_pg.jpg',15,4,1),
-          ('100000000098','Quitasarro baño 500ml P&G','Limpieza baño',11,'quitasarro_pg.jpg',15,4,1),
-          ('100000000099','Jabón líquido 1.8L P&G','Ropa color',12,'jabliquido_pg.jpg',15,4,1),
-          ('100000000100','Suavizante 3L P&G','Aroma duradero',12,'suavizante3l_pg.jpg',15,4,1);
-
-COMMIT TRANSACTION;
+    COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
-ROLLBACK TRANSACTION;
-    THROW;
-END CATCH;
-GO
-
-/* ============================
-   PRECIOS (10 CAMBIOS vs supermercado1)
-============================ */
-BEGIN TRY
-BEGIN TRANSACTION;
-
-DECLARE @precios TABLE(cod_barra varchar(50) PRIMARY KEY, precio decimal(10,2));
-
--- BASE: mismos precios que supermercado1 ...
-INSERT INTO @precios(cod_barra, precio) VALUES
--- Lácteos
-('100000000001', 1500.00),('100000000002', 1550.00),('100000000003', 950.00),
-('100000000004', 2100.00),('100000000005', 7800.00),('100000000006', 7600.00),
-('100000000007', 1900.00),('100000000008', 1750.00),
--- Fiambres
-('100000000009', 4500.00),('100000000010', 5200.00),('100000000011', 3500.00),
-('100000000012', 5200.00),('100000000013', 2800.00),
--- Snacks
-('100000000014', 1800.00),('100000000015', 1900.00),('100000000016', 2200.00),
-('100000000017', 1600.00),('100000000018', 2300.00),
--- Galletitas
-('100000000019', 2200.00),('100000000020', 2500.00),('100000000021', 1500.00),
-('100000000022', 2100.00),('100000000023', 2000.00),
--- Pastas/Salsas
-('100000000024', 1700.00),('100000000025', 1700.00),('100000000026', 1700.00),
-('100000000027', 1850.00),('100000000028', 2500.00),('100000000029', 2400.00),
--- Bebidas sin alcohol
-('100000000030', 4800.00),('100000000031', 5000.00),('100000000032', 4500.00),
-('100000000033', 2900.00),('100000000034', 2900.00),
--- Jugos
-('100000000035', 650.00),('100000000036', 650.00),('100000000037', 650.00),
--- Cerveza
-('100000000038', 2400.00),('100000000039', 1700.00),('100000000040', 3200.00),
-('100000000041', 2400.00),('100000000042', 2600.00),
--- Vinos
-('100000000043', 5900.00),('100000000044', 6200.00),('100000000045', 5400.00),
-('100000000046', 8500.00),
--- Limpieza hogar
-('100000000047', 1200.00),('100000000048', 2300.00),('100000000049', 2100.00),
-('100000000050', 2000.00),
--- Lavandería
-('100000000051', 3900.00),('100000000052', 9800.00),('100000000053', 4800.00),
-('100000000054', 5200.00),
--- Cuidado personal
-('100000000055', 5200.00),('100000000056', 5200.00),('100000000057', 1200.00),
-('100000000058', 2600.00),('100000000059', 1800.00),('100000000060', 4500.00),
--- Perfumería
-('100000000061', 3900.00),('100000000062', 3900.00),('100000000063', 4900.00),
-('100000000064', 3200.00),
--- Electrónica
-('100000000065', 650000.00),('100000000066', 780000.00),('100000000067', 1150000.00),
-('100000000068', 160000.00),('100000000069', 45000.00),('100000000070', 28000.00),
-('100000000071', 52000.00),('100000000072', 89000.00),
--- Más lácteos
-('100000000073', 2600.00),('100000000074', 1400.00),('100000000075', 4200.00),
-('100000000076', 3300.00),('100000000077', 1100.00),('100000000078', 4900.00),
--- Más pastas/salsas
-('100000000079', 3000.00),('100000000080', 3200.00),('100000000081', 2900.00),('100000000082', 2400.00),
--- Más galletitas/snacks
-('100000000083', 1700.00),('100000000084', 1200.00),('100000000085', 1900.00),
-('100000000086', 2300.00),('100000000087', 1700.00),
--- Más bebidas/jugos
-('100000000088', 4200.00),('100000000089', 4000.00),('100000000090', 2900.00),
-('100000000091', 1050.00),('100000000092', 1050.00),
--- Más cerveza/vinos
-('100000000093', 2000.00),('100000000094', 2600.00),('100000000095', 4800.00),
--- Más limpieza/lavandería
-('100000000096', 2200.00),('100000000097', 2100.00),('100000000098', 2500.00),
-('100000000099', 7800.00),('100000000100', 9500.00);
-
--- ... Y AHORA APLICAMOS 10 CAMBIOS PARA supermercado2
-UPDATE @precios SET precio = 1600.00 WHERE cod_barra='100000000001'; -- +100
-UPDATE @precios SET precio = 5000.00 WHERE cod_barra='100000000010'; -- -200
-UPDATE @precios SET precio = 2700.00 WHERE cod_barra='100000000020'; -- +200
-UPDATE @precios SET precio = 5100.00 WHERE cod_barra='100000000030'; -- +300
-UPDATE @precios SET precio = 3500.00 WHERE cod_barra='100000000040'; -- +300
-UPDATE @precios SET precio = 2300.00 WHERE cod_barra='100000000050'; -- +300
-UPDATE @precios SET precio = 4200.00 WHERE cod_barra='100000000060'; -- -300
-UPDATE @precios SET precio = 25000.00 WHERE cod_barra='100000000070'; -- -3000
-UPDATE @precios SET precio = 3000.00 WHERE cod_barra='100000000080'; -- -200
-UPDATE @precios SET precio = 3100.00 WHERE cod_barra='100000000090'; -- +200
-
--- Replicar mismo precio (ajustado) en TODAS las sucursales
-INSERT INTO dbo.productos_sucursales(nro_sucursal, cod_barra, precio)
-SELECT s.nro_sucursal, p.cod_barra, p.precio
-FROM dbo.sucursales s CROSS JOIN @precios p;
-
-COMMIT TRANSACTION;
-END TRY
-BEGIN CATCH
-ROLLBACK TRANSACTION;
+    ROLLBACK TRANSACTION;
     THROW;
 END CATCH;
 GO
