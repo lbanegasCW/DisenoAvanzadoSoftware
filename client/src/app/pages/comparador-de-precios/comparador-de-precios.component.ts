@@ -15,6 +15,7 @@ interface PriceCell {
   value: number;
   promotionName: string | null;
   promotionPrice: number | null;
+  promotionEndDate: string | null;
 }
 
 interface VmRow extends ComparadorRow {
@@ -183,6 +184,7 @@ export class ComparadorPreciosComponent implements OnInit {
       value: offer.precio,
       promotionName: offer.tipoPromocion ?? null,
       promotionPrice: offer.precioPromocion ?? null,
+      promotionEndDate: offer.finVigencia ?? null,
     };
   }
 
@@ -197,22 +199,29 @@ export class ComparadorPreciosComponent implements OnInit {
 
   showPromotionDetails(price: PriceCell | null): boolean {
     if (!price) return false;
-    return !!price.promotionName || price.promotionPrice !== null;
+    return !!price.promotionName?.trim();
   }
 
-  promotionDescription(price: PriceCell | null): string {
+  promotionLabel(price: PriceCell | null): string {
+    const promotionType = price?.promotionName?.trim();
+    return promotionType ? `Promoción: ${promotionType}` : '';
+  }
+
+  promotionTooltip(price: PriceCell | null): string {
     if (!price) return '';
 
-    const promoName = price.promotionName?.trim();
-    const promoPrice =
-      price.promotionPrice !== null
-        ? this.formatPrice(price.promotionPrice)
-        : null;
+    return `Válida hasta ${this.formatPromotionEndDate(price.promotionEndDate)}`;
+  }
 
-    if (promoName && promoPrice) return `${promoName} · ${promoPrice}`;
-    if (promoName) return promoName;
-    if (promoPrice) return promoPrice;
-    return '';
+  private formatPromotionEndDate(value: string | null): string {
+    if (!value) return 'fecha no informada';
+
+    const parsedDate = new Date(value);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return new Intl.DateTimeFormat('es-AR').format(parsedDate);
+    }
+
+    return value;
   }
 
   private computeTotals(): void {

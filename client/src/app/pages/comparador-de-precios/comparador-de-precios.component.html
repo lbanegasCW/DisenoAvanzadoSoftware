@@ -51,9 +51,10 @@
               <span class="price-chip" [class.price-chip-min]="isMinPrice(row, id)">
                 {{ formatPrice(price.value) }}
               </span>
-              <p *ngIf="showPromotionDetails(price)" class="mt-1 text-[11px] text-slate-500">
-                {{ promotionDescription(price) }}
-              </p>
+              <div *ngIf="showPromotionDetails(price)" class="promotion-note mt-1">
+                <span class="promotion-note__text">{{ promotionLabel(price) }}</span>
+                <span class="promotion-note__icon" [attr.title]="promotionTooltip(price)" aria-label="Información de promoción">ℹ</span>
+              </div>
             </ng-container>
             <ng-template #noPrice>
               <span class="text-slate-300">—</span>

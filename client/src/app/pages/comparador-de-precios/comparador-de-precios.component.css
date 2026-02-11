@@ -21,3 +21,11 @@
 .best-column-light {
   @apply bg-emerald-50/60;
 }
+
+.promotion-note {
+  @apply inline-flex items-center gap-1 text-[11px] font-bold text-fuchsia-700;
+}
+
+.promotion-note__icon {
+  @apply inline-flex h-4 w-4 items-center justify-center rounded-full border border-fuchsia-300 bg-fuchsia-100 text-[10px] font-bold text-fuchsia-700 cursor-help;
+}
