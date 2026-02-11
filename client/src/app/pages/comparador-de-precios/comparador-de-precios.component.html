@@ -52,8 +52,13 @@
                 {{ formatPrice(price.value) }}
               </span>
               <div *ngIf="showPromotionDetails(price)" class="promotion-note mt-1">
-                <span class="promotion-note__text">{{ promotionLabel(price) }}</span>
-                <span class="promotion-note__icon" [attr.title]="promotionTooltip(price)" aria-label="Información de promoción">ℹ</span>
+                <span class="promotion-note__description">
+                  <span class="promotion-note__text">{{ promotionLabel(price) }}</span>
+                  <span class="promotion-note__icon" [attr.title]="promotionTooltip(price)" aria-label="Información de promoción">ℹ</span>
+                </span>
+                <span *ngIf="price.promotionPrice !== null" class="promotion-note__price">
+                  {{ formatPrice(price.promotionPrice) }}
+                </span>
               </div>
             </ng-container>
             <ng-template #noPrice>

@@ -199,7 +199,11 @@ export class ComparadorPreciosComponent implements OnInit {
 
   showPromotionDetails(price: PriceCell | null): boolean {
     if (!price) return false;
-    return !!price.promotionName?.trim();
+
+    const hasPromotionName = !!price.promotionName?.trim();
+    const hasPromotionPrice = Number.isFinite(price.promotionPrice);
+
+    return hasPromotionName || hasPromotionPrice;
   }
 
   promotionLabel(price: PriceCell | null): string {
