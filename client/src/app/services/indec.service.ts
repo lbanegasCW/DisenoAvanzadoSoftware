@@ -112,9 +112,9 @@ export class IndecService {
       .pipe(catchError(this.handleError));
   }
 
-  getProductosCatalogo() {
+  getProductosCatalogo(params?: Record<string, string | number>) {
     return this.http
-      .get<Producto[]>(`${this.API_URL}/productos`)
+      .get<Producto[]>(`${this.API_URL}/productos`, { params })
       .pipe(catchError(this.handleError));
   }
 

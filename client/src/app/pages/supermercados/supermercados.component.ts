@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, catchError, of, takeUntil } from 'rxjs';
@@ -6,11 +6,10 @@ import { Subject, catchError, of, takeUntil } from 'rxjs';
 import { NotificationComponent } from '../../components/notificacion/notificacion.component';
 import {
   IndecService,
-  Localidad,
-  Provincia,
   Sucursal,
   Supermercado,
 } from '../../services/indec.service';
+import { LocalizacionStore } from '../../store/localizacion.store';
 
 type NotificationKind = 'success' | 'error' | 'info' | 'warning';
 
@@ -31,13 +30,10 @@ interface NotificationState {
 export class SupermercadosComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly indecService = inject(IndecService);
+  readonly locStore = inject(LocalizacionStore);
 
-  selectedProvincia = '';
-  selectedLocalidad: number | null = null;
   searchTerm = '';
 
-  provincias: Provincia[] = [];
-  localidades: Localidad[] = [];
   supermercados: Supermercado[] = [];
   filteredSupermercados: Supermercado[] = [];
   selectedSupermercado: Supermercado | null = null;
@@ -52,9 +48,17 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
     message: '',
   };
 
+  constructor() {
+    effect(() => {
+      this.locStore.localidad();
+      this.selectedSupermercado = null;
+      this.sucursales = [];
+      this.updateSucursales();
+    });
+  }
+
   ngOnInit(): void {
     this.loadInitialData();
-    this.updateSucursales();
   }
 
   ngOnDestroy(): void {
@@ -62,50 +66,12 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onProvinciaChange(): void {
-    this.selectedLocalidad = null;
-    this.selectedSupermercado = null;
-    this.sucursales = [];
-    this.localidades = [];
-
-    if (!this.selectedProvincia) {
-      this.updateSucursales();
-      return;
-    }
-
-    this.isLoading = true;
-    this.indecService
-      .getLocalidades(this.selectedProvincia)
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError((error: Error) => {
-          this.showNotification('error', 'Error', error.message);
-          return of([]);
-        })
-      )
-      .subscribe({
-        next: (localidades) => {
-          this.localidades = localidades;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
-
-    this.updateSucursales();
-  }
-
-  onLocalidadChange(): void {
-    this.selectedSupermercado = null;
-    this.sucursales = [];
-    this.updateSucursales();
-  }
-
   updateSucursales(): void {
+    const { codProvincia, nroLocalidad } = this.locStore.localidad();
     const params: Record<string, string | number> = {};
 
-    if (this.selectedProvincia) params['provinciaId'] = this.selectedProvincia;
-    if (this.selectedLocalidad) params['localidadId'] = this.selectedLocalidad;
+    if (codProvincia) params['provinciaId'] = codProvincia;
+    if (nroLocalidad) params['localidadId'] = nroLocalidad;
 
     this.isLoading = true;
     this.indecService
@@ -147,13 +113,14 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
 
   selectSupermercado(supermercado: Supermercado): void {
     this.selectedSupermercado = supermercado;
+    const { codProvincia, nroLocalidad } = this.locStore.localidad();
 
     const params: Record<string, string | number> = {
       supermercadoId: supermercado.nroSupermercado,
     };
 
-    if (this.selectedProvincia) params['provinciaId'] = this.selectedProvincia;
-    if (this.selectedLocalidad) params['localidadId'] = this.selectedLocalidad;
+    if (codProvincia) params['provinciaId'] = codProvincia;
+    if (nroLocalidad) params['localidadId'] = nroLocalidad;
 
     this.isLoading = true;
     this.indecService
@@ -179,21 +146,6 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.indecService
-      .getProvincias()
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError((error: Error) => {
-          this.showNotification('error', 'Error', error.message);
-          return of([]);
-        })
-      )
-      .subscribe({
-        next: (provincias) => {
-          this.provincias = provincias;
-        },
-      });
-
-    this.indecService
       .getSupermercados()
       .pipe(
         takeUntil(this.destroy$),
@@ -206,6 +158,7 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
         next: (supermercados) => {
           this.supermercados = supermercados;
           this.filteredSupermercados = supermercados;
+          this.updateSucursales();
         },
         complete: () => {
           this.isLoading = false;
