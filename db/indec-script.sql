@@ -195,6 +195,19 @@ CREATE TABLE dbo.productos_supermercados
     FOREIGN KEY (cod_barra) REFERENCES dbo.productos (cod_barra)
 )
 
+CREATE TABLE dbo.productos_sucursales_promociones
+(
+    nro_supermercado INT NOT NULL,
+    nro_sucursal INT NOT NULL,
+    cod_barra VARCHAR(50) NOT NULL,
+    tipo_promocion varchar(50) NOT NULL,
+    precio decimal(10,2) NOT NULL,
+    fin_vigencia DATETIME NOT NULL,
+    PRIMARY KEY (cod_barra, nro_supermercado, nro_sucursal),
+    FOREIGN KEY (nro_supermercado, nro_sucursal) REFERENCES dbo.sucursales (nro_supermercado, nro_sucursal),
+    FOREIGN KEY (cod_barra) REFERENCES dbo.productos (cod_barra)
+)
+
 /* -------------------------------------
    datos iniciales
 ------------------------------------- */
