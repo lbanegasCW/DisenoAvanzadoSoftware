@@ -3,6 +3,8 @@
 # Iniciar SQL Server
 /opt/mssql/bin/sqlservr &
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Esperar a que SQL Server esté listo
 wait_for_sql() {
     for i in {1..50}; do
@@ -27,12 +29,20 @@ if [ $? -eq 0 ]; then
         IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'indec') CREATE DATABASE indec;
         IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'supermercado1') CREATE DATABASE supermercado1;
         IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'supermercado2') CREATE DATABASE supermercado2;
+        IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'supermercado3') CREATE DATABASE supermercado3;
+        IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'supermercado4') CREATE DATABASE supermercado4;
     "
 
     echo "Correr scripts"
     # Definiciones de BD con su script de inicialización respectivo
-    databases=("indec" "supermercado1" "supermercado2")
-    scripts=("/scripts/indec-script.sql" "/scripts/supermercado1-script.sql" "/scripts/supermercado2-script.sql")
+    databases=("indec" "supermercado1" "supermercado2" "supermercado3" "supermercado4")
+    scripts=(
+      "$SCRIPT_DIR/indec-script.sql"
+      "$SCRIPT_DIR/supermercado1-script.sql"
+      "$SCRIPT_DIR/supermercado2-script.sql"
+      "$SCRIPT_DIR/supermercado3-script.sql"
+      "$SCRIPT_DIR/supermercado4-script.sql"
+    )
 
     for i in "${!databases[@]}"; do
         /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "$MSSQL_SA_PASSWORD" -d "${databases[i]}" -i "${scripts[i]}"

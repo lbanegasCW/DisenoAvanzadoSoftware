@@ -1,6 +1,5 @@
 package ar.edu.ubp.das.api.repositories;
 
-import ar.edu.ubp.das.api.batch.beans.ProductoSucursalBean;
 import ar.edu.ubp.das.api.beans.*;
 import ar.edu.ubp.das.api.components.SimpleJdbcCallFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,43 +66,22 @@ public class IndecRepository {
                 );
         }
 
-        public void insertarSucursal(SucursalBean sucursal) {
+        public void upsertSucursales(int nroSupermercado, String formato, String payload) {
                 SqlParameterSource params = new MapSqlParameterSource()
-                        .addValue("nro_supermercado", sucursal.getNroSupermercado())
-                        .addValue("nro_sucursal", sucursal.getNroSucursal())
-                        .addValue("nom_sucursal", sucursal.getNomSucursal())
-                        .addValue("calle", sucursal.getCalle())
-                        .addValue("nro_calle", sucursal.getNroCalle())
-                        .addValue("telefonos", sucursal.getTelefonos())
-                        .addValue("coord_latitud", sucursal.getCoordLatitud())
-                        .addValue("coord_longitud", sucursal.getCoordLongitud())
-                        .addValue("horario_sucursal", sucursal.getHorarioSucursal())
-                        .addValue("servicios_disponibles", sucursal.getServiciosDisponibles())
-                        .addValue("nro_localidad", sucursal.getNroLocalidad())
-                        .addValue("habilitada", sucursal.getHabilitada());
+                        .addValue("nro_supermercado",nroSupermercado)
+                        .addValue("formato", formato)
+                        .addValue("payload", payload);
 
-                jdbcCallFactory.execute("sp_insertar_sucursal", "dbo", params);
+                jdbcCallFactory.execute("sp_upsert_sucursales", "dbo", params);
         }
 
-        public void insertarProducto(ProductoSucursalBean producto, int nroSupermercado, int nroSucursal) {
+        public void upsertProductos(int nroSupermercado, String formato, String payload) {
                 SqlParameterSource params = new MapSqlParameterSource()
-                        .addValue("nro_supermercado", nroSupermercado)
-                        .addValue("nro_sucursal", nroSucursal)
-                        .addValue("nroRubro", producto.getNroRubro())
-                        .addValue("nomRubro", producto.getNomRubro())
-                        .addValue("nroCategoria", producto.getNroCategoria())
-                        .addValue("nomCategoria", producto.getNomCategoria())
-                        .addValue("cod_barra", producto.getCod_barra())
-                        .addValue("nomProducto", producto.getNomProducto())
-                        .addValue("descProducto", producto.getDescProducto())
-                        .addValue("imagen", producto.getImagen())
-                        .addValue("nroMarca", producto.getNroMarca())
-                        .addValue("nomMarca", producto.getNomMarca())
-                        .addValue("nroTipoProducto", producto.getNroTipoProducto())
-                        .addValue("nomTipoProducto", producto.getNomTipoProducto())
-                        .addValue("precio", producto.getPrecio());
+                        .addValue("nro_supermercado",nroSupermercado)
+                        .addValue("formato", formato)
+                        .addValue("payload", payload);
 
-                jdbcCallFactory.execute("sp_insertar_producto", "dbo", params);
+                jdbcCallFactory.execute("sp_upsert_productos", "dbo", params);
         }
 
 }

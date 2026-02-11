@@ -37,7 +37,6 @@ http://localhost:8081/ws/productos.wsdl
    </soapenv:Header>
    <soapenv:Body>
       <web:obtenerProductos>
-        <nroSucursal>1</nroSucursal>
       </web:obtenerProductos>
    </soapenv:Body>
 </soapenv:Envelope>
