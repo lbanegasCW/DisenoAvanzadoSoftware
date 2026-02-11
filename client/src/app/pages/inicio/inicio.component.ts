@@ -78,27 +78,5 @@ export class InicioComponent {
         route: '/supermercados',
       },
     },
-    {
-      title: $localize`:@@inicio.section_carrito_title:Carrito de Compras`,
-      description:
-        $localize`:@@inicio.section_carrito_desc:Armá tu lista de compras y compará precios entre diferentes supermercados para encontrar la mejor opción.`,
-      image:
-        'https://plus.unsplash.com/premium_photo-1683121938935-118d0a16a469?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      link: {
-        text: $localize`:@@inicio.section_carrito_link:Crear carrito`,
-        route: '/carrito',
-      },
-    },
-    {
-      title: $localize`:@@inicio.section_categorias_title:Categorías de Productos`,
-      description:
-        $localize`:@@inicio.section_categorias_desc:Explorá nuestra amplia variedad de productos organizados por categorías para facilitar tu búsqueda.`,
-      image:
-        'https://plus.unsplash.com/premium_photo-1664305032567-2c460e29dec1?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      link: {
-        text: $localize`:@@inicio.section_categorias_link:Ver categorías`,
-        route: '/categorias',
-      },
-    },
   ];
 }

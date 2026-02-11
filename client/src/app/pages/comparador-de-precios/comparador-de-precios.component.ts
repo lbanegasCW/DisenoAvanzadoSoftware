@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 import {
   ComparadorRow,
   IndecService,
@@ -39,9 +39,16 @@ export class ComparadorPreciosComponent implements OnInit {
   totalBySup: Record<SupermarketId, number> = {};
   cheapestSupId: SupermarketId | null = null;
 
+  constructor() {
+    effect(() => {
+      this.locStore.localidad();
+      this.cart.codes();
+      this.comparar();
+    });
+  }
+
   ngOnInit(): void {
     this.loadSupermarkets();
-    this.comparar();
   }
 
   comparar(): void {

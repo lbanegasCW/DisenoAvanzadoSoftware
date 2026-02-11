@@ -4,7 +4,7 @@ import {Observable, catchError, throwError, map} from 'rxjs';
 
 const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'http://localhost:8085',
   defaultLanguage: 'es',
   supportedLanguages: ['es', 'en'],
 };
@@ -112,9 +112,9 @@ export class IndecService {
       .pipe(catchError(this.handleError));
   }
 
-  getProductosCatalogo() {
+  getProductosCatalogo(params?: Record<string, string | number>) {
     return this.http
-      .get<Producto[]>(`${this.API_URL}/productos`)
+      .get<Producto[]>(`${this.API_URL}/productos`, { params })
       .pipe(catchError(this.handleError));
   }
 

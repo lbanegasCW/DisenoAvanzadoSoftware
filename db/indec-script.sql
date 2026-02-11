@@ -526,6 +526,7 @@ BEGIN
                       JOIN dbo.productos_supermercados ps2
                            ON ps2.nro_supermercado = s2.nro_supermercado
                                AND ps2.nro_sucursal    = s2.nro_sucursal
+                               AND CONVERT(date, ps2.fecha_ult_actualizacion) = CONVERT(date, GETDATE())
              WHERE s2.nro_localidad = @nro_localidad
                AND s2.habilitada = 1
                AND ps2.cod_barra = p.cod_barra
@@ -542,6 +543,7 @@ BEGIN
                    ON ps.cod_barra = p.cod_barra
                        AND ps.nro_supermercado = s.nro_supermercado
                        AND ps.nro_sucursal    = s.nro_sucursal
+                       AND CONVERT(date, ps.fecha_ult_actualizacion) = CONVERT(date, GETDATE())
      WHERE p.vigente = 1
        AND c.vigente = 1
        AND s.habilitada = 1

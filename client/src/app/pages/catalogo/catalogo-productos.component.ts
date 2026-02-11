@@ -1,16 +1,11 @@
-import {
-  Component,
-  HostListener,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, HostListener, computed, effect, inject, signal, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { IndecService, Producto } from '@/app/services/indec.service';
 import { CartCodesService } from '@/app/services/cart-codes.service';
+import { LocalizacionStore } from '@/app/store/localizacion.store';
 
 type FacetId = number | null;
 
@@ -30,6 +25,7 @@ interface Facet {
 export class CatalogoProductosComponent {
   private readonly indec = inject(IndecService);
   readonly cart = inject(CartCodesService);
+  readonly locStore = inject(LocalizacionStore);
 
   readonly all = signal<Producto[]>([]);
   readonly loading = signal(false);
@@ -88,7 +84,10 @@ export class CatalogoProductosComponent {
   });
 
   constructor() {
-    this.loadProductos();
+    effect(() => {
+      const loc = this.locStore.localidad();
+      untracked(() => this.loadProductos(loc));
+    });
   }
 
   get totalResultados(): number {
@@ -141,11 +140,19 @@ export class CatalogoProductosComponent {
     this.closeCart();
   }
 
-  private loadProductos(): void {
+  private loadProductos(loc: { codProvincia?: any; nroLocalidad?: any }): void {
     this.loading.set(true);
-    this.indec.getProductosCatalogo().subscribe({
+
+    const { codProvincia, nroLocalidad } = loc;
+    const filters: Record<string, string | number> = {};
+
+    if (codProvincia) filters['provinciaId'] = codProvincia;
+    if (nroLocalidad) filters['localidadId'] = nroLocalidad;
+
+    this.indec.getProductosCatalogo(filters).subscribe({
       next: (rows) => {
         this.all.set(rows);
+        this.errorMsg.set(null); // opcional: limpiar error al éxito
       },
       error: (error) => {
         console.error('[Catálogo] error', error);
