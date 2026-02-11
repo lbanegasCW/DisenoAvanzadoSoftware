@@ -1,101 +1,81 @@
-<div class="bg-white shadow">
-  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900" i18n="@@catalogo.title">
-      Comparador de precios
-    </h1>
+<section class="page-container page-section">
+  <div class="page-hero">
+    <h1 class="page-title" i18n="@@catalogo.title">Comparador de precios</h1>
+    <p class="page-subtitle">
+      Visualizá rápidamente dónde conviene comprar tu carrito en la localidad seleccionada.
+    </p>
   </div>
-</div>
+</section>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<section class="page-container pb-14">
+  <div *ngIf="loading" class="card text-sm font-medium text-slate-600">Cargando comparación…</div>
 
-  <div *ngIf="loading" class="text-gray-600 mb-3">
-    Cargando comparación…
-  </div>
-
-  <div *ngIf="errorMsg" class="mb-3 rounded border border-red-300 bg-red-50 p-3 text-red-900">
+  <div *ngIf="errorMsg" class="card border-rose-200 bg-rose-50 text-sm font-medium text-rose-700">
     {{ errorMsg }}
   </div>
 
-  <div class="overflow-x-auto bg-white rounded-xl shadow border border-gray-200"
-       *ngIf="!loading && vmRows.length">
-
-    <table class="min-w-full text-sm text-gray-700">
-
-      <thead class="bg-blue-50 border-b border-blue-200">
-      <tr>
-        <th class="text-left px-4 py-3 font-semibold">Producto</th>
-        <th class="text-left px-4 py-3 font-semibold">Categoría</th>
-
-        <th class="px-4 py-3 text-center font-semibold"
+  <div class="card overflow-x-auto p-0" *ngIf="!loading && vmRows.length">
+    <table class="w-full min-w-[720px] text-sm text-slate-700">
+      <thead class="bg-slate-50 text-slate-700">
+        <tr>
+          <th class="px-4 py-3 text-left font-semibold">Producto</th>
+          <th class="px-4 py-3 text-left font-semibold">Categoría</th>
+          <th
             *ngFor="let id of colIds; trackBy: trackCol"
-            [class.bg-green-200]="id === cheapestSupId">
-          <div class="flex items-center justify-center gap-2">
-            <span>{{ supName(id) }}</span>
-            <span *ngIf="id === cheapestSupId"
-                  class="text-[11px] px-2 py-[2px] rounded-full bg-green-600 text-white">
-                🏆 Más barato
-              </span>
-          </div>
-        </th>
-      </tr>
+            class="px-4 py-3 text-center font-semibold"
+            [class.best-column]="id === cheapestSupId"
+          >
+            <div class="inline-flex items-center gap-2">
+              <span>{{ supName(id) }}</span>
+              <span *ngIf="id === cheapestSupId" class="winner-chip">🏆 Más barato</span>
+            </div>
+          </th>
+        </tr>
       </thead>
 
       <tbody>
-      <tr *ngFor="let r of vmRows; trackBy: trackRow"
-          class="border-b last:border-none even:bg-gray-50 hover:bg-blue-50 transition">
+        <tr *ngFor="let row of vmRows; trackBy: trackRow" class="table-row">
+          <td class="px-4 py-3 align-top">
+            <p class="font-semibold text-slate-900">{{ row.nomProducto }}</p>
+            <p class="mt-1 text-xs text-slate-500">EAN {{ row.codBarra }}</p>
+          </td>
 
-        <td class="px-4 py-3 align-top">
-          <div class="font-semibold text-gray-900">
-            {{ r.nomProducto }}
-          </div>
-          <div class="text-xs text-gray-500">
-            EAN {{ r.codBarra }}
-          </div>
-        </td>
+          <td class="px-4 py-3 align-top text-slate-600">{{ row.nomCategoria }}</td>
 
-        <td class="px-4 py-3 align-top text-gray-600">
-          {{ r.nomCategoria }}
-        </td>
-
-        <td class="px-4 py-3 text-center"
+          <td
             *ngFor="let id of colIds; trackBy: trackCol"
-            [class.bg-green-50]="id === cheapestSupId">
-
-          <ng-container *ngIf="r.pricesBySup[id] !== null && r.pricesBySup[id] !== undefined; else sinPrecio">
-              <span class="inline-flex items-center justify-center px-3 py-1 rounded-lg font-semibold border"
-                    [class.bg-green-100]="r.min !== null && r.pricesBySup[id] === r.min"
-                    [class.border-green-300]="r.min !== null && r.pricesBySup[id] === r.min"
-                    [class.text-green-700]="r.min !== null && r.pricesBySup[id] === r.min">
-                {{ r.pricesBySup[id] }}
+            class="px-4 py-3 text-center"
+            [class.best-column-light]="id === cheapestSupId"
+          >
+            <ng-container *ngIf="row.pricesBySup[id] !== null && row.pricesBySup[id] !== undefined; else noPrice">
+              <span
+                class="price-chip"
+                [class.price-chip-min]="row.min !== null && row.pricesBySup[id] === row.min"
+              >
+                {{ row.pricesBySup[id] }}
               </span>
-          </ng-container>
+            </ng-container>
+            <ng-template #noPrice>
+              <span class="text-slate-300">—</span>
+            </ng-template>
+          </td>
+        </tr>
 
-          <ng-template #sinPrecio>
-            <span class="text-gray-300">—</span>
-          </ng-template>
-
-        </td>
-      </tr>
-
-      <!-- TOTAL -->
-      <tr class="bg-gray-100 border-t border-gray-300 font-semibold">
-        <td class="px-4 py-3 text-gray-900" colspan="2">
-          TOTAL
-        </td>
-
-        <td class="px-4 py-3 text-center"
+        <tr class="border-t border-slate-200 bg-slate-50 font-semibold text-slate-900">
+          <td class="px-4 py-3" colspan="2">TOTAL</td>
+          <td
             *ngFor="let id of colIds; trackBy: trackCol"
-            [class.bg-green-100]="id === cheapestSupId">
-          {{ totalBySup[id] ?? 0 }}
-        </td>
-      </tr>
-
+            class="px-4 py-3 text-center"
+            [class.best-column-light]="id === cheapestSupId"
+          >
+            {{ totalBySup[id] ?? 0 }}
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <div *ngIf="!loading && !vmRows.length && !errorMsg" class="text-gray-500">
+  <div *ngIf="!loading && !vmRows.length && !errorMsg" class="card text-sm text-slate-500">
     No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad.
   </div>
-
-</div>
+</section>

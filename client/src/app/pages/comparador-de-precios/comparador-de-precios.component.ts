@@ -1,66 +1,51 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { IndecService, Supermercado, ComparadorRow } from '@/app/services/indec.service';
+import { Component, OnInit, inject } from '@angular/core';
+import {
+  ComparadorRow,
+  IndecService,
+  Supermercado,
+} from '@/app/services/indec.service';
 import { CartCodesService } from '@/app/services/cart-codes.service';
 import { LocalizacionStore } from '@/app/store/localizacion.store';
 
-type VmRow = ComparadorRow & {
-  pricesBySup: Record<number, any>; // RAW, sin parsear
-  min: number | null;               // mínimo numérico para resaltar (siempre que sea number)
-};
+type SupermarketId = number;
+type PriceValue = number | string | null;
+
+interface VmRow extends ComparadorRow {
+  pricesBySup: Record<SupermarketId, PriceValue>;
+  min: number | null;
+}
 
 @Component({
   selector: 'app-comparador-precios',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './comparador-de-precios.component.html'
+  templateUrl: './comparador-de-precios.component.html',
+  styleUrl: './comparador-de-precios.component.css',
 })
-export class ComparadorPreciosComponent {
+export class ComparadorPreciosComponent implements OnInit {
+  private readonly indec = inject(IndecService);
+
+  readonly cart = inject(CartCodesService);
+  readonly locStore = inject(LocalizacionStore);
+
   loading = false;
   errorMsg: string | null = null;
 
   supermercados: Supermercado[] = [];
-
-  // columnas (supermercados)
-  colIds: number[] = [];
-
-  // filas listas para render
+  colIds: SupermarketId[] = [];
   vmRows: VmRow[] = [];
 
-  // totales por supermercado y el más barato
-  totalBySup: Record<number, number> = {};
-  cheapestSupId: number | null = null;
+  totalBySup: Record<SupermarketId, number> = {};
+  cheapestSupId: SupermarketId | null = null;
 
-  supName = (id: number) => {
-    const s = this.supermercados.find(x => x.nroSupermercado === id);
-    return s?.razonSocial ?? `Super ${id}`;
-  };
-
-  constructor(
-    private indec: IndecService,
-    public cart: CartCodesService,
-    public locStore: LocalizacionStore
-  ) {}
-
-  ngOnInit() {
-    // Traigo supermercados (para nombres y para columnas si querés forzar 4 columnas)
-    this.indec.getSupermercados().subscribe({
-      next: ss => {
-        this.supermercados = ss ?? [];
-        // Si querés mostrar SIEMPRE todos los supers (aunque no venga precio), descomentá:
-        // this.colIds = this.supermercados.map(s => s.nroSupermercado).sort((a, b) => a - b);
-      },
-      error: () => {
-        this.supermercados = [];
-      },
-    });
-
+  ngOnInit(): void {
+    this.loadSupermarkets();
     this.comparar();
   }
 
-  comparar() {
-    const loc = this.locStore.localidad();
-    const nroLocalidad = loc?.nroLocalidad ?? 0;
+  comparar(): void {
+    const { nroLocalidad = 0 } = this.locStore.localidad() ?? {};
     const codes = this.cart.codes();
 
     this.errorMsg = null;
@@ -70,6 +55,7 @@ export class ComparadorPreciosComponent {
       this.resetTable();
       return;
     }
+
     if (!codes.length) {
       this.errorMsg = 'Tu carrito está vacío. Agregá productos para comparar.';
       this.resetTable();
@@ -79,90 +65,112 @@ export class ComparadorPreciosComponent {
     this.loading = true;
 
     this.indec.compareByLocalidad(nroLocalidad, codes).subscribe({
-      next: data => {
-        const rows = data ?? [];
-
-        // Columnas: por defecto, salen de lo que viene en ofertas
-        // (Si querés siempre 4 supers, setea colIds desde supermercados en ngOnInit y NO lo pises acá)
-        this.colIds = this.buildColIds(rows);
-
-        // armo vmRows con precios RAW
-        this.vmRows = rows.map(r => {
-          const pricesBySup: Record<number, any> = {};
-
-          // inicializo
-          for (const id of this.colIds) pricesBySup[id] = null;
-
-          // lleno con lo que venga
-          for (const o of (r.ofertas ?? [])) {
-            const id = Number(o.nroSupermercado);
-            if (Number.isFinite(id)) pricesBySup[id] = o.precio; // RAW
-          }
-
-          // mínimo por fila (solo considera números reales)
-          const numeric = Object.values(pricesBySup).filter((v): v is number => typeof v === 'number');
-          const min = numeric.length ? Math.min(...numeric) : null;
-
-          return { ...r, pricesBySup, min };
-        });
-
-        this.computeTotals();
-
+      next: (rows) => this.buildTable(rows ?? []),
+      error: (error) => {
+        this.errorMsg = error?.message || 'Error al cargar la comparación.';
+        this.resetTable();
+      },
+      complete: () => {
         this.loading = false;
       },
-      error: err => {
-        this.errorMsg = err?.message || 'Error al cargar la comparación.';
-        this.resetTable();
-        this.loading = false;
-      }
     });
   }
 
-  private resetTable() {
+  supName(id: SupermarketId): string {
+    return (
+      this.supermercados.find((market) => market.nroSupermercado === id)
+        ?.razonSocial ?? `Super ${id}`
+    );
+  }
+
+  trackCol = (_: number, id: SupermarketId): SupermarketId => id;
+  trackRow = (_: number, row: VmRow): string => row.codBarra;
+
+  private loadSupermarkets(): void {
+    this.indec.getSupermercados().subscribe({
+      next: (supermarkets) => {
+        this.supermercados = supermarkets ?? [];
+      },
+      error: () => {
+        this.supermercados = [];
+      },
+    });
+  }
+
+  private buildTable(rows: ComparadorRow[]): void {
+    this.colIds = this.buildColIds(rows);
+
+    this.vmRows = rows.map((row) => {
+      const pricesBySup = this.buildPriceMap(row);
+      return {
+        ...row,
+        pricesBySup,
+        min: this.minPrice(pricesBySup),
+      };
+    });
+
+    this.computeTotals();
+  }
+
+  private buildColIds(rows: ComparadorRow[]): SupermarketId[] {
+    const ids = new Set<SupermarketId>();
+
+    for (const row of rows) {
+      for (const offer of row.ofertas ?? []) {
+        const id = Number(offer.nroSupermercado);
+        if (Number.isFinite(id)) ids.add(id);
+      }
+    }
+
+    return [...ids].sort((a, b) => a - b);
+  }
+
+  private buildPriceMap(row: ComparadorRow): Record<SupermarketId, PriceValue> {
+    const pricesBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, null])
+    ) as Record<SupermarketId, PriceValue>;
+
+    for (const offer of row.ofertas ?? []) {
+      const id = Number(offer.nroSupermercado);
+      if (Number.isFinite(id)) {
+        pricesBySup[id] = offer.precio;
+      }
+    }
+
+    return pricesBySup;
+  }
+
+  private minPrice(pricesBySup: Record<SupermarketId, PriceValue>): number | null {
+    const numericPrices = Object.values(pricesBySup).filter(
+      (value): value is number => typeof value === 'number'
+    );
+
+    return numericPrices.length ? Math.min(...numericPrices) : null;
+  }
+
+  private computeTotals(): void {
+    this.totalBySup = Object.fromEntries(this.colIds.map((id) => [id, 0]));
+
+    for (const row of this.vmRows) {
+      for (const id of this.colIds) {
+        const price = row.pricesBySup[id];
+        if (typeof price === 'number') {
+          this.totalBySup[id] += price;
+        }
+      }
+    }
+
+    this.cheapestSupId = this.colIds.reduce<SupermarketId | null>((winnerId, id) => {
+      if (winnerId === null) return id;
+      return this.totalBySup[id] < this.totalBySup[winnerId] ? id : winnerId;
+    }, null);
+  }
+
+  private resetTable(): void {
     this.vmRows = [];
     this.colIds = [];
     this.totalBySup = {};
     this.cheapestSupId = null;
     this.loading = false;
   }
-
-  private buildColIds(rows: ComparadorRow[]): number[] {
-    const set = new Set<number>();
-    for (const r of rows) {
-      for (const o of (r.ofertas ?? [])) {
-        const id = Number(o.nroSupermercado);
-        if (Number.isFinite(id)) set.add(id);
-      }
-    }
-    return Array.from(set).sort((a, b) => a - b);
-  }
-
-  private computeTotals() {
-    this.totalBySup = {};
-    for (const id of this.colIds) this.totalBySup[id] = 0;
-
-    for (const r of this.vmRows) {
-      for (const id of this.colIds) {
-        const v = r.pricesBySup[id];
-        if (typeof v === 'number') this.totalBySup[id] += v;
-      }
-    }
-
-    let min = Infinity;
-    let minId: number | null = null;
-
-    for (const id of this.colIds) {
-      const total = this.totalBySup[id] ?? 0;
-      // si querés evitar que gane uno con total 0 por falta de precios, avisame y lo ajusto
-      if (total < min) {
-        min = total;
-        minId = id;
-      }
-    }
-
-    this.cheapestSupId = minId;
-  }
-
-  trackCol = (_: number, id: number) => id;
-  trackRow = (_: number, r: VmRow) => r.codBarra;
 }
