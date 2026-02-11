@@ -1,122 +1,214 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
-import { IndecService, Supermercado, ComparadorRow } from '@/app/services/indec.service';
+import { Component, OnInit, effect, inject } from '@angular/core';
+import {
+  ComparadorRow,
+  IndecService,
+  Supermercado,
+} from '@/app/services/indec.service';
 import { CartCodesService } from '@/app/services/cart-codes.service';
 import { LocalizacionStore } from '@/app/store/localizacion.store';
+
+type SupermarketId = number;
+type PriceValue = number | string | null;
+
+interface VmRow extends ComparadorRow {
+  pricesBySup: Record<SupermarketId, PriceValue>;
+  min: number | null;
+}
 
 @Component({
   selector: 'app-comparador-precios',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './comparador-de-precios.component.html'
+  templateUrl: './comparador-de-precios.component.html',
+  styleUrl: './comparador-de-precios.component.css',
 })
-export class ComparadorPreciosComponent {
-  // estado
-  loading = signal(false);
-  errorMsg = signal<string | null>(null);
+export class ComparadorPreciosComponent implements OnInit {
+  private readonly indec = inject(IndecService);
 
-  // datos
-  rows!: ComparadorRow[];
-  supermercados = signal<Supermercado[]>([]);
+  readonly cart = inject(CartCodesService);
+  readonly locStore = inject(LocalizacionStore);
 
-  // map id -> razonSocial para header
-  supName = (id: number) => {
-    const s = this.supermercados().find(x => x.nroSupermercado === id);
-    return s?.razonSocial ?? `Super ${id}`;
-  };
+  loading = false;
+  errorMsg: string | null = null;
 
-  constructor(
-    private indec: IndecService,
-    public cart: CartCodesService,
-    public locStore: LocalizacionStore
-  ) {}
+  supermercados: Supermercado[] = [];
+  colIds: SupermarketId[] = [];
+  vmRows: VmRow[] = [];
 
-  ngOnInit() {
-    this.indec.getSupermercados().subscribe({
-      next: ss => this.supermercados.set(ss ?? []),
-      error: () => this.supermercados.set([]),
+  // ✅ fijo: siempre number
+  totalBySup: Record<SupermarketId, number> = {};
+  isCompleteBySup: Record<SupermarketId, boolean> = {};
+  cheapestSupId: SupermarketId | null = null;
+
+  constructor() {
+    effect(() => {
+      this.locStore.localidad();
+      this.cart.codes();
+      this.comparar();
     });
-    this.comparar();
   }
 
-  comparar() {
-    const loc = this.locStore.localidad();
-    const nroLocalidad = loc.nroLocalidad ?? 0;
+  ngOnInit(): void {
+    this.loadSupermarkets();
+  }
+
+  comparar(): void {
+    const { nroLocalidad = 0 } = this.locStore.localidad() ?? {};
     const codes = this.cart.codes();
 
-    this.errorMsg.set(null);
+    this.errorMsg = null;
 
     if (!nroLocalidad) {
-      this.errorMsg.set($localize`:@@comparador.error_sin_localidad:Seleccioná una localidad desde el navbar.`);
-      this.rows = [];
+      this.errorMsg = 'Seleccioná una localidad desde el navbar.';
+      this.resetTable();
       return;
     }
+
     if (!codes.length) {
-      this.errorMsg.set($localize`:@@comparador.error_carrito_vacio:Tu carrito está vacío. Agregá productos para comparar.`);
-      this.rows = [];
+      this.errorMsg = 'Tu carrito está vacío. Agregá productos para comparar.';
+      this.resetTable();
       return;
     }
 
-    this.loading.set(true);
+    this.loading = true;
+
     this.indec.compareByLocalidad(nroLocalidad, codes).subscribe({
-      next: data => {
-        console.log('[comparar] recibido -> filas:', data?.length, data);
-        this.rows = data ?? [];
-        this.loading.set(false);
+      next: (rows) => this.buildTable(rows ?? []),
+      error: (error) => {
+        this.errorMsg = error?.message || 'Error al cargar la comparación.';
+        this.resetTable();
       },
-      error: (err) => {
-        this.errorMsg.set($localize`:@@comparador.error_carga:Error al cargar la comparación.`);
-        this.rows = [];
-        this.loading.set(false);
-      }
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
-  private toNumber(v: any): number | null {
-    if (v === null || v === undefined || v === '') return null;
-    // normaliza: saca espacios, quita separadores de miles, cambia coma decimal por punto
-    let s = String(v).trim().replace(/\s+/g, '');
-    // si hay ambas , y . intentá detectar decimal por la última aparición
-    const lastComma = s.lastIndexOf(',');
-    const lastDot   = s.lastIndexOf('.');
-    if (lastComma > -1 && lastDot > -1) {
-      // Considerá como separador decimal el que aparece último
-      const decimalSep = lastComma > lastDot ? ',' : '.';
-      const thousandSep = decimalSep === ',' ? '.' : ',';
-      s = s.replace(new RegExp('\\' + thousandSep, 'g'), '').replace(decimalSep, '.');
-    } else {
-      // Solo hay uno o ninguno: quita puntos de miles y cambia coma por punto
-      s = s.replace(/\./g, '').replace(',', '.');
-    }
-    const n = Number(s);
-    return Number.isFinite(n) ? n : null;
+  supName(id: SupermarketId): string {
+    return (
+      this.supermercados.find((market) => market.nroSupermercado === id)
+        ?.razonSocial ?? `Super ${id}`
+    );
   }
 
-  priceFor(r: ComparadorRow, supId: number): number | null {
-    const f = r?.ofertas?.find(o => {
-      // por si o.nroSupermercado viene como string
-      const id = this.toNumber(o.nroSupermercado);
-      return id !== null && id === supId;
+  trackCol = (_: number, id: SupermarketId): SupermarketId => id;
+  trackRow = (_: number, row: VmRow): string => row.codBarra;
+
+  formatPrice(value: number): string {
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  }
+
+  private loadSupermarkets(): void {
+    this.indec.getSupermercados().subscribe({
+      next: (supermarkets) => {
+        this.supermercados = supermarkets ?? [];
+      },
+      error: () => {
+        this.supermercados = [];
+      },
     });
-    return f ? this.toNumber(f.precio) : null;
   }
 
-  minPrice(r: ComparadorRow): number | null {
-    const arr = (r?.ofertas ?? [])
-      .map(o => this.toNumber(o.precio))
-      .filter((n): n is number => n !== null);
-    return arr.length ? Math.min(...arr) : null;
+  private buildTable(rows: ComparadorRow[]): void {
+    this.colIds = this.buildColIds(rows);
+
+    this.vmRows = rows.map((row) => {
+      const pricesBySup = this.buildPriceMap(row);
+      return {
+        ...row,
+        pricesBySup,
+        min: this.minPrice(pricesBySup),
+      };
+    });
+
+    this.computeTotals();
   }
 
-  colIds = computed<number[]>(() => {
-    const set = new Set<number>();
-    for (const r of this.rows) {
-      for (const o of (r.ofertas ?? [])) {
-        const id = this.toNumber(o.nroSupermercado);
-        if (id !== null) set.add(id);
+  private buildColIds(rows: ComparadorRow[]): SupermarketId[] {
+    const ids = new Set<SupermarketId>();
+
+    for (const row of rows) {
+      for (const offer of row.ofertas ?? []) {
+        const id = Number(offer.nroSupermercado);
+        if (Number.isFinite(id)) ids.add(id);
       }
     }
-    return Array.from(set).sort((a, b) => a - b);
-  });
 
+    return [...ids].sort((a, b) => a - b);
+  }
+
+  private buildPriceMap(row: ComparadorRow): Record<SupermarketId, PriceValue> {
+    const pricesBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, null])
+    ) as Record<SupermarketId, PriceValue>;
+
+    for (const offer of row.ofertas ?? []) {
+      const id = Number(offer.nroSupermercado);
+      if (Number.isFinite(id)) {
+        pricesBySup[id] = offer.precio;
+      }
+    }
+
+    return pricesBySup;
+  }
+
+  private minPrice(
+    pricesBySup: Record<SupermarketId, PriceValue>
+  ): number | null {
+    const numericPrices = Object.values(pricesBySup).filter(
+      (value): value is number => typeof value === 'number'
+    );
+
+    return numericPrices.length ? Math.min(...numericPrices) : null;
+  }
+
+  private computeTotals(): void {
+    // ✅ inicialización fuerte: todos los ids tienen total = 0 y complete = true
+    this.totalBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, 0])
+    ) as Record<SupermarketId, number>;
+
+    this.isCompleteBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, true])
+    ) as Record<SupermarketId, boolean>;
+
+    for (const row of this.vmRows) {
+      for (const id of this.colIds) {
+        const price = row.pricesBySup[id];
+
+        if (typeof price === 'number') {
+          this.totalBySup[id] = this.totalBySup[id] + price;
+        } else {
+          this.isCompleteBySup[id] = false;
+        }
+      }
+    }
+
+    this.cheapestSupId = this.colIds.reduce<SupermarketId | null>(
+      (winnerId, id) => {
+        if (!this.isCompleteBySup[id]) return winnerId;
+        if (winnerId === null) return id;
+
+        return this.totalBySup[id] < this.totalBySup[winnerId]
+          ? id
+          : winnerId;
+      },
+      null
+    );
+  }
+
+  private resetTable(): void {
+    this.vmRows = [];
+    this.colIds = [];
+    this.totalBySup = {};
+    this.isCompleteBySup = {};
+    this.cheapestSupId = null;
+    this.loading = false;
+  }
 }

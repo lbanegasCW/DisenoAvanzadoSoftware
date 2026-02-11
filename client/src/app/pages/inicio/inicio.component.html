@@ -1,77 +1,40 @@
-<!-- Hero Section -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="text-center">
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4">
-        {{ heroTitle }}
-      </h1>
-      <p class="text-xl sm:text-2xl mb-8 text-blue-100">
-        {{ heroSubtitle }}
-      </p>
-      <a
-        [routerLink]="heroCtaLink"
-        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition duration-150 ease-in-out"
-      >
-        {{ heroCta }}
-      </a>
-    </div>
+<section class="page-container page-section">
+  <div class="inicio-hero">
+    <h1 class="inicio-hero-title">{{ heroTitle }}</h1>
+    <p class="inicio-hero-subtitle">{{ heroSubtitle }}</p>
+    <a [routerLink]="heroCtaLink" class="btn-primary">{{ heroCta }}</a>
   </div>
 </section>
 
-<!-- Features Section -->
-<section class="py-16 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div
-        *ngFor="let feature of features"
-        class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
-      >
-        <span class="material-icons text-4xl text-blue-600 mb-4">
-          {{ feature.icon }}
-        </span>
-        <h3 class="text-xl font-semibold mb-2 text-black">
-          {{ feature.title }}
-        </h3>
-        <p class="text-gray-600">
-          {{ feature.description }}
-        </p>
-      </div>
-    </div>
+<section class="page-container pb-10">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <article *ngFor="let feature of features" class="card feature-card">
+      <span class="material-icons feature-icon">{{ feature.icon }}</span>
+      <h3 class="text-lg font-semibold text-slate-900">{{ feature.title }}</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ feature.description }}</p>
+    </article>
   </div>
 </section>
 
-<!-- Main Sections -->
-<section class="py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="space-y-24">
-      <div
-        *ngFor="let section of sections; let i = index"
-        class="flex flex-col md:flex-row items-center gap-12"
-        [ngClass]="{ 'md:flex-row-reverse': i % 2 !== 0 }"
-      >
-        <div class="flex-1">
-          <h2 class="text-3xl font-bold mb-4 text-gray-900">
-            {{ section.title }}
-          </h2>
-          <p class="text-lg text-gray-600 mb-6">
-            {{ section.description }}
-          </p>
-          <a
-            [routerLink]="section.link.route"
-            class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
-          >
-            {{ section.link.text }}
-            <span class="material-icons ml-2">arrow_forward</span>
-          </a>
-        </div>
-        <div class="flex-1">
-          <img
-            [src]="section.image"
-            [alt]="section.title"
-            class="w-full h-auto rounded-lg shadow-lg"
-          />
-        </div>
+<section class="page-container pb-14">
+  <div class="space-y-8 sm:space-y-10">
+    <article
+      *ngFor="let section of sections; let i = index"
+      class="section-card"
+      [ngClass]="{ 'lg:flex-row-reverse': i % 2 !== 0 }"
+    >
+      <div class="flex-1">
+        <h2 class="text-2xl font-semibold text-slate-900 sm:text-3xl">{{ section.title }}</h2>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">{{ section.description }}</p>
+        <a [routerLink]="section.link.route" class="section-link">
+          {{ section.link.text }}
+          <span class="material-icons text-base">arrow_forward</span>
+        </a>
       </div>
-    </div>
+
+      <div class="flex-1">
+        <img [src]="section.image" [alt]="section.title" class="section-image" />
+      </div>
+    </article>
   </div>
 </section>

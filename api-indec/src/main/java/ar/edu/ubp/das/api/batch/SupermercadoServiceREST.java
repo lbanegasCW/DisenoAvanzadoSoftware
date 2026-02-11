@@ -10,8 +10,9 @@ public class SupermercadoServiceREST implements SupermercadoService {
 
     @Override
     public String obtenerSucursales(String endpoint, String user, String pass) {
+        String resolvedEndpoint = SupermercadoEndpointResolver.resolve(endpoint);
         try {
-            return new Httpful(endpoint)
+            return new Httpful(resolvedEndpoint)
                     .path(SERVICIO_SUCURSALES)
                     .method(HttpMethod.GET)
                     .basicAuth(user, pass)
@@ -19,7 +20,7 @@ public class SupermercadoServiceREST implements SupermercadoService {
                     .toString();
         } catch (Exception e) {
             throw new SupermercadoServiceException(
-                    "obtenerSucursales(REST)", endpoint + SERVICIO_SUCURSALES,
+                    "obtenerSucursales(REST)", resolvedEndpoint + SERVICIO_SUCURSALES,
                     "Error llamando servicio REST de sucursales", e
             );
         }
@@ -27,8 +28,9 @@ public class SupermercadoServiceREST implements SupermercadoService {
 
     @Override
     public String obtenerProductos(String endpoint, String user, String pass) {
+        String resolvedEndpoint = SupermercadoEndpointResolver.resolve(endpoint);
         try {
-            return new Httpful(endpoint)
+            return new Httpful(resolvedEndpoint)
                     .path(SERVICIO_PRODUCTOS)
                     .method(HttpMethod.GET)
                     .basicAuth(user, pass)
@@ -36,7 +38,7 @@ public class SupermercadoServiceREST implements SupermercadoService {
                     .toString();
         } catch (Exception e) {
             throw new SupermercadoServiceException(
-                    "obtenerProductos(REST)", endpoint + SERVICIO_PRODUCTOS,
+                    "obtenerProductos(REST)", resolvedEndpoint + SERVICIO_PRODUCTOS,
                     "Error llamando servicio REST de productos", e
             );
         }

@@ -6,8 +6,6 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 
 import java.io.StringWriter;
- import java.util.Collections;
-import java.util.List;
 
 public class SupermercadoServiceSOAP implements SupermercadoService {
     final String SERVICIO_SUCURSALES = "sucursales.wsdl";
@@ -31,7 +29,8 @@ public class SupermercadoServiceSOAP implements SupermercadoService {
 
     @Override
     public String obtenerSucursales(String endpoint, String user, String pass) {
-        String wsdl = endpoint + SERVICIO_SUCURSALES;
+        String resolvedEndpoint = SupermercadoEndpointResolver.resolve(endpoint);
+        String wsdl = resolvedEndpoint + SERVICIO_SUCURSALES;
         try {
             SOAPClient client = new SOAPClient.SOAPClientBuilder()
                     .wsdlUrl(wsdl)
@@ -57,7 +56,8 @@ public class SupermercadoServiceSOAP implements SupermercadoService {
 
     @Override
     public String obtenerProductos(String endpoint, String user, String pass) {
-        String wsdl = endpoint + SERVICIO_PRODUCTOS;
+        String resolvedEndpoint = SupermercadoEndpointResolver.resolve(endpoint);
+        String wsdl = resolvedEndpoint + SERVICIO_PRODUCTOS;
         try {
             SOAPClient client = new SOAPClient.SOAPClientBuilder()
                     .wsdlUrl(wsdl)

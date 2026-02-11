@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-AR" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="catalogo.aria_carrito" datatype="html">
+        <source>Carrito</source>
+      </trans-unit>
+      <trans-unit id="catalogo.aria_cerrar" datatype="html">
+        <source>Cerrar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.aria_ver_carrito" datatype="html">
+        <source>Ver carrito</source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_agregar" datatype="html">
+        <source>Agregar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_comparar" datatype="html">
+        <source> Comparar </source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_categoria" datatype="html">
+        <source>Limpiar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_rubro" datatype="html">
+        <source>Limpiar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_quitar" datatype="html">
+        <source>Quitar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_vaciar" datatype="html">
+        <source>Vaciar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_btn_quitar" datatype="html">
+        <source>Quitar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_title" datatype="html">
+        <source>Tu carrito</source>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_vacio" datatype="html">
+        <source>No agregaste productos.</source>
+      </trans-unit>
+      <trans-unit id="catalogo.error_carga" datatype="html">
+        <source>No pudimos cargar el catálogo.</source>
+      </trans-unit>
+      <trans-unit id="catalogo.heading_categorias" datatype="html">
+        <source>Categorías</source>
+      </trans-unit>
+      <trans-unit id="catalogo.heading_rubros" datatype="html">
+        <source>Rubros</source>
+      </trans-unit>
+      <trans-unit id="catalogo.info_categorias_filtradas" datatype="html">
+        <source> Mostrando categorías del rubro seleccionado. </source>
+      </trans-unit>
+      <trans-unit id="catalogo.loading" datatype="html">
+        <source>Cargando…</source>
+      </trans-unit>
+      <trans-unit id="catalogo.placeholder_buscar" datatype="html">
+        <source>Buscar producto, marca, código…</source>
+      </trans-unit>
+      <trans-unit id="catalogo.search_label" datatype="html">
+        <source>Buscar</source>
+      </trans-unit>
+      <trans-unit id="catalogo.sin_resultados" datatype="html">
+        <source>No hay productos que coincidan con los filtros.</source>
+      </trans-unit>
+      <trans-unit id="catalogo.title" datatype="html">
+        <source>Catálogo de productos</source>
+      </trans-unit>
+      <trans-unit id="header.nav_productos" datatype="html">
+        <source> Productos </source>
+      </trans-unit>
+      <trans-unit id="header.nav_supermercados" datatype="html">
+        <source> Supermercados </source>
+      </trans-unit>
+      <trans-unit id="header.placeholder_localidad" datatype="html">
+        <source>Localidad...</source>
+      </trans-unit>
+      <trans-unit id="header.placeholder_provincia" datatype="html">
+        <source>Provincia...</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_comparison_desc" datatype="html">
+        <source>Interfaz intuitiva para comparar precios entre diferentes supermercados</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_comparison_title" datatype="html">
+        <source>Comparación Sencilla</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_daily_desc" datatype="html">
+        <source>Precios actualizados todos los días para mantener la información precisa</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_daily_title" datatype="html">
+        <source>Actualización Diaria</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_location_desc" datatype="html">
+        <source>Encontrá los mejores precios en tu zona</source>
+      </trans-unit>
+      <trans-unit id="inicio.feature_location_title" datatype="html">
+        <source>Basado en Ubicación</source>
+      </trans-unit>
+      <trans-unit id="inicio.hero_cta" datatype="html">
+        <source>Comenzar a comparar</source>
+      </trans-unit>
+      <trans-unit id="inicio.hero_subtitle" datatype="html">
+        <source>Compará precios en tiempo real de los principales supermercados</source>
+      </trans-unit>
+      <trans-unit id="inicio.hero_title" datatype="html">
+        <source>Comprá más inteligente</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_desc" datatype="html">
+        <source>Comprá inteligente a través de nuestro comparador de precios. Encontrá las mejores ofertas en productos de la canasta básica comparando precios entre diferentes supermercados.</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_link" datatype="html">
+        <source>Ir al comparador</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_title" datatype="html">
+        <source>Comparador de Precios</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_desc" datatype="html">
+        <source>Conocé los supermercados que participan en nuestra plataforma. Encontrá información detallada sobre sucursales, horarios y servicios disponibles.</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_link" datatype="html">
+        <source>Ver supermercados</source>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_title" datatype="html">
+        <source>Supermercados Adheridos</source>
+      </trans-unit>
+      <trans-unit id="supermercados.heading_lista" datatype="html">
+        <source>Supermercados</source>
+      </trans-unit>
+      <trans-unit id="supermercados.heading_sucursales" datatype="html">
+        <source>Sucursales</source>
+      </trans-unit>
+      <trans-unit id="supermercados.placeholder_buscar" datatype="html">
+        <source>Buscar...</source>
+      </trans-unit>
+      <trans-unit id="supermercados.title" datatype="html">
+        <source>Supermercados</source>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados_0" datatype="html">
+        <source>0 resultados</source>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados_1" datatype="html">
+        <source>1 resultado</source>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados_n" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ totalResultados }}"/> resultados</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

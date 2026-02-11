@@ -1,0 +1,23 @@
+.table-row {
+  @apply border-b border-slate-100 transition hover:bg-indigo-50/50;
+}
+
+.price-chip {
+  @apply inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1 font-semibold text-slate-700;
+}
+
+.price-chip-min {
+  @apply border-emerald-200 bg-emerald-50 text-emerald-700;
+}
+
+.winner-chip {
+  @apply rounded-full bg-emerald-600 px-2 py-0.5 text-[11px] font-medium text-white;
+}
+
+.best-column {
+  @apply bg-emerald-50;
+}
+
+.best-column-light {
+  @apply bg-emerald-50/60;
+}

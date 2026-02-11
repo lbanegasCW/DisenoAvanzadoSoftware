@@ -1,47 +1,52 @@
-<nav class="bg-blue-600">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
-      <!-- IZQUIERDA: brand + links -->
-      <div class="flex items-center gap-4">
-        <a routerLink="/" class="text-white font-semibold">INDEC App</a>
+<header class="header-wrap">
+  <div class="page-container">
+    <nav class="header-nav" aria-label="Principal">
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a routerLink="/" class="brand-link">INDEC +</a>
 
-        <a routerLink="/supermercados"
-           routerLinkActive="bg-blue-700"
-           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
-           i18n="@@header.nav_supermercados">
+        <a
+          routerLink="/supermercados"
+          routerLinkActive="header-link-active"
+          class="header-link"
+          i18n="@@header.nav_supermercados"
+        >
           Supermercados
         </a>
 
-        <a routerLink="/catalogo"
-           routerLinkActive="bg-blue-700"
-           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
-           i18n="@@header.nav_productos">
+        <a
+          routerLink="/catalogo"
+          routerLinkActive="header-link-active"
+          class="header-link"
+          i18n="@@header.nav_productos"
+        >
           Productos
         </a>
       </div>
 
-      <div class="flex items-center gap-2">
-        <!-- Provincia -->
-        <select class="bg-white text-gray-800 text-sm rounded-md px-2 py-1"
-                [ngModel]="codProvinciaSel"
-                (ngModelChange)="onProvinciaChange($event)">
+      <div class="header-filters">
+        <select
+          class="header-select"
+          [ngModel]="codProvinciaSel"
+          (ngModelChange)="onProvinciaChange($event)"
+        >
           <option [ngValue]="null" i18n="@@header.placeholder_provincia">Provincia...</option>
           <option *ngFor="let p of provincias" [value]="p.codProvincia">
             {{ p.nomProvincia }}
           </option>
         </select>
 
-        <!-- Localidad -->
-        <select class="bg-white text-gray-800 text-sm rounded-md px-2 py-1"
-                [disabled]="!codProvinciaSel"
-                [ngModel]="nroLocalidadSel"
-                (ngModelChange)="onLocalidadChange($event)">
+        <select
+          class="header-select"
+          [disabled]="!codProvinciaSel"
+          [ngModel]="nroLocalidadSel"
+          (ngModelChange)="onLocalidadChange($event)"
+        >
           <option [ngValue]="null" i18n="@@header.placeholder_localidad">Localidad...</option>
           <option *ngFor="let l of localidades" [value]="l.nroLocalidad">
             {{ l.nomLocalidad }}
           </option>
         </select>
       </div>
-    </div>
+    </nav>
   </div>
-</nav>
+</header>

@@ -5,206 +5,85 @@
   [message]="notification.message"
 />
 
-<!-- Header Section -->
-<div class="bg-white shadow">
-  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900" i18n="@@supermercados.title">
-      Supermercados
-    </h1>
+<section class="page-container page-section">
+  <div class="page-hero">
+    <h1 class="page-title" i18n="@@supermercados.title">Supermercados</h1>
+    <p class="page-subtitle">
+      Explorá cadenas adheridas y consultá sucursales disponibles por provincia y localidad.
+    </p>
   </div>
-</div>
+</section>
 
-<!-- Filters Section -->
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-  <div class="bg-white p-6 rounded-lg shadow-md">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-black">
-      <!-- Province Select -->
-      <div>
-        <label class="block text-sm font-medium text-black mb-1" i18n="@@supermercados.label_provincia">
-          Provincia
-        </label>
-        <select
-          [(ngModel)]="selectedProvincia"
-          (change)="onProvinciaChange()"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        >
-          <option value="" i18n="@@supermercados.option_todas_provincias">
-            Todas las provincias
-          </option>
-          <option
-            *ngFor="let provincia of provincias"
-            [value]="provincia.codProvincia"
-          >
-            {{ provincia.nomProvincia }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Location Select -->
-      <div>
-        <label class="block text-sm font-medium text-black mb-1" i18n="@@supermercados.label_localidad">
-          Localidad
-        </label>
-        <select
-          [(ngModel)]="selectedLocalidad"
-          (change)="onLocalidadChange()"
-          [disabled]="!selectedProvincia"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-black"
-        >
-          <option value="" i18n="@@supermercados.option_todas_localidades">
-            Todas las localidades
-          </option>
-          <option
-            *ngFor="let localidad of localidades"
-            [value]="localidad.nroLocalidad"
-          >
-            {{ localidad.nomLocalidad }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Current Location Button -->
-      <div class="flex items-end text-black">
-        <button
-          (click)="updateSucursales()"
-          class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-black"
-        >
-          <span class="material-icons mr-2">location_on</span>
-          <ng-container i18n="@@supermercados.btn_buscar_cercanas">Buscar cercanas</ng-container>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Results Section -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Supermarkets List -->
-    <div class="lg:col-span-1 bg-white rounded-lg shadow-md overflow-hidden">
-      <div class="p-4 border-b">
-        <h2 class="text-lg font-semibold text-gray-900" i18n="@@supermercados.heading_lista">
-          Supermercados
-        </h2>
-        <div class="mt-2">
-          <div class="relative">
-            <input
-              type="text"
-              [(ngModel)]="searchTerm"
-              (input)="filterSupermercados()"
-              class="w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500"
-              placeholder="Buscar..."
-              i18n-placeholder="@@supermercados.placeholder_buscar"
-            />
-            <span class="material-icons absolute left-3 top-2.5 text-gray-400"
-              >search</span
-            >
-          </div>
+<section class="page-container pb-14">
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div class="card overflow-hidden p-0 lg:col-span-1">
+      <div class="border-b border-slate-200 p-4">
+        <h2 class="text-lg font-semibold text-slate-900" i18n="@@supermercados.heading_lista">Supermercados</h2>
+        <div class="relative mt-3">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="filterSupermercados()"
+            class="input-control pl-10"
+            placeholder="Buscar..."
+            i18n-placeholder="@@supermercados.placeholder_buscar"
+          />
+          <span class="material-icons pointer-events-none absolute left-3 top-2.5 text-slate-400">search</span>
         </div>
       </div>
 
-      <div class="divide-y divide-gray-200">
-        @for (supermercado of filteredSupermercados; track
-        supermercado.nroSupermercado) {
-        <div
-          (click)="selectSupermercado(supermercado)"
-          class="p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
-          [class.bg-blue-50]="
-            selectedSupermercado?.nroSupermercado ===
-            supermercado.nroSupermercado
-          "
-        >
-          <h3 class="text-lg font-medium text-gray-900">
-            {{ supermercado.razonSocial }}
-          </h3>
-        </div>
+      <div class="max-h-[520px] divide-y divide-slate-100 overflow-y-auto">
+        @for (supermercado of filteredSupermercados; track supermercado.nroSupermercado) {
+          <button
+            type="button"
+            (click)="selectSupermercado(supermercado)"
+            class="market-item"
+            [class.market-item-active]="selectedSupermercado?.nroSupermercado === supermercado.nroSupermercado"
+          >
+            <span class="font-medium">{{ supermercado.razonSocial }}</span>
+          </button>
         }
       </div>
     </div>
 
-    <!-- Branch Details -->
-    <div class="lg:col-span-2">
-      <div class="bg-white rounded-lg shadow-md">
-        <div class="p-4 border-b">
-          <h2 class="text-lg font-semibold text-gray-900" i18n="@@supermercados.heading_sucursales">
-            Sucursales
-          </h2>
-        </div>
-        <div class="p-4">
-          @if (selectedSupermercado && sucursales.length > 0) {
-          <div class="grid gap-4">
-            @for (sucursal of sucursales; track sucursal.nroSucursal) {
-            <div
-              class="border rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
-            >
-              <h3 class="text-lg font-medium text-gray-900">
-                {{ sucursal.nomSucursal }}
-              </h3>
-              <div class="mt-2 space-y-2">
-                <p class="text-gray-600 flex items-center">
-                  <span class="material-icons mr-2">location_on</span>
+    <div class="card lg:col-span-2">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-slate-900" i18n="@@supermercados.heading_sucursales">Sucursales</h2>
+        <span *ngIf="isLoading" class="text-xs font-medium text-slate-500">Cargando...</span>
+      </div>
+
+      @if (selectedSupermercado && sucursales.length > 0) {
+        <div class="grid gap-3">
+          @for (sucursal of sucursales; track sucursal.nroSucursal) {
+            <article class="branch-card">
+              <h3 class="text-base font-semibold text-slate-900">{{ sucursal.nomSucursal }}</h3>
+
+              <div class="mt-2 space-y-1.5 text-sm text-slate-600">
+                <p class="flex items-center gap-2">
+                  <span class="material-icons text-base">location_on</span>
                   {{ sucursal.calle }} {{ sucursal.nroCalle }}
                 </p>
-                <p class="text-gray-600 flex items-center">
-                  <span class="material-icons mr-2">schedule</span>
+                <p class="flex items-center gap-2">
+                  <span class="material-icons text-base">schedule</span>
                   {{ sucursal.horarioSucursal }}
                 </p>
-                <p class="text-gray-600 flex items-center">
-                  <span class="material-icons mr-2">phone</span>
-                  {{ sucursal.telefonos }}
+                <p class="flex items-center gap-2">
+                  <span class="material-icons text-base">phone</span>
+                  {{ sucursal.telefonos || 'Sin teléfono informado' }}
                 </p>
-
-                @if (sucursal.serviciosDisponibles) {
-                <div class="mt-3">
-                  <h4 class="text-sm font-medium text-gray-900" i18n="@@supermercados.heading_servicios">
-                    Servicios
-                  </h4>
-                  <div class="mt-2 flex flex-wrap gap-2">
-                    @for (servicio of sucursal.serviciosDisponibles.split(',');
-                    track servicio) {
-                    <span
-                      class="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full"
-                    >
-                      {{ servicio.trim() }}
-                    </span>
-                    }
-                  </div>
-                </div>
-                }
-
-                <!-- Location Data -->
-                <div class="mt-3 text-black">
-                  <p class="text-black text-sm">
-                    {{ sucursal.nomLocalidad }}, {{ sucursal.nomProvincia }}
-                  </p>
-                  @if (sucursal.coordLatitud && sucursal.coordLongitud) {
-                  <a
-                    href="https://www.google.com/maps?q={{
-                      sucursal.coordLatitud
-                    }},{{ sucursal.coordLongitud }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800"
-                  >
-                    <span class="material-icons text-sm mr-1">map</span>
-                    <ng-container i18n="@@supermercados.link_ver_mapa">Ver en mapa</ng-container>
-                  </a>
-                  }
-                </div>
               </div>
-            </div>
-            }
-          </div>
-          } @else {
-          <div class="text-center py-12">
-            <span class="material-icons text-gray-400 text-6xl">store</span>
-            <p class="mt-4 text-black" i18n="@@supermercados.empty_state">
-              Selecciona un supermercado para ver sus sucursales
-            </p>
-          </div>
+
+              <div *ngIf="sucursal.serviciosDisponibles" class="mt-3 flex flex-wrap gap-1.5">
+                <span class="chip">{{ sucursal.serviciosDisponibles }}</span>
+              </div>
+            </article>
           }
         </div>
-      </div>
+      } @else {
+        <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600">
+          Seleccioná un supermercado para ver las sucursales disponibles.
+        </div>
+      }
     </div>
   </div>
-</div>
+</section>
