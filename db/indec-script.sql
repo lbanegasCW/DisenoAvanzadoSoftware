@@ -848,7 +848,7 @@ BEGIN
                                 vigente            BIT            NULL
                             );
 
-        IF UPPER(@formato) = 'JSON'
+        IF UPPER(@formato) = 'REST'
             BEGIN
                 IF ISJSON(@payload) <> 1
                     THROW 11001, 'Payload JSON inválido', 1;
@@ -881,7 +881,7 @@ BEGIN
                                   vigente            BIT
                                   ) AS p;
             END
-        ELSE IF UPPER(@formato) = 'XML'
+        ELSE IF UPPER(@formato) = 'SOAP'
             BEGIN
                 DECLARE @x XML = TRY_CAST(@payload AS XML);
                 IF @x IS NULL THROW 11002, 'Payload XML inválido', 1;
