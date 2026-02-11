@@ -7,4 +7,4 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["./mvnw", "spring-boot:run", "-Dspring-boot.run.fork=false", "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
+ENTRYPOINT ["sh", "./mvnw", "spring-boot:run", "-Dspring-boot.run.fork=false", "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]

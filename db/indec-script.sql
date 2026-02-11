@@ -357,10 +357,10 @@ BEGIN TRY
     INSERT INTO dbo.servicios_supermercados
     (nro_supermercado, url_servicio, tipo_servicio, token_servicio)
     VALUES
-        (1, 'http://localhost:8081/ws/', 'SOAP', 'carrefour.a5s1d7fg4'),
-        (2, 'http://localhost:8082/api/v1/supermercado', 'REST', 'changoMas.c1h2s4f'),
-        (3, 'http://localhost:8083/ws/', 'SOAP', 'libertad.b3s1x8fg4'),
-        (4, 'http://localhost:8084/api/v1/supermercado', 'REST', 'disco.n0h2e9f');
+        (1, 'http://api-super1:8081/ws/', 'SOAP', 'carrefour.a5s1d7fg4'),
+        (2, 'http://api-super2:8082/api/v1/supermercado', 'REST', 'changoMas.c1h2s4f'),
+        (3, 'http://api-super3:8083/ws/', 'SOAP', 'libertad.b3s1x8fg4'),
+        (4, 'http://api-super4:8084/api/v1/supermercado', 'REST', 'disco.n0h2e9f');
 
     COMMIT TRANSACTION;
 END TRY
