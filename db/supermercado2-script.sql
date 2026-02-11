@@ -169,7 +169,7 @@ CREATE TABLE dbo.productos
     nom_producto varchar(100) NOT NULL,
     desc_producto varchar(500),
     nro_categoria int NOT NULL,
-    imagen varchar(100) NOT NULL,
+    imagen varchar(500) NOT NULL,
     nro_marca int NOT NULL,
     nro_tipo_producto int NOT NULL,
     vigente bit NOT NULL DEFAULT 1,
@@ -493,148 +493,148 @@ BEGIN TRY
 
 -- (1) PANIFICADOS
     INSERT INTO dbo.productos VALUES
-                                  ('100000000001','Pan francés 1Kg','Pan común a granel',1,'pan_frances.jpg',9,1,1),
-                                  ('100000000002','Pan lactal 550g Molinos','Pan de molde',1,'pan_lactal.jpg',5,1,1),
-                                  ('100000000003','Galletitas de agua 303g Arcor','Galletitas saladas',1,'galletitas_agua.jpg',3,1,1),
-                                  ('100000000004','Bizcochos 200g Arcor','Bizcochos para mate',1,'bizcochos.jpg',3,1,1),
-                                  ('100000000005','Pan rallado 500g','Rebozador',1,'pan_rallado.jpg',5,1,1);
+                                  ('100000000001','Pan francés 1Kg','Pan común a granel',1,'https://images.openfoodfacts.org/images/products/257/001/200/0902/front_es.3.400.jpg',9,1,1),
+                                  ('100000000002','Pan lactal 550g Molinos','Pan de molde',1,'https://images.openfoodfacts.org/images/products/779/389/000/1129/front_fr.8.400.jpg',5,1,1),
+                                  ('100000000003','Galletitas de agua 303g Arcor','Galletitas saladas',1,'https://images.openfoodfacts.org/images/products/779/808/274/4518/front_es.5.400.jpg',3,1,1),
+                                  ('100000000004','Bizcochos 200g Arcor','Bizcochos para mate',1,'https://images.openfoodfacts.org/images/products/841/037/603/5391/front_es.24.400.jpg',3,1,1),
+                                  ('100000000005','Pan rallado 500g','Rebozador',1,'https://images.openfoodfacts.org/images/products/841/480/754/3721/front_es.3.400.jpg',5,1,1);
 
 -- (2) HARINAS Y CEREALES
     INSERT INTO dbo.productos VALUES
-                                  ('100000000006','Harina 000 1Kg Molinos','Harina de trigo',2,'harina_000.jpg',5,1,1),
-                                  ('100000000007','Harina leudante 1Kg Molinos','Harina con leudante',2,'harina_leudante.jpg',5,1,1),
-                                  ('100000000008','Arroz largo fino 1Kg Gallo','Arroz largo fino',2,'arroz_gallo.jpg',8,1,1),
-                                  ('100000000009','Polenta 500g Molinos','Harina de maíz',2,'polenta.jpg',5,1,1),
-                                  ('100000000010','Avena 500g Molinos','Avena arrollada',2,'avena.jpg',5,1,1),
-                                  ('100000000011','Sémola 500g','Sémola de trigo',2,'semola.jpg',9,1,1),
-                                  ('100000000012','Harina de maíz 1Kg','Harina de maíz',2,'harina_maiz.jpg',9,1,1);
+                                  ('100000000006','Harina 000 1Kg Molinos','Harina de trigo',2,'https://images.openfoodfacts.org/images/products/777/261/900/0278/front_es.4.400.jpg',5,1,1),
+                                  ('100000000007','Harina leudante 1Kg Molinos','Harina con leudante',2,'https://images.openfoodfacts.org/images/products/779/218/014/0708/front_es.20.400.jpg',5,1,1),
+                                  ('100000000008','Arroz largo fino 1Kg Gallo','Arroz largo fino',2,'https://images.openfoodfacts.org/images/products/177/905/031/59693/front_es.3.400.jpg',8,1,1),
+                                  ('100000000009','Polenta 500g Molinos','Harina de maíz',2,'https://images.openfoodfacts.org/images/products/400/604/012/0698/front_en.20.400.jpg',5,1,1),
+                                  ('100000000010','Avena 500g Molinos','Avena arrollada',2,'https://images.openfoodfacts.org/images/products/842/690/410/3647/front_es.5.400.jpg',5,1,1),
+                                  ('100000000011','Sémola 500g','Sémola de trigo',2,'https://images.openfoodfacts.org/images/products/801/178/090/9713/front_fr.4.400.jpg',9,1,1),
+                                  ('100000000012','Harina de maíz 1Kg','Harina de maíz',2,'https://placehold.co/300x300?text=Harina%20de%20ma%C3%ADz%201Kg',9,1,1);
 
 -- (3) PASTAS Y LEGUMBRES
     INSERT INTO dbo.productos VALUES
-                                  ('100000000013','Fideos secos spaghetti 500g Lucchetti','Pasta seca larga',3,'spaghetti_lucchetti.jpg',6,1,1),
-                                  ('100000000014','Fideos secos tirabuzón 500g Matarazzo','Pasta seca corta',3,'tirabuzon_matarazzo.jpg',7,1,1),
-                                  ('100000000015','Fideos secos mostachol 500g Matarazzo','Pasta seca corta',3,'mostachol_lucchetti.jpg',7,1,1),
-                                  ('100000000016','Lentejas secas 400g','Legumbre seca',3,'lentejas.jpg',9,1,1),
-                                  ('100000000017','Arvejas secas 400g','Legumbre seca',3,'arvejas.jpg',9,1,1),
-                                  ('100000000018','Porotos secos 400g','Legumbre seca',3,'porotos.jpg',9,1,1),
-                                  ('100000000019','Purè de tomate 520g Arcor','Tomate triturado',3,'pure_tomate.jpg',3,1,1),
-                                  ('100000000020','Salsa de tomate 340g Arcor','Salsa lista',3,'salsa_tomate.jpg',3,1,1);
+                                  ('100000000013','Fideos secos spaghetti 500g Lucchetti','Pasta seca larga',3,'https://placehold.co/300x300?text=Fideos%20secos%20spaghetti%20500g%20Lucchetti',6,1,1),
+                                  ('100000000014','Fideos secos tirabuzón 500g Matarazzo','Pasta seca corta',3,'https://placehold.co/300x300?text=Fideos%20secos%20tirabuz%C3%B3n%20500g%20Matarazzo',7,1,1),
+                                  ('100000000015','Fideos secos mostachol 500g Matarazzo','Pasta seca corta',3,'https://placehold.co/300x300?text=Fideos%20secos%20mostachol%20500g%20Lucchetti',7,1,1),
+                                  ('100000000016','Lentejas secas 400g','Legumbre seca',3,'https://images.openfoodfacts.org/images/products/848/000/005/3251/front_es.49.400.jpg',9,1,1),
+                                  ('100000000017','Arvejas secas 400g','Legumbre seca',3,'https://images.openfoodfacts.org/images/products/779/661/330/8543/front_es.3.400.jpg',9,1,1),
+                                  ('100000000018','Porotos secos 400g','Legumbre seca',3,'https://images.openfoodfacts.org/images/products/779/229/027/9008/front_en.8.400.jpg',9,1,1),
+                                  ('100000000019','Purè de tomate 520g Arcor','Tomate triturado',3,'https://images.openfoodfacts.org/images/products/779/058/013/8844/front_es.8.400.jpg',3,1,1),
+                                  ('100000000020','Salsa de tomate 340g Arcor','Salsa lista',3,'https://images.openfoodfacts.org/images/products/779/058/096/9400/front_es.10.400.jpg',3,1,1);
 
 -- (4) CARNES
     INSERT INTO dbo.productos VALUES
-                                  ('100000000021','Carne picada 1Kg','Carne vacuna picada',4,'carne_picada.jpg',9,1,1),
-                                  ('100000000022','Carne para milanesa 1Kg','Nalga/cuadrada',4,'milanesa.jpg',9,1,1),
-                                  ('100000000023','Pollo entero 1Kg','Pollo fresco',4,'pollo_entero.jpg',9,1,1),
-                                  ('100000000024','Pescado congelado 1Kg','Filet congelado',4,'pescado.jpg',9,1,1),
-                                  ('100000000025','Carne para guiso 1Kg','Osobuco/paleta',4,'carne_guiso.jpg',9,1,1);
+                                  ('100000000021','Carne picada 1Kg','Carne vacuna picada',4,'https://images.openfoodfacts.org/images/products/843/656/926/3174/front_es.39.400.jpg',9,1,1),
+                                  ('100000000022','Carne para milanesa 1Kg','Nalga/cuadrada',4,'https://images.openfoodfacts.org/images/products/234/947/400/6483/front_es.4.400.jpg',9,1,1),
+                                  ('100000000023','Pollo entero 1Kg','Pollo fresco',4,'https://images.openfoodfacts.org/images/products/230/278/100/4542/front_es.4.400.jpg',9,1,1),
+                                  ('100000000024','Pescado congelado 1Kg','Filet congelado',4,'https://images.openfoodfacts.org/images/products/848/000/024/0200/front_es.53.400.jpg',9,1,1),
+                                  ('100000000025','Carne para guiso 1Kg','Osobuco/paleta',4,'https://images.openfoodfacts.org/images/products/841/030/035/5397/front_fr.7.400.jpg',9,1,1);
 
 -- (5) LÁCTEOS Y HUEVOS
     INSERT INTO dbo.productos VALUES
-                                  ('100000000026','Leche entera 1L La Serenísima','Leche UAT entera',5,'leche_entera_ls.jpg',1,1,1),
-                                  ('100000000027','Leche descremada 1L La Serenísima','Leche UAT descremada',5,'leche_descremada_sc.jpg',1,1,1),
-                                  ('100000000028','Yogur firme 190g Sancor','Yogur firme',5,'yogur_firme.jpg',2,1,1),
-                                  ('100000000029','Queso cremoso 1Kg La Serenísima','Queso blando',5,'queso_cremoso.jpg',1,1,1),
-                                  ('100000000030','Manteca 200g Sancor','Manteca',5,'manteca.jpg',2,1,1),
-                                  ('100000000031','Crema de leche 200cc La Serenísima','Crema',5,'crema.jpg',1,1,1),
-                                  ('100000000032','Huevos docena','Huevos',5,'huevos.jpg',9,1,1);
+                                  ('100000000026','Leche entera 1L La Serenísima','Leche UAT entera',5,'https://images.openfoodfacts.org/images/products/779/074/230/6302/front_es.7.400.jpg',1,1,1),
+                                  ('100000000027','Leche descremada 1L La Serenísima','Leche UAT descremada',5,'https://images.openfoodfacts.org/images/products/779/008/003/7715/front_es.5.400.jpg',1,1,1),
+                                  ('100000000028','Yogur firme 190g Sancor','Yogur firme',5,'https://images.openfoodfacts.org/images/products/779/133/700/7000/front_es.3.400.jpg',2,1,1),
+                                  ('100000000029','Queso cremoso 1Kg La Serenísima','Queso blando',5,'https://images.openfoodfacts.org/images/products/762/220/172/4443/front_en.21.400.jpg',1,1,1),
+                                  ('100000000030','Manteca 200g Sancor','Manteca',5,'https://images.openfoodfacts.org/images/products/779/074/234/5707/front_es.3.400.jpg',2,1,1),
+                                  ('100000000031','Crema de leche 200cc La Serenísima','Crema',5,'https://images.openfoodfacts.org/images/products/779/008/003/3199/front_es.3.400.jpg',1,1,1),
+                                  ('100000000032','Huevos docena','Huevos',5,'https://images.openfoodfacts.org/images/products/842/796/572/2464/front_es.4.400.jpg',9,1,1);
 
 -- (6) FRUTAS Y VERDURAS
     INSERT INTO dbo.productos VALUES
-                                  ('100000000033','Papa 1Kg','Papa',6,'papa.jpg',9,1,1),
-                                  ('100000000034','Cebolla 1Kg','Cebolla',6,'cebolla.jpg',9,1,1),
-                                  ('100000000035','Tomate 1Kg','Tomate',6,'tomate.jpg',9,1,1),
-                                  ('100000000036','Zanahoria 1Kg','Zanahoria',6,'zanahoria.jpg',9,1,1),
-                                  ('100000000037','Lechuga unidad','Lechuga',6,'lechuga.jpg',9,1,1),
-                                  ('100000000038','Manzana 1Kg','Manzana',6,'manzana.jpg',9,1,1),
-                                  ('100000000039','Banana 1Kg','Banana',6,'banana.jpg',9,1,1),
-                                  ('100000000040','Naranja 1Kg','Naranja',6,'naranja.jpg',9,1,1);
+                                  ('100000000033','Papa 1Kg','Papa',6,'https://images.openfoodfacts.org/images/products/541/308/199/0033/front_fr.40.400.jpg',9,1,1),
+                                  ('100000000034','Cebolla 1Kg','Cebolla',6,'https://images.openfoodfacts.org/images/products/843/700/027/0669/front_es.3.400.jpg',9,1,1),
+                                  ('100000000035','Tomate 1Kg','Tomate',6,'https://images.openfoodfacts.org/images/products/366/099/200/1767/front_fr.3.400.jpg',9,1,1),
+                                  ('100000000036','Zanahoria 1Kg','Zanahoria',6,'https://images.openfoodfacts.org/images/products/848/000/016/7521/front_es.56.400.jpg',9,1,1),
+                                  ('100000000037','Lechuga unidad','Lechuga',6,'https://placehold.co/300x300?text=Lechuga%20unidad',9,1,1),
+                                  ('100000000038','Manzana 1Kg','Manzana',6,'https://images.openfoodfacts.org/images/products/840/200/101/2174/front_es.51.400.jpg',9,1,1),
+                                  ('100000000039','Banana 1Kg','Banana',6,'https://images.openfoodfacts.org/images/products/600/398/900/3042/front_en.3.400.jpg',9,1,1),
+                                  ('100000000040','Naranja 1Kg','Naranja',6,'https://images.openfoodfacts.org/images/products/841/037/604/7578/front_es.61.400.jpg',9,1,1);
 
 -- (7) AZÚCAR Y DULCES
     INSERT INTO dbo.productos VALUES
-                                  ('100000000041','Azúcar 1Kg Ledesma','Azúcar común',7,'azucar_ledesma.jpg',4,1,1),
-                                  ('100000000042','Dulce de leche 400g Sancor','Dulce de leche',7,'ddl.jpg',2,1,1),
-                                  ('100000000043','Mermelada 454g Arcor','Mermelada',7,'mermelada.jpg',3,1,1),
-                                  ('100000000044','Galletitas dulces 300g Arcor','Galletitas dulces',7,'galletitas_dulces.jpg',3,1,1),
-                                  ('100000000045','Cacao en polvo 180g Arcor','Cacao',7,'cacao.jpg',3,1,1);
+                                  ('100000000041','Azúcar 1Kg Ledesma','Azúcar común',7,'https://images.openfoodfacts.org/images/products/779/254/025/0450/front_es.8.400.jpg',4,1,1),
+                                  ('100000000042','Dulce de leche 400g Sancor','Dulce de leche',7,'https://images.openfoodfacts.org/images/products/779/074/214/4607/front_es.21.400.jpg',2,1,1),
+                                  ('100000000043','Mermelada 454g Arcor','Mermelada',7,'https://images.openfoodfacts.org/images/products/779/058/012/3437/front_es.3.400.jpg',3,1,1),
+                                  ('100000000044','Galletitas dulces 300g Arcor','Galletitas dulces',7,'https://images.openfoodfacts.org/images/products/779/004/012/6800/front_es.10.400.jpg',3,1,1),
+                                  ('100000000045','Cacao en polvo 180g Arcor','Cacao',7,'https://images.openfoodfacts.org/images/products/750/223/094/7238/front_es.4.400.jpg',3,1,1);
 
 -- (8) ACEITES Y GRASAS
     INSERT INTO dbo.productos VALUES
-                                  ('100000000046','Aceite mezcla 1.5L Cocinero','Aceite vegetal',8,'aceite_cocinero.jpg',11,1,1),
-                                  ('100000000047','Aceite girasol 1.5L Natura','Aceite de girasol',8,'aceite_natura.jpg',10,1,1),
-                                  ('100000000048','Grasa vacuna 500g','Grasa',8,'grasa.jpg',9,1,1),
-                                  ('100000000049','Margarina 200g Arcor','Margarina',8,'margarina.jpg',3,1,1);
+                                  ('100000000046','Aceite mezcla 1.5L Cocinero','Aceite vegetal',8,'https://placehold.co/300x300?text=Aceite%20mezcla%201.5L%20Cocinero',11,1,1),
+                                  ('100000000047','Aceite girasol 1.5L Natura','Aceite de girasol',8,'https://images.openfoodfacts.org/images/products/779/027/200/1005/front_es.44.400.jpg',10,1,1),
+                                  ('100000000048','Grasa vacuna 500g','Grasa',8,'https://images.openfoodfacts.org/images/products/773/013/200/1677/front_es.3.400.jpg',9,1,1),
+                                  ('100000000049','Margarina 200g Arcor','Margarina',8,'https://placehold.co/300x300?text=Margarina%20200g%20Arcor',3,1,1);
 
 -- (9) INFUSIONES
     INSERT INTO dbo.productos VALUES
-                                  ('100000000050','Yerba mate 1Kg Taragüi','Yerba mate',9,'yerba_taraguei.jpg',13,2,1),
-                                  ('100000000051','Yerba mate 1Kg CBSé','Yerba mate',9,'yerba_amanda.jpg',15,2,1),
-                                  ('100000000052','Té 50 saquitos CBSé','Té negro',9,'te.jpg',15,2,1),
-                                  ('100000000053','Café molido 250g La Virginia','Café',9,'cafe_lavirginia.jpg',14,2,1),
-                                  ('100000000054','Mate cocido 25 saquitos Taragüi','Mate cocido',9,'mate_cocido.jpg',13,2,1);
+                                  ('100000000050','Yerba mate 1Kg Taragüi','Yerba mate',9,'https://images.openfoodfacts.org/images/products/779/038/711/3228/front_fr.3.400.jpg',13,2,1),
+                                  ('100000000051','Yerba mate 1Kg CBSé','Yerba mate',9,'https://images.openfoodfacts.org/images/products/779/271/000/0021/front_fr.13.400.jpg',15,2,1),
+                                  ('100000000052','Té 50 saquitos CBSé','Té negro',9,'https://placehold.co/300x300?text=T%C3%A9%2050%20saquitos%20CBS%C3%A9',15,2,1),
+                                  ('100000000053','Café molido 250g La Virginia','Café',9,'https://images.openfoodfacts.org/images/products/779/015/003/7072/front_es.3.400.jpg',14,2,1),
+                                  ('100000000054','Mate cocido 25 saquitos Taragüi','Mate cocido',9,'https://placehold.co/300x300?text=Mate%20cocido%2025%20saquitos%20Amanda',13,2,1);
 
 -- (10) BEBIDAS SIN ALCOHOL
     INSERT INTO dbo.productos VALUES
-                                  ('100000000055','Agua mineral 2L','Agua sin gas',10,'agua_2l.jpg',9,2,1),
-                                  ('100000000056','Agua mineral 500ml','Agua sin gas',10,'agua_500.jpg',9,2,1),
-                                  ('100000000057','Jugo en polvo 18g Arcor','Jugo en polvo',10,'jugo_polvo.jpg',3,2,1),
-                                  ('100000000058','Gaseosa cola 2.25L','Gaseosa',10,'gaseosa_cola.jpg',9,2,1),
-                                  ('100000000059','Gaseosa naranja 2.25L','Gaseosa',10,'gaseosa_naranja.jpg',9,2,1);
+                                  ('100000000055','Agua mineral 2L','Agua sin gas',10,'https://images.openfoodfacts.org/images/products/841/204/250/2367/front_es.26.400.jpg',9,2,1),
+                                  ('100000000056','Agua mineral 500ml','Agua sin gas',10,'https://images.openfoodfacts.org/images/products/789/490/053/0001/front_pt.30.400.jpg',9,2,1),
+                                  ('100000000057','Jugo en polvo 18g Arcor','Jugo en polvo',10,'https://images.openfoodfacts.org/images/products/779/058/010/6041/front_es.4.400.jpg',3,2,1),
+                                  ('100000000058','Gaseosa cola 2.25L','Gaseosa',10,'https://images.openfoodfacts.org/images/products/775/018/200/1687/front_es.21.400.jpg',9,2,1),
+                                  ('100000000059','Gaseosa naranja 2.25L','Gaseosa',10,'https://images.openfoodfacts.org/images/products/759/103/100/0228/front_es.3.400.jpg',9,2,1);
 
 -- (11) LIMPIEZA HOGAR
     INSERT INTO dbo.productos VALUES
-                                  ('100000000060','Lavandina 1L Ayudín','Lavandina',11,'lavandina_ayudin.jpg',17,3,1),
-                                  ('100000000061','Desinfectante 1L Ayudín','Desinfectante',11,'desinfectante.jpg',17,3,1),
-                                  ('100000000062','Limpiador piso 900ml Poett','Limpieza pisos',11,'poett.jpg',18,3,1),
-                                  ('100000000063','Detergente cocina 750ml','Lavavajillas',11,'detergente.jpg',9,3,1),
-                                  ('100000000064','Esponja de cocina','Esponja',11,'esponja.jpg',9,3,1),
-                                  ('100000000065','Limpiavidrios 500ml Poett','Vidrios',11,'limpiavidrios.jpg',18,3,1);
+                                  ('100000000060','Lavandina 1L Ayudín','Lavandina',11,'https://placehold.co/300x300?text=Lavandina%201L%20Ayud%C3%ADn',17,3,1),
+                                  ('100000000061','Desinfectante 1L Ayudín','Desinfectante',11,'https://images.openfoodfacts.org/images/products/779/325/300/5221/front_es.3.400.jpg',17,3,1),
+                                  ('100000000062','Limpiador piso 900ml Poett','Limpieza pisos',11,'https://placehold.co/300x300?text=Limpiador%20piso%20900ml%20Poett',18,3,1),
+                                  ('100000000063','Detergente cocina 750ml','Lavavajillas',11,'https://placehold.co/300x300?text=Detergente%20cocina%20750ml',9,3,1),
+                                  ('100000000064','Esponja de cocina','Esponja',11,'https://placehold.co/300x300?text=Esponja%20de%20cocina',9,3,1),
+                                  ('100000000065','Limpiavidrios 500ml Poett','Vidrios',11,'https://placehold.co/300x300?text=Limpiavidrios%20500ml%20Poett',18,3,1);
 
 -- (12) LAVANDERÍA
     INSERT INTO dbo.productos VALUES
-                                  ('100000000066','Jabón en polvo 800g Ala','Jabón en polvo',12,'ala_800.jpg',16,3,1),
-                                  ('100000000067','Jabón líquido ropa 3L Ala','Jabón líquido',12,'jabon_liquido_3l.jpg',16,3,1),
-                                  ('100000000068','Suavizante 1L Ala','Suavizante',12,'suavizante_1l.jpg',16,3,1),
-                                  ('100000000069','Quitamanchas 450ml Ala','Quitamanchas',12,'quitamanchas.jpg',16,3,1),
-                                  ('100000000070','Lavandina concentrada 2L Ayudín','Lavandina concentrada',12,'lavandina_2l.jpg',17,3,1);
+                                  ('100000000066','Jabón en polvo 800g Ala','Jabón en polvo',12,'https://placehold.co/300x300?text=Jab%C3%B3n%20en%20polvo%20800g%20Ala',16,3,1),
+                                  ('100000000067','Jabón líquido ropa 3L Ala','Jabón líquido',12,'https://placehold.co/300x300?text=Jab%C3%B3n%20l%C3%ADquido%20ropa%203L%20Ala',16,3,1),
+                                  ('100000000068','Suavizante 1L Ala','Suavizante',12,'https://placehold.co/300x300?text=Suavizante%201L%20Ala',16,3,1),
+                                  ('100000000069','Quitamanchas 450ml Ala','Quitamanchas',12,'https://placehold.co/300x300?text=Quitamanchas%20450ml%20Ala',16,3,1),
+                                  ('100000000070','Lavandina concentrada 2L Ayudín','Lavandina concentrada',12,'https://placehold.co/300x300?text=Lavandina%20concentrada%202L%20Ayud%C3%ADn',17,3,1);
 
 -- (13) CUIDADO PERSONAL
     INSERT INTO dbo.productos VALUES
-                                  ('100000000071','Jabón tocador 3x90g','Jabón de tocador',13,'jabon_tocador.jpg',9,4,1),
-                                  ('100000000072','Shampoo 400ml','Shampoo',13,'shampoo.jpg',9,4,1),
-                                  ('100000000073','Acondicionador 400ml','Acondicionador',13,'acondicionador.jpg',9,4,1),
-                                  ('100000000074','Pasta dental 90g Colgate','Pasta dental',13,'colgate_90.jpg',20,4,1),
-                                  ('100000000075','Cepillo dental Colgate','Cepillo dental',13,'cepillo.jpg',20,4,1),
-                                  ('100000000076','Desodorante aerosol 150ml','Desodorante',13,'desodorante.jpg',9,4,1),
-                                  ('100000000077','Toallitas femeninas','Higiene femenina',13,'toallitas.jpg',19,4,1);
+                                  ('100000000071','Jabón tocador 3x90g','Jabón de tocador',13,'https://placehold.co/300x300?text=Jab%C3%B3n%20tocador%203x90g',9,4,1),
+                                  ('100000000072','Shampoo 400ml','Shampoo',13,'https://images.openfoodfacts.org/images/products/405/648/982/7184/front_en.3.400.jpg',9,4,1),
+                                  ('100000000073','Acondicionador 400ml','Acondicionador',13,'https://images.openfoodfacts.org/images/products/000/001/221/1111/front_fr.9.400.jpg',9,4,1),
+                                  ('100000000074','Pasta dental 90g Colgate','Pasta dental',13,'https://placehold.co/300x300?text=Pasta%20dental%2090g%20Colgate',20,4,1),
+                                  ('100000000075','Cepillo dental Colgate','Cepillo dental',13,'https://placehold.co/300x300?text=Cepillo%20dental%20Colgate',20,4,1),
+                                  ('100000000076','Desodorante aerosol 150ml','Desodorante',13,'https://placehold.co/300x300?text=Desodorante%20aerosol%20150ml',9,4,1),
+                                  ('100000000077','Toallitas femeninas','Higiene femenina',13,'https://images.openfoodfacts.org/images/products/779/077/060/2087/front_en.3.400.jpg',19,4,1);
 
 -- (14) PAPEL E HIGIENE
     INSERT INTO dbo.productos VALUES
-                                  ('100000000078','Papel higiénico 4 rollos Higienol','Papel higiénico',14,'higienol_4.jpg',19,4,1),
-                                  ('100000000079','Papel higiénico 6 rollos Higienol','Papel higiénico',14,'higienol_6.jpg',19,4,1),
-                                  ('100000000080','Servilletas 200u Higienol','Servilletas',14,'servilletas.jpg',19,4,1),
-                                  ('100000000081','Pañuelos descartables Higienol','Pañuelos',14,'panuelos.jpg',19,4,1),
-                                  ('100000000082','Toalla de papel Higienol','Rollo cocina',14,'toalla_papel.jpg',19,4,1);
+                                  ('100000000078','Papel higiénico 4 rollos Higienol','Papel higiénico',14,'https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%204%20rollos%20Higienol',19,4,1),
+                                  ('100000000079','Papel higiénico 6 rollos Higienol','Papel higiénico',14,'https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%206%20rollos%20Higienol',19,4,1),
+                                  ('100000000080','Servilletas 200u Higienol','Servilletas',14,'https://placehold.co/300x300?text=Servilletas%20200u%20Higienol',19,4,1),
+                                  ('100000000081','Pañuelos descartables Higienol','Pañuelos',14,'https://placehold.co/300x300?text=Pa%C3%B1uelos%20descartables%20Higienol',19,4,1),
+                                  ('100000000082','Toalla de papel Higienol','Rollo cocina',14,'https://placehold.co/300x300?text=Toalla%20de%20papel%20Higienol',19,4,1);
 
 -- (15) CONDIMENTOS Y BÁSICOS
     INSERT INTO dbo.productos VALUES
-                                  ('100000000083','Sal fina 500g','Sal de mesa',15,'sal.jpg',9,5,1),
-                                  ('100000000084','Vinagre alcohol 1L','Vinagre',15,'vinagre.jpg',9,5,1),
-                                  ('100000000085','Caldo cubitos Arcor','Caldo',15,'caldo.jpg',3,5,1),
-                                  ('100000000086','Purè instantáneo 125g Molinos','Purè instantáneo',15,'pure_inst.jpg',5,5,1),
-                                  ('100000000087','Mayonesa 500g Arcor','Mayonesa',15,'mayonesa.jpg',3,5,1),
-                                  ('100000000088','Mostaza 250g Arcor','Mostaza',15,'mostaza.jpg',3,5,1),
-                                  ('100000000089','Fideos guiseros 500g Lucchetti','Pasta corta',3,'fideos_guiseros.jpg',6,1,1),
-                                  ('100000000090','Arroz parboil 1Kg Gallo','Arroz',2,'arroz_parboil.jpg',8,1,1),
-                                  ('100000000091','Azúcar 1Kg (económica)','Azúcar',7,'azucar_econo.jpg',9,1,1),
-                                  ('100000000092','Aceite 900ml Cocinero','Aceite',8,'aceite_900.jpg',11,1,1),
-                                  ('100000000093','Leche en polvo 400g La Serenísima','Leche en polvo',5,'leche_polvo.jpg',1,1,1),
-                                  ('100000000094','Queso rallado 40g La Serenísima','Queso rallado',5,'queso_rallado.jpg',1,1,1),
-                                  ('100000000095','Tomate triturado 520g','Triturado',3,'triturado.jpg',9,1,1),
-                                  ('100000000096','Atún en lata 170g','Atún',3,'atun.jpg',9,1,1),
-                                  ('100000000097','Fideos moñitos 500g Matarazzo','Pasta corta',3,'monitos.jpg',7,1,1),
-                                  ('100000000098','Arvejas en lata 300g','Arvejas',3,'arvejas_lata.jpg',9,1,1),
-                                  ('100000000099','Levadura seca 10g','Levadura',1,'levadura.jpg',9,5,1),
-                                  ('100000000100','Leche chocolatada 1L Sancor','Bebida láctea',10,'chocolatada.jpg',2,2,1);
+                                  ('100000000083','Sal fina 500g','Sal de mesa',15,'https://images.openfoodfacts.org/images/products/000/002/008/4820/front_es.41.400.jpg',9,5,1),
+                                  ('100000000084','Vinagre alcohol 1L','Vinagre',15,'https://images.openfoodfacts.org/images/products/750/105/247/5004/front_es.9.400.jpg',9,5,1),
+                                  ('100000000085','Caldo cubitos Arcor','Caldo',15,'https://placehold.co/300x300?text=Caldo%20cubitos%20Arcor',3,5,1),
+                                  ('100000000086','Purè instantáneo 125g Molinos','Purè instantáneo',15,'https://placehold.co/300x300?text=Pur%C3%A8%20instant%C3%A1neo%20125g%20Molinos',5,5,1),
+                                  ('100000000087','Mayonesa 500g Arcor','Mayonesa',15,'https://placehold.co/300x300?text=Mayonesa%20500g%20Arcor',3,5,1),
+                                  ('100000000088','Mostaza 250g Arcor','Mostaza',15,'https://placehold.co/300x300?text=Mostaza%20250g%20Arcor',3,5,1),
+                                  ('100000000089','Fideos guiseros 500g Lucchetti','Pasta corta',3,'https://placehold.co/300x300?text=Fideos%20guiseros%20500g%20Matarazzo',6,1,1),
+                                  ('100000000090','Arroz parboil 1Kg Gallo','Arroz',2,'https://images.openfoodfacts.org/images/products/779/007/041/3765/front_es.3.400.jpg',8,1,1),
+                                  ('100000000091','Azúcar 1Kg (económica)','Azúcar',7,'https://placehold.co/300x300?text=Az%C3%BAcar%201Kg%20%28econ%C3%B3mica%29',9,1,1),
+                                  ('100000000092','Aceite 900ml Cocinero','Aceite',8,'https://images.openfoodfacts.org/images/products/841/017/901/6542/front_es.8.400.jpg',11,1,1),
+                                  ('100000000093','Leche en polvo 400g La Serenísima','Leche en polvo',5,'https://images.openfoodfacts.org/images/products/779/008/004/4188/front_es.12.400.jpg',1,1,1),
+                                  ('100000000094','Queso rallado 40g La Serenísima','Queso rallado',5,'https://images.openfoodfacts.org/images/products/779/008/001/4709/front_es.11.400.jpg',1,1,1),
+                                  ('100000000095','Tomate triturado 520g','Triturado',3,'https://images.openfoodfacts.org/images/products/848/000/016/0447/front_es.52.400.jpg',9,1,1),
+                                  ('100000000096','Atún en lata 170g','Atún',3,'https://images.openfoodfacts.org/images/products/841/020/503/2386/front_es.44.400.jpg',9,1,1),
+                                  ('100000000097','Fideos moñitos 500g Matarazzo','Pasta corta',3,'https://placehold.co/300x300?text=Fideos%20mo%C3%B1itos%20500g%20Lucchetti',7,1,1),
+                                  ('100000000098','Arvejas en lata 300g','Arvejas',3,'https://images.openfoodfacts.org/images/products/779/229/027/9206/front_es.5.400.jpg',9,1,1),
+                                  ('100000000099','Levadura seca 10g','Levadura',1,'https://images.openfoodfacts.org/images/products/000/004/210/0263/front_es.8.400.jpg',9,5,1),
+                                  ('100000000100','Leche chocolatada 1L Sancor','Bebida láctea',10,'https://images.openfoodfacts.org/images/products/779/074/217/2204/front_es.12.400.jpg',2,2,1);
 
     -- ============================
 -- PRECIOS (variación fuerte)

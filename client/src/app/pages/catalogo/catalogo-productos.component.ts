@@ -135,6 +135,15 @@ export class CatalogoProductosComponent {
 
   track = (_: number, producto: Producto): string => producto.codBarra;
 
+  getImagenSrc(imagen: string | null | undefined): string | null {
+    const value = imagen?.trim();
+    if (!value) return null;
+
+    // Soporta URLs completas (Open Food) y fallback a assets locales.
+    if (/^https?:\/\//i.test(value)) return value;
+    return `assets/images/${value}`;
+  }
+
   @HostListener('window:keydown.escape')
   onEsc(): void {
     this.closeCart();

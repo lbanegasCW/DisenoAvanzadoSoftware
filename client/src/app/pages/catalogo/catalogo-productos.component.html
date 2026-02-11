@@ -87,8 +87,8 @@
         <article class="card flex h-full flex-col" *ngFor="let p of productos(); trackBy: track">
           <div class="flex items-start gap-3">
             <img
-              *ngIf="p.imagen"
-              [src]="'assets/images/' + p.imagen"
+              *ngIf="getImagenSrc(p.imagen) as imgSrc"
+              [src]="imgSrc"
               alt=""
               class="h-16 w-16 rounded-lg border border-slate-200 bg-slate-50 object-contain"
             >
@@ -147,7 +147,7 @@
 
     <ul class="divide-y divide-slate-200" *ngIf="cart.count()">
       <li *ngFor="let p of seleccionados()" class="flex items-center gap-3 py-3">
-        <img *ngIf="p.imagen" [src]="'assets/images/' + p.imagen" class="h-12 w-12 rounded-lg border border-slate-200 bg-slate-50 object-contain" alt="" />
+        <img *ngIf="getImagenSrc(p.imagen) as imgSrc" [src]="imgSrc" class="h-12 w-12 rounded-lg border border-slate-200 bg-slate-50 object-contain" alt="" />
         <div class="min-w-0 flex-1">
           <div class="truncate text-sm font-semibold text-slate-900">{{ p.nomProducto }}</div>
           <div class="truncate text-xs text-slate-500"><span i18n="@@catalogo.ean_label">EAN:</span> {{ p.codBarra }}</div>
