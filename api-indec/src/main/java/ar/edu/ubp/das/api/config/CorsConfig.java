@@ -10,7 +10,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**") // Ajustado al context-path de la aplicación
-                .allowedOrigins("http://localhost:4200") // Frontend Angular
+                .allowedOrigins("http://localhost:4200", "http://localhost:4201") // Frontend Angular
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
                 .exposedHeaders("Access-Control-Allow-Origin",
