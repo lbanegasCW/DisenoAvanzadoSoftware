@@ -44,19 +44,24 @@ public class IndecRepository {
                                 SucursalBean.class);
         }
 
-        public List<Map<String, Object>> getProductos() {
+        public List<Map<String, Object>> getProductos(String codIdioma) {
+                SqlParameterSource params = new MapSqlParameterSource()
+                                .addValue("cod_idioma", codIdioma);
+
                 return jdbcCallFactory.executeQueryForList(
                         "sp_get_productos",
                         "dbo",
+                        params,
                         "productos"
                 );
         }
 
-        public List<Map<String, Object>> getProductosPrecios(int nroLocalidad, List<String> codigos) {
+        public List<Map<String, Object>> getProductosPrecios(int nroLocalidad, List<String> codigos, String codIdioma) {
                 String csv = codigos == null ? "" : String.join(",", codigos);
                 SqlParameterSource params = new MapSqlParameterSource()
                         .addValue("nro_localidad", nroLocalidad)
-                        .addValue("codigos", csv);
+                        .addValue("codigos", csv)
+                        .addValue("cod_idioma", codIdioma);
 
                 return jdbcCallFactory.executeQueryForList(
                         "sp_get_productos_precios",

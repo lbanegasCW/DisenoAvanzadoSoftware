@@ -476,35 +476,49 @@ END
 GO
 
 CREATE OR ALTER PROCEDURE dbo.sp_get_productos
+    @cod_idioma VARCHAR(2) = 'es'
 AS
 BEGIN
     SET NOCOUNT ON;
     SELECT
-        p.cod_barra         AS codBarra,
-        p.nom_producto      AS nomProducto,
-        p.desc_producto     AS descProducto,
-        p.imagen            AS imagen,
-        m.nom_marca         AS nomMarca,
-        p.nro_categoria     AS nroCategoria,
-        c.nom_categoria     AS nomCategoria,
-        r.nro_rubro         AS nroRubro,
-        r.nom_rubro         AS nomRubro
+        p.cod_barra                               AS codBarra,
+        p.nom_producto                            AS nomProducto,
+        p.desc_producto                           AS descProducto,
+        p.imagen                                  AS imagen,
+        m.nom_marca                               AS nomMarca,
+        p.nro_categoria                           AS nroCategoria,
+        COALESCE(icp.categoria, c.nom_categoria)  AS nomCategoria,
+        r.nro_rubro                               AS nroRubro,
+        COALESCE(irp.rubro, r.nom_rubro)          AS nomRubro,
+        COALESCE(itp.tipo_producto, tp.nom_tipo_producto) AS nomTipoProducto
     FROM dbo.productos p
              INNER JOIN dbo.categorias_productos c
                         ON c.nro_categoria = p.nro_categoria
              INNER JOIN dbo.rubros_productos r
                         ON r.nro_rubro = c.nro_rubro
+             LEFT JOIN dbo.tipos_productos tp
+                       ON tp.nro_tipo_producto = c.nro_tipo_producto
+             LEFT JOIN dbo.idiomas_categorias_productos icp
+                       ON icp.nro_categoria = c.nro_categoria
+                      AND icp.cod_idioma = @cod_idioma
+             LEFT JOIN dbo.idiomas_rubros_productos irp
+                       ON irp.nro_rubro = r.nro_rubro
+                      AND irp.cod_idioma = @cod_idioma
+             LEFT JOIN dbo.idiomas_tipos_productos itp
+                       ON itp.nro_tipo_producto = tp.nro_tipo_producto
+                      AND itp.cod_idioma = @cod_idioma
              LEFT  JOIN dbo.marcas_productos m
                         ON m.nro_marca = p.nro_marca
     WHERE p.vigente=1 AND c.vigente=1 AND r.vigente=1
     ORDER BY
-        r.nom_rubro, c.nom_categoria, p.nom_producto;
+        COALESCE(irp.rubro, r.nom_rubro), COALESCE(icp.categoria, c.nom_categoria), p.nom_producto;
 END
 GO
 
 CREATE OR ALTER PROCEDURE dbo.sp_get_productos_precios
     @nro_localidad INT,
-    @codigos       NVARCHAR(MAX) -- CSV: '100000000001,100000000030,...'
+    @codigos       NVARCHAR(MAX), -- CSV: '100000000001,100000000030,...'
+    @cod_idioma    VARCHAR(2) = 'es'
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -515,9 +529,9 @@ BEGIN
         WHERE TRIM(value) <> ''
     )
      SELECT
-         p.cod_barra             AS codBarra,
-         p.nom_producto          AS nomProducto,
-         c.nom_categoria         AS nomCategoria,
+         p.cod_barra                              AS codBarra,
+         p.nom_producto                           AS nomProducto,
+         COALESCE(icp.categoria, c.nom_categoria) AS nomCategoria,
          (
              SELECT
                  s2.nro_supermercado                  AS nroSupermercado,
@@ -537,6 +551,9 @@ BEGIN
                    ON p.cod_barra = x.cod_barra
               JOIN dbo.categorias_productos c
                    ON c.nro_categoria = p.nro_categoria
+              LEFT JOIN dbo.idiomas_categorias_productos icp
+                   ON icp.nro_categoria = c.nro_categoria
+                  AND icp.cod_idioma = @cod_idioma
               JOIN dbo.sucursales s
                    ON s.nro_localidad = @nro_localidad
               JOIN dbo.productos_supermercados ps
@@ -548,7 +565,7 @@ BEGIN
        AND c.vigente = 1
        AND s.habilitada = 1
      GROUP BY
-         p.cod_barra, p.nom_producto, c.nom_categoria
+         p.cod_barra, p.nom_producto, c.nom_categoria, icp.categoria
      ORDER BY
          p.nom_producto;
 END

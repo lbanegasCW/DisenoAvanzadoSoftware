@@ -36,7 +36,9 @@ export class ComparadorPreciosComponent implements OnInit {
   colIds: SupermarketId[] = [];
   vmRows: VmRow[] = [];
 
+  // ✅ fijo: siempre number
   totalBySup: Record<SupermarketId, number> = {};
+  isCompleteBySup: Record<SupermarketId, boolean> = {};
   cheapestSupId: SupermarketId | null = null;
 
   constructor() {
@@ -93,6 +95,15 @@ export class ComparadorPreciosComponent implements OnInit {
   trackCol = (_: number, id: SupermarketId): SupermarketId => id;
   trackRow = (_: number, row: VmRow): string => row.codBarra;
 
+  formatPrice(value: number): string {
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  }
+
   private loadSupermarkets(): void {
     this.indec.getSupermercados().subscribe({
       next: (supermarkets) => {
@@ -147,7 +158,9 @@ export class ComparadorPreciosComponent implements OnInit {
     return pricesBySup;
   }
 
-  private minPrice(pricesBySup: Record<SupermarketId, PriceValue>): number | null {
+  private minPrice(
+    pricesBySup: Record<SupermarketId, PriceValue>
+  ): number | null {
     const numericPrices = Object.values(pricesBySup).filter(
       (value): value is number => typeof value === 'number'
     );
@@ -156,27 +169,45 @@ export class ComparadorPreciosComponent implements OnInit {
   }
 
   private computeTotals(): void {
-    this.totalBySup = Object.fromEntries(this.colIds.map((id) => [id, 0]));
+    // ✅ inicialización fuerte: todos los ids tienen total = 0 y complete = true
+    this.totalBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, 0])
+    ) as Record<SupermarketId, number>;
+
+    this.isCompleteBySup = Object.fromEntries(
+      this.colIds.map((id) => [id, true])
+    ) as Record<SupermarketId, boolean>;
 
     for (const row of this.vmRows) {
       for (const id of this.colIds) {
         const price = row.pricesBySup[id];
+
         if (typeof price === 'number') {
-          this.totalBySup[id] += price;
+          this.totalBySup[id] = this.totalBySup[id] + price;
+        } else {
+          this.isCompleteBySup[id] = false;
         }
       }
     }
 
-    this.cheapestSupId = this.colIds.reduce<SupermarketId | null>((winnerId, id) => {
-      if (winnerId === null) return id;
-      return this.totalBySup[id] < this.totalBySup[winnerId] ? id : winnerId;
-    }, null);
+    this.cheapestSupId = this.colIds.reduce<SupermarketId | null>(
+      (winnerId, id) => {
+        if (!this.isCompleteBySup[id]) return winnerId;
+        if (winnerId === null) return id;
+
+        return this.totalBySup[id] < this.totalBySup[winnerId]
+          ? id
+          : winnerId;
+      },
+      null
+    );
   }
 
   private resetTable(): void {
     this.vmRows = [];
     this.colIds = [];
     this.totalBySup = {};
+    this.isCompleteBySup = {};
     this.cheapestSupId = null;
     this.loading = false;
   }

@@ -47,8 +47,10 @@ public class IndecResource {
     }
 
     @GetMapping(value = "/productos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Map<String, Object>>> getProductos() {
-        var rows = indecRepository.getProductos();
+    public ResponseEntity<List<Map<String, Object>>> getProductos(
+            @RequestParam(name = "lang", required = false, defaultValue = "es") String lang
+    ) {
+        var rows = indecRepository.getProductos(normalizeLang(lang));
         return ResponseEntity.ok(rows);
     }
 
@@ -68,6 +70,8 @@ public class IndecResource {
         int nroLocalidad = (locObj instanceof Number)
                 ? ((Number) locObj).intValue()
                 : Integer.parseInt(locObj.toString());
+
+        String lang = normalizeLang(Objects.toString(body.get("lang"), null));
 
         if (nroLocalidad <= 0) {
             return ResponseEntity.badRequest().build();
@@ -92,9 +96,25 @@ public class IndecResource {
         }
 
         // 3) Llamar al repo (tu SP)
-        List<Map<String, Object>> rows = indecRepository.getProductosPrecios(nroLocalidad, codigos);
+        List<Map<String, Object>> rows = indecRepository.getProductosPrecios(nroLocalidad, codigos, lang);
 
         return ResponseEntity.ok(rows);
+    }
+
+    private String normalizeLang(String lang) {
+        if (lang == null || lang.isBlank()) {
+            return "es";
+        }
+
+        String normalized = lang.trim().toLowerCase();
+        if (normalized.length() > 2) {
+            normalized = normalized.substring(0, 2);
+        }
+
+        return switch (normalized) {
+            case "en" -> "en";
+            default -> "es";
+        };
     }
 
 }

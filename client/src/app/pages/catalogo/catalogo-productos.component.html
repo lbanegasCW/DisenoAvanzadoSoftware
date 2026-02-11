@@ -69,14 +69,19 @@
 
     <section class="col-span-12 md:col-span-9">
       <div class="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-600 shadow-sm">
-        <div>
-          <ng-container i18n="@@catalogo.count_resultados">{totalResultados, plural,
-            =0 {0 resultados}
-            =1 {1 resultado}
-            other {# resultados}}
-          </ng-container>
+        <div [ngPlural]="totalResultados">
+          <ng-template ngPluralCase="=0">
+            <span i18n="@@catalogo.count_resultados_0">0 resultados</span>
+          </ng-template>
+          <ng-template ngPluralCase="=1">
+            <span i18n="@@catalogo.count_resultados_1">1 resultado</span>
+          </ng-template>
+          <ng-template ngPluralCase="other">
+            <span i18n="@@catalogo.count_resultados_n">{{ totalResultados }} resultados</span>
+          </ng-template>
         </div>
       </div>
+
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3" *ngIf="productos().length; else sinResultados">
         <article class="card flex h-full flex-col" *ngFor="let p of productos(); trackBy: track">

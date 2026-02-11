@@ -52,7 +52,7 @@
                 class="price-chip"
                 [class.price-chip-min]="row.min !== null && row.pricesBySup[id] === row.min"
               >
-                {{ row.pricesBySup[id] }}
+                {{ formatPrice(+row.pricesBySup[id]!) }}
               </span>
             </ng-container>
             <ng-template #noPrice>
@@ -68,7 +68,10 @@
             class="px-4 py-3 text-center"
             [class.best-column-light]="id === cheapestSupId"
           >
-            {{ totalBySup[id] ?? 0 }}
+            <span *ngIf="isCompleteBySup[id]; else incompleto">{{ formatPrice(totalBySup[id]) }}</span>
+            <ng-template #incompleto>
+              <span class="text-slate-400">Incompleto</span>
+            </ng-template>
           </td>
         </tr>
       </tbody>

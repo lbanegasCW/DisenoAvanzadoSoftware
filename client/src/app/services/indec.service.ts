@@ -4,7 +4,7 @@ import {Observable, catchError, throwError, map} from 'rxjs';
 
 const environment = {
   production: false,
-  apiUrl: 'http://localhost:8085',
+  apiUrl: 'http://localhost:8080',
   defaultLanguage: 'es',
   supportedLanguages: ['es', 'en'],
 };
@@ -74,6 +74,7 @@ export interface Producto {
   nomCategoria: string;
   nroRubro: number;
   nomRubro: string;
+  nomTipoProducto?: string | null;
 }
 
 @Injectable({
@@ -113,8 +114,14 @@ export class IndecService {
   }
 
   getProductosCatalogo(params?: Record<string, string | number>) {
+    let httpParams = new HttpParams().set('lang', this.getCurrentLanguage());
+
+    for (const [key, value] of Object.entries(params ?? {})) {
+      httpParams = httpParams.set(key, String(value));
+    }
+
     return this.http
-      .get<Producto[]>(`${this.API_URL}/productos`, { params })
+      .get<Producto[]>(`${this.API_URL}/productos`, { params: httpParams })
       .pipe(catchError(this.handleError));
   }
 
@@ -134,7 +141,7 @@ export class IndecService {
 
   // IndecService
   compareByLocalidad(nroLocalidad: number, codigos: string[]): Observable<ComparadorRow[]> {
-    const body = { nroLocalidad, codigos }; // <- ambos en el body
+    const body = { nroLocalidad, codigos, lang: this.getCurrentLanguage() };
 
     return this.http.post<any[]>(
       `${this.API_URL}/productosPrecios`,
@@ -149,6 +156,15 @@ export class IndecService {
       } as ComparadorRow))),
       catchError(this.handleError)
     );
+  }
+
+  private getCurrentLanguage(): string {
+    const language = (document?.documentElement?.lang || environment.defaultLanguage)
+      .toLowerCase()
+      .trim();
+
+    if (language.startsWith('en')) return 'en';
+    return 'es';
   }
 
   private handleError(error: HttpErrorResponse) {

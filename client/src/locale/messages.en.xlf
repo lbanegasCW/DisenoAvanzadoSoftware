@@ -130,12 +130,6 @@
         <source> Mostrando categorías del rubro seleccionado. </source>
         <target> Showing categories of the selected section. </target>
       </trans-unit>
-      <trans-unit id="catalogo.count_resultados" datatype="html">
-        <source>
-          <x id="ICU" equiv-text="{totalResultados, plural, =0 {0 resultados} =1 {1 resultado} other {# resultados}}" xid="6523587658991541323"/>
-        </source>
-        <target state="new">{totalResultados, plural, =0 {0 results} =1 {1 result} other {<x id="INTERPOLATION" equiv-text="# resultados"/> results}}</target>
-      </trans-unit>
       <trans-unit id="catalogo.btn_agregar" datatype="html">
         <source>Agregar</source>
         <target>Add</target>
@@ -184,9 +178,17 @@
         <source>Buscar</source>
         <target>Search</target>
       </trans-unit>
-      <trans-unit id="6523587658991541323" datatype="html">
-        <source>{VAR_PLURAL, plural, =0 {0 resultados} =1 {1 resultado} other {# resultados}}</source>
-        <target>{VAR_PLURAL, plural, =0 {0 results} =1 {1 result} other {# results}}</target>
+      <trans-unit id="catalogo.count_resultados_0" datatype="html">
+        <source>0 resultados</source>
+        <target>0 resultados</target>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados_1" datatype="html">
+        <source>1 resultado</source>
+        <target>1 resultado</target>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados_n" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ totalResultados }}"/> resultados</source>
+        <target state="new">{$INTERPOLATION} resultados</target>
       </trans-unit>
     </body>
   </file>
