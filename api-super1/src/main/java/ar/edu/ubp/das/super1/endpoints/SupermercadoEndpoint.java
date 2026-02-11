@@ -29,16 +29,9 @@ public class SupermercadoEndpoint {
         var b = f.newDocumentBuilder();
         var doc = b.parse(new org.xml.sax.InputSource(new java.io.StringReader(sucursales)));
         org.w3c.dom.Element root = doc.getDocumentElement();
-        org.w3c.dom.NodeList children = root.getChildNodes();
-        java.util.List<org.w3c.dom.Element> elements = new java.util.ArrayList<>();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i) instanceof org.w3c.dom.Element el) {
-                elements.add(el);
-            }
-        }
 
         var resp = new ObtenerSucursalesResponse();
-        resp.setAny(elements);
+        resp.setAny(java.util.Collections.singletonList(root));
         return resp;
     }
 
@@ -55,16 +48,9 @@ public class SupermercadoEndpoint {
         var b = f.newDocumentBuilder();
         var doc = b.parse(new org.xml.sax.InputSource(new java.io.StringReader(productos)));
         org.w3c.dom.Element root = doc.getDocumentElement();
-        org.w3c.dom.NodeList children = root.getChildNodes();
-        java.util.List<org.w3c.dom.Element> elements = new java.util.ArrayList<>();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i) instanceof org.w3c.dom.Element el) {
-                elements.add(el);
-            }
-        }
 
         var resp = new ObtenerProductosResponse();
-        resp.setAny(elements);
+        resp.setAny(java.util.Collections.singletonList(root));
         return resp;
     }
 
