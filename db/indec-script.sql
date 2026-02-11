@@ -547,40 +547,50 @@ BEGIN
          COALESCE(icp.categoria, c.nom_categoria) AS nomCategoria,
          (
              SELECT
-                 s2.nro_supermercado                  AS nroSupermercado,
-                 CAST(ps2.precio AS DECIMAL(10,2))    AS precio
+                 s2.nro_supermercado                               AS nroSupermercado,
+                 s2.nro_sucursal                                   AS nroSucursal,
+                 CAST(ps2.precio AS DECIMAL(10,2))                 AS precioLista,
+                 pr2.tipo_promocion                                AS tipoPromocion,
+                 CAST(pr2.precio AS DECIMAL(10,2))                 AS precioPromocion,
+                 pr2.fin_vigencia                                  AS finVigencia,
+                 CAST(COALESCE(pr2.precio, ps2.precio) AS DECIMAL(10,2)) AS precioFinal
              FROM dbo.sucursales s2
                       JOIN dbo.productos_supermercados ps2
                            ON ps2.nro_supermercado = s2.nro_supermercado
-                               AND ps2.nro_sucursal    = s2.nro_sucursal
+                               AND ps2.nro_sucursal     = s2.nro_sucursal
+                               AND ps2.cod_barra        = p.cod_barra
                                AND CONVERT(date, ps2.fecha_ult_actualizacion) = CONVERT(date, GETDATE())
+                      LEFT JOIN dbo.productos_sucursales_promociones pr2
+                                ON pr2.nro_supermercado = s2.nro_supermercado
+                                    AND pr2.nro_sucursal     = s2.nro_sucursal
+                                    AND pr2.cod_barra        = p.cod_barra
+                                    AND pr2.fin_vigencia     >= GETDATE()
              WHERE s2.nro_localidad = @nro_localidad
                AND s2.habilitada = 1
-               AND ps2.cod_barra = p.cod_barra
-             FOR JSON PATH
-         ) AS preciosPorSupermercado
+                     FOR JSON PATH
+                     ) AS preciosPorSupermercado
      FROM codes x
-              JOIN dbo.productos p
-                   ON p.cod_barra = x.cod_barra
-              JOIN dbo.categorias_productos c
-                   ON c.nro_categoria = p.nro_categoria
-              LEFT JOIN dbo.idiomas_categorias_productos icp
-                   ON icp.nro_categoria = c.nro_categoria
-                  AND icp.cod_idioma = @cod_idioma
-              JOIN dbo.sucursales s
-                   ON s.nro_localidad = @nro_localidad
-              JOIN dbo.productos_supermercados ps
-                   ON ps.cod_barra = p.cod_barra
-                       AND ps.nro_supermercado = s.nro_supermercado
-                       AND ps.nro_sucursal    = s.nro_sucursal
-                       AND CONVERT(date, ps.fecha_ult_actualizacion) = CONVERT(date, GETDATE())
+                 JOIN dbo.productos p
+     ON p.cod_barra = x.cod_barra
+                 JOIN dbo.categorias_productos c
+                 ON c.nro_categoria = p.nro_categoria
+                 LEFT JOIN dbo.idiomas_categorias_productos icp
+                 ON icp.nro_categoria = c.nro_categoria
+                 AND icp.cod_idioma = @cod_idioma
      WHERE p.vigente = 1
        AND c.vigente = 1
+       AND EXISTS (
+                 SELECT 1
+                 FROM dbo.sucursales s
+                 JOIN dbo.productos_supermercados ps
+                 ON ps.nro_supermercado = s.nro_supermercado
+       AND ps.nro_sucursal     = s.nro_sucursal
+       AND ps.cod_barra        = p.cod_barra
+       AND CONVERT(date, ps.fecha_ult_actualizacion) = CONVERT(date, GETDATE())
+                 WHERE s.nro_localidad = @nro_localidad
        AND s.habilitada = 1
-     GROUP BY
-         p.cod_barra, p.nom_producto, c.nom_categoria, icp.categoria
-     ORDER BY
-         p.nom_producto;
+                 )
+     ORDER BY p.nom_producto;
 END
 GO
 

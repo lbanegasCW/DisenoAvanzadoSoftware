@@ -262,53 +262,56 @@ END
 GO
 
 CREATE OR ALTER PROCEDURE dbo.sp_get_productos
-AS
+    AS
 BEGIN
     SET NOCOUNT ON;
-
-    SELECT
-        ps.nro_sucursal,
-        r.nro_rubro,
-        r.nom_rubro,
-        c.nro_categoria,
-        c.nom_categoria,
-        p.cod_barra,
-        p.nom_producto,
-        p.desc_producto,
-        p.imagen,
-        m.nro_marca,
-        m.nom_marca,
-        t.nro_tipo_producto,
-        t.nom_tipo_producto,
-        ps.precio,
-        ps.vigente,
-        (
-            SELECT
-                pp.tipo_promocion,
-                pp.precio,
-                pp.fin_vigencia
-            FROM dbo.productos_promociones AS pp
-            WHERE p.cod_barra = pp.cod_barra
-            FOR XML PATH('promocion'), ROOT('promociones'), TYPE
-        ) AS 'Promociones'
-    FROM dbo.productos_sucursales ps
-             INNER JOIN dbo.productos p
-                        ON ps.cod_barra = p.cod_barra
-             INNER JOIN dbo.categorias_productos c
-                        ON p.nro_categoria = c.nro_categoria
-             INNER JOIN dbo.rubros_productos r
-                        ON c.nro_rubro = r.nro_rubro
-             INNER JOIN dbo.marcas_productos m
-                        ON p.nro_marca = m.nro_marca
-             INNER JOIN dbo.tipos_productos t
-                        ON p.nro_tipo_producto = t.nro_tipo_producto
-             INNER JOIN dbo.sucursales s
-                        ON ps.nro_sucursal = s.nro_sucursal
-    WHERE p.vigente  = 1
-      AND c.vigente  = 1
-      AND r.vigente  = 1
-      AND s.habilitada = 1
-    ORDER BY ps.nro_sucursal, r.nom_rubro, c.nom_categoria, p.nom_producto
+SELECT
+    ps.nro_sucursal,
+    r.nro_rubro,
+    r.nom_rubro,
+    c.nro_categoria,
+    c.nom_categoria,
+    p.cod_barra,
+    p.nom_producto,
+    p.desc_producto,
+    p.imagen,
+    m.nro_marca,
+    m.nom_marca,
+    t.nro_tipo_producto,
+    t.nom_tipo_producto,
+    ps.precio,
+    ps.vigente,
+    pr.tipo_promocion,
+    pr.precio_promocion,
+    pr.fin_vigencia_promocion
+FROM dbo.productos_sucursales ps
+         INNER JOIN dbo.productos p
+                    ON ps.cod_barra = p.cod_barra
+         INNER JOIN dbo.categorias_productos c
+                    ON p.nro_categoria = c.nro_categoria
+         INNER JOIN dbo.rubros_productos r
+                    ON c.nro_rubro = r.nro_rubro
+         INNER JOIN dbo.marcas_productos m
+                    ON p.nro_marca = m.nro_marca
+         INNER JOIN dbo.tipos_productos t
+                    ON p.nro_tipo_producto = t.nro_tipo_producto
+         INNER JOIN dbo.sucursales s
+                    ON ps.nro_sucursal = s.nro_sucursal
+    OUTER APPLY (
+        SELECT TOP (1)
+            pp.tipo_promocion       AS tipo_promocion,
+            pp.precio               AS precio_promocion,
+            pp.fin_vigencia         AS fin_vigencia_promocion
+        FROM dbo.productos_promociones pp
+        WHERE pp.cod_barra    = ps.cod_barra
+          AND pp.fin_vigencia IS NOT NULL
+          AND pp.fin_vigencia > SYSUTCDATETIME()
+    ) pr
+WHERE p.vigente    = 1
+  AND c.vigente    = 1
+  AND r.vigente    = 1
+  AND s.habilitada = 1
+ORDER BY ps.nro_sucursal, r.nom_rubro, c.nom_categoria, p.nom_producto
     FOR XML PATH('productoSucursal'), ROOT('productosSucursales'), TYPE;
 END
 GO
