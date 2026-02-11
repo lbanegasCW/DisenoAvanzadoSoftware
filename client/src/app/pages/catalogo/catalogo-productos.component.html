@@ -1,7 +1,7 @@
 <section class="page-container page-section">
   <div class="page-hero">
     <h1 class="page-title" i18n="@@catalogo.title">Catálogo de productos</h1>
-    <p class="page-subtitle">Explorá productos y armá tu carrito para comparar precios.</p>
+    <p class="page-subtitle" i18n="@@catalogo.subtitle">Explorá productos y armá tu carrito para comparar precios.</p>
   </div>
 </section>
 
@@ -98,7 +98,7 @@
               <p class="mt-0.5 text-xs text-slate-600" *ngIf="p.descProducto">{{ p.descProducto }}</p>
 
               <div class="mt-2 flex flex-wrap gap-1.5">
-                <span class="chip">EAN: {{ p.codBarra }}</span>
+                <span class="chip"><span i18n="@@catalogo.ean_label">EAN:</span> {{ p.codBarra }}</span>
                 <span *ngIf="p.nomMarca" class="chip">{{ p.nomMarca }}</span>
                 <span class="chip">{{ p.nomRubro }}</span>
                 <span class="chip">{{ p.nomCategoria }}</span>
@@ -150,7 +150,7 @@
         <img *ngIf="p.imagen" [src]="'assets/images/' + p.imagen" class="h-12 w-12 rounded-lg border border-slate-200 bg-slate-50 object-contain" alt="" />
         <div class="min-w-0 flex-1">
           <div class="truncate text-sm font-semibold text-slate-900">{{ p.nomProducto }}</div>
-          <div class="truncate text-xs text-slate-500">EAN: {{ p.codBarra }}</div>
+          <div class="truncate text-xs text-slate-500"><span i18n="@@catalogo.ean_label">EAN:</span> {{ p.codBarra }}</div>
           <div class="truncate text-xs text-slate-500" *ngIf="p.nomMarca">{{ p.nomMarca }}</div>
         </div>
         <button class="btn-secondary px-3 py-2 text-xs" (click)="cart.remove(p.codBarra)" i18n="@@catalogo.drawer_btn_quitar">Quitar</button>

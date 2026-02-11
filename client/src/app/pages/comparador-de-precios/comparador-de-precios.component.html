@@ -1,14 +1,14 @@
 <section class="page-container page-section">
   <div class="page-hero">
-    <h1 class="page-title" i18n="@@catalogo.title">Comparador de precios</h1>
-    <p class="page-subtitle">
+    <h1 class="page-title" i18n="@@comparador.title">Comparador de precios</h1>
+    <p class="page-subtitle" i18n="@@comparador.subtitle">
       Visualizá rápidamente dónde conviene comprar tu carrito en la localidad seleccionada.
     </p>
   </div>
 </section>
 
 <section class="page-container pb-14">
-  <div *ngIf="loading" class="card text-sm font-medium text-slate-600">Cargando comparación…</div>
+  <div *ngIf="loading" class="card text-sm font-medium text-slate-600" i18n="@@comparador.loading">Cargando comparación…</div>
 
   <div *ngIf="errorMsg" class="card border-rose-200 bg-rose-50 text-sm font-medium text-rose-700">
     {{ errorMsg }}
@@ -18,8 +18,8 @@
     <table class="w-full min-w-[720px] text-sm text-slate-700">
       <thead class="bg-slate-50 text-slate-700">
         <tr>
-          <th class="px-4 py-3 text-left font-semibold">Producto</th>
-          <th class="px-4 py-3 text-left font-semibold">Categoría</th>
+          <th class="px-4 py-3 text-left font-semibold" i18n="@@comparador.col_producto">Producto</th>
+          <th class="px-4 py-3 text-left font-semibold" i18n="@@comparador.col_categoria">Categoría</th>
           <th
             *ngFor="let id of colIds; trackBy: trackCol"
             class="px-4 py-3 text-center font-semibold"
@@ -27,7 +27,7 @@
           >
             <div class="inline-flex items-center gap-2">
               <span>{{ supName(id) }}</span>
-              <span *ngIf="id === cheapestSupId" class="winner-chip">🏆 Más barato</span>
+              <span *ngIf="id === cheapestSupId" class="winner-chip" i18n="@@comparador.cheapest">🏆 Más barato</span>
             </div>
           </th>
         </tr>
@@ -37,7 +37,7 @@
         <tr *ngFor="let row of vmRows; trackBy: trackRow" class="table-row">
           <td class="px-4 py-3 align-top">
             <p class="font-semibold text-slate-900">{{ row.nomProducto }}</p>
-            <p class="mt-1 text-xs text-slate-500">EAN {{ row.codBarra }}</p>
+            <p class="mt-1 text-xs text-slate-500"><span i18n="@@comparador.ean_label">EAN</span> {{ row.codBarra }}</p>
           </td>
 
           <td class="px-4 py-3 align-top text-slate-600">{{ row.nomCategoria }}</td>
@@ -62,7 +62,7 @@
         </tr>
 
         <tr class="border-t border-slate-200 bg-slate-50 font-semibold text-slate-900">
-          <td class="px-4 py-3" colspan="2">TOTAL</td>
+          <td class="px-4 py-3" colspan="2" i18n="@@comparador.total">TOTAL</td>
           <td
             *ngFor="let id of colIds; trackBy: trackCol"
             class="px-4 py-3 text-center"
@@ -70,7 +70,7 @@
           >
             <span *ngIf="isCompleteBySup[id]; else incompleto">{{ formatPrice(totalBySup[id]) }}</span>
             <ng-template #incompleto>
-              <span class="text-slate-400">Incompleto</span>
+              <span class="text-slate-400" i18n="@@comparador.incomplete">Incompleto</span>
             </ng-template>
           </td>
         </tr>
@@ -78,7 +78,7 @@
     </table>
   </div>
 
-  <div *ngIf="!loading && !vmRows.length && !errorMsg" class="card text-sm text-slate-500">
+  <div *ngIf="!loading && !vmRows.length && !errorMsg" class="card text-sm text-slate-500" i18n="@@comparador.empty_results">
     No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad.
   </div>
 </section>

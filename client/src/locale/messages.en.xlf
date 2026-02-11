@@ -200,15 +200,15 @@
       </trans-unit>
       <trans-unit id="catalogo.count_resultados_0" datatype="html">
         <source>0 resultados</source>
-        <target>0 resultados</target>
+        <target>0 results</target>
       </trans-unit>
       <trans-unit id="catalogo.count_resultados_1" datatype="html">
         <source>1 resultado</source>
-        <target>1 resultado</target>
+        <target>1 result</target>
       </trans-unit>
       <trans-unit id="catalogo.count_resultados_n" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ totalResultados }}"/> resultados</source>
-        <target state="new">{$INTERPOLATION} resultados</target>
+        <target>{$INTERPOLATION} results</target>
       </trans-unit>
     </body>
   </file>
