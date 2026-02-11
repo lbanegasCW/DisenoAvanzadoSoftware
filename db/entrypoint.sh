@@ -49,6 +49,12 @@ if [ $? -eq 0 ]; then
         echo "Script ejecutado ${scripts[i]} en ${databases[i]}"
     done
 
+    OPENFOOD_SCRIPT="$SCRIPT_DIR/openfood-images-update.sql"
+    if [ -f "$OPENFOOD_SCRIPT" ]; then
+        echo "Aplicar actualización de imágenes Open Food Facts"
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "$MSSQL_SA_PASSWORD" -d master -i "$OPENFOOD_SCRIPT"
+    fi
+
 else
     echo "SQL Server no está levantado"
 fi

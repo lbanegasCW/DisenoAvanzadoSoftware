@@ -1,0 +1,1297 @@
+{
+  "generated_at_utc": "2026-02-11T18:49:26Z",
+  "products_total": 100,
+  "resolved_total": 100,
+  "unresolved_total": 0,
+  "placeholder_total": 35,
+  "results": [
+    {
+      "cod_barra": "100000000001",
+      "nom_producto": "Pan francés 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/257/001/200/0902/front_es.3.400.jpg",
+      "matched_code": "2570012000902",
+      "matched_name": "Pan frances",
+      "score": 0.9667,
+      "query": "Pan francés"
+    },
+    {
+      "cod_barra": "100000000002",
+      "nom_producto": "Pan lactal 550g",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/389/000/1129/front_fr.8.400.jpg",
+      "matched_code": "7793890001129",
+      "matched_name": "Pan lactal",
+      "score": 0.9667,
+      "query": "Pan lactal"
+    },
+    {
+      "cod_barra": "100000000003",
+      "nom_producto": "Galletitas de agua 303g",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/808/274/4518/front_es.5.400.jpg",
+      "matched_code": "7798082744518",
+      "matched_name": "Galletitas crackers de agua",
+      "score": 0.7667,
+      "query": "Galletitas de agua"
+    },
+    {
+      "cod_barra": "100000000004",
+      "nom_producto": "Bizcochos 200g",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/037/603/5391/front_es.24.400.jpg",
+      "matched_code": "8410376035391",
+      "matched_name": "Bizcochos",
+      "score": 0.8,
+      "query": "Bizcochos"
+    },
+    {
+      "cod_barra": "100000000005",
+      "nom_producto": "Pan rallado 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/480/754/3721/front_es.3.400.jpg",
+      "matched_code": "8414807543721",
+      "matched_name": "Pan Rallado Ajo y Perejil 500g",
+      "score": 1.1,
+      "query": "Pan rallado 500g"
+    },
+    {
+      "cod_barra": "100000000006",
+      "nom_producto": "Harina 000 1Kg Molinos",
+      "image_url": "https://images.openfoodfacts.org/images/products/777/261/900/0278/front_es.4.400.jpg",
+      "matched_code": "7772619000278",
+      "matched_name": "Harina de Trigo 000",
+      "score": 0.6,
+      "query": "Harina 000 Molinos"
+    },
+    {
+      "cod_barra": "100000000007",
+      "nom_producto": "Harina leudante 1Kg Molinos",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/218/014/0708/front_es.20.400.jpg",
+      "matched_code": "7792180140708",
+      "matched_name": "Pureza - Harina  Leudante Ultra Fina - Reposteria Casera",
+      "score": 0.6,
+      "query": "Harina leudante Molinos"
+    },
+    {
+      "cod_barra": "100000000008",
+      "nom_producto": "Arroz largo fino 1Kg Gallo",
+      "image_url": "https://images.openfoodfacts.org/images/products/177/905/031/59693/front_es.3.400.jpg",
+      "matched_code": "17790503159693",
+      "matched_name": "arroz gallo largo fino x 1kg",
+      "score": 1.1,
+      "query": "Arroz largo fino 1Kg Gallo"
+    },
+    {
+      "cod_barra": "100000000009",
+      "nom_producto": "Polenta 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/400/604/012/0698/front_en.20.400.jpg",
+      "matched_code": "4006040120698",
+      "matched_name": "Biona Organic Polenta 500G",
+      "score": 1.45,
+      "query": "Polenta 500g"
+    },
+    {
+      "cod_barra": "100000000010",
+      "nom_producto": "Avena 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/842/690/410/3647/front_es.5.400.jpg",
+      "matched_code": "8426904103647",
+      "matched_name": "Salvado Avena 500G, Sello verde",
+      "score": 1.45,
+      "query": "Avena 500g"
+    },
+    {
+      "cod_barra": "100000000011",
+      "nom_producto": "Sémola 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/801/178/090/9713/front_fr.4.400.jpg",
+      "matched_code": "8011780909713",
+      "matched_name": "Pasta di semola di grano duro 500G",
+      "score": 1.1,
+      "query": "Sémola 500g"
+    },
+    {
+      "cod_barra": "100000000016",
+      "nom_producto": "Lentejas secas 400g",
+      "image_url": "https://images.openfoodfacts.org/images/products/848/000/005/3251/front_es.49.400.jpg",
+      "matched_code": "8480000053251",
+      "matched_name": "Lentejas",
+      "score": 0.6333,
+      "query": "Lentejas secas"
+    },
+    {
+      "cod_barra": "100000000017",
+      "nom_producto": "Arvejas secas 400g",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/661/330/8543/front_es.3.400.jpg",
+      "matched_code": "7796613308543",
+      "matched_name": "arvejas secas",
+      "score": 0.9667,
+      "query": "Arvejas secas"
+    },
+    {
+      "cod_barra": "100000000018",
+      "nom_producto": "Porotos secos 400g",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/229/027/9008/front_en.8.400.jpg",
+      "matched_code": "7792290279008",
+      "matched_name": "Porotos secos remojados",
+      "score": 0.7667,
+      "query": "Porotos secos"
+    },
+    {
+      "cod_barra": "100000000019",
+      "nom_producto": "Purè de tomate 520g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/058/013/8844/front_es.8.400.jpg",
+      "matched_code": "7790580138844",
+      "matched_name": "Arcor Puré de Tomate",
+      "score": 0.85,
+      "query": "Purè de tomate Arcor"
+    },
+    {
+      "cod_barra": "100000000020",
+      "nom_producto": "Salsa de tomate 340g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/058/096/9400/front_es.10.400.jpg",
+      "matched_code": "7790580969400",
+      "matched_name": "Salsa Lista Tuco",
+      "score": 0.35,
+      "query": "Salsa de tomate Arcor"
+    },
+    {
+      "cod_barra": "100000000021",
+      "nom_producto": "Carne picada 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/843/656/926/3174/front_es.39.400.jpg",
+      "matched_code": "8436569263174",
+      "matched_name": "Preparado de carne picada vacuno",
+      "score": 0.7667,
+      "query": "Carne picada"
+    },
+    {
+      "cod_barra": "100000000022",
+      "nom_producto": "Carne para milanesa 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/234/947/400/6483/front_es.4.400.jpg",
+      "matched_code": "2349474006483",
+      "matched_name": "Milanesa de carne de pollo",
+      "score": 0.7667,
+      "query": "carne milanesa"
+    },
+    {
+      "cod_barra": "100000000023",
+      "nom_producto": "Pollo entero 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/230/278/100/4542/front_es.4.400.jpg",
+      "matched_code": "2302781004542",
+      "matched_name": "Pollo entero",
+      "score": 0.9667,
+      "query": "Pollo entero"
+    },
+    {
+      "cod_barra": "100000000024",
+      "nom_producto": "Pescado congelado 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/848/000/024/0200/front_es.53.400.jpg",
+      "matched_code": "8480000240200",
+      "matched_name": "Bacalao lomo en su punto de sal congelado",
+      "score": 0.4333,
+      "query": "pescado congelado"
+    },
+    {
+      "cod_barra": "100000000025",
+      "nom_producto": "Carne para guiso 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/030/035/5397/front_fr.7.400.jpg",
+      "matched_code": "8410300355397",
+      "matched_name": "Dúo caldo para guisos de carne estuche 117 g",
+      "score": 0.4333,
+      "query": "carne guiso"
+    },
+    {
+      "cod_barra": "100000000026",
+      "nom_producto": "Leche entera 1L La Serenísima",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/074/230/6302/front_es.7.400.jpg",
+      "matched_code": "7790742306302",
+      "matched_name": "Leche entera en polvo",
+      "score": 0.6,
+      "query": "Leche entera La Serenísima"
+    },
+    {
+      "cod_barra": "100000000027",
+      "nom_producto": "Leche descremada 1L Sancor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/008/003/7715/front_es.5.400.jpg",
+      "matched_code": "7790080037715",
+      "matched_name": "Leche Parcialmente Descremada 0% Lactosa",
+      "score": 0.6,
+      "query": "Leche descremada Sancor"
+    },
+    {
+      "cod_barra": "100000000028",
+      "nom_producto": "Yogur firme 190g La Serenísima",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/133/700/7000/front_es.3.400.jpg",
+      "matched_code": "7791337007000",
+      "matched_name": "Yogur La Serenisima Firme Vainilla",
+      "score": 0.85,
+      "query": "Yogur firme La Serenísima"
+    },
+    {
+      "cod_barra": "100000000029",
+      "nom_producto": "Queso cremoso 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/762/220/172/4443/front_en.21.400.jpg",
+      "matched_code": "7622201724443",
+      "matched_name": "Queso delicioso y/e cremoso",
+      "score": 0.7667,
+      "query": "Queso cremoso"
+    },
+    {
+      "cod_barra": "100000000030",
+      "nom_producto": "Manteca 200g La Serenísima",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/074/234/5707/front_es.3.400.jpg",
+      "matched_code": "7790742345707",
+      "matched_name": "manteca light la serenísima 200g 3263508",
+      "score": 1.1,
+      "query": "Manteca 200g La Serenísima"
+    },
+    {
+      "cod_barra": "100000000031",
+      "nom_producto": "Crema de leche 200cc Sancor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/008/003/3199/front_es.3.400.jpg",
+      "matched_code": "7790080033199",
+      "matched_name": "crema de leche",
+      "score": 0.8,
+      "query": "Crema de leche Sancor"
+    },
+    {
+      "cod_barra": "100000000032",
+      "nom_producto": "Huevos docena",
+      "image_url": "https://images.openfoodfacts.org/images/products/842/796/572/2464/front_es.4.400.jpg",
+      "matched_code": "8427965722464",
+      "matched_name": "Huevos Docena L/M Alimentación Maiz",
+      "score": 1.45,
+      "query": "Huevos docena"
+    },
+    {
+      "cod_barra": "100000000033",
+      "nom_producto": "Papa 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/541/308/199/0033/front_fr.40.400.jpg",
+      "matched_code": "5413081990033",
+      "matched_name": "Papas Noisettes Pre Fritas Congeladas 1KG Mydibel Bsa",
+      "score": 0.6,
+      "query": "Papa 1Kg"
+    },
+    {
+      "cod_barra": "100000000034",
+      "nom_producto": "Cebolla 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/843/700/027/0669/front_es.3.400.jpg",
+      "matched_code": "8437000270669",
+      "matched_name": "Combinado ajo y cebolla malla 1kg",
+      "score": 1.1,
+      "query": "Cebolla 1Kg"
+    },
+    {
+      "cod_barra": "100000000035",
+      "nom_producto": "Tomate 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/366/099/200/1767/front_fr.3.400.jpg",
+      "matched_code": "3660992001767",
+      "matched_name": "Tomate bien vu filet 1Kg",
+      "score": 1.1,
+      "query": "Tomate 1Kg"
+    },
+    {
+      "cod_barra": "100000000036",
+      "nom_producto": "Zanahoria 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/848/000/016/7521/front_es.56.400.jpg",
+      "matched_code": "8480000167521",
+      "matched_name": "Zanahoria",
+      "score": 0.8,
+      "query": "Zanahoria"
+    },
+    {
+      "cod_barra": "100000000038",
+      "nom_producto": "Manzana 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/840/200/101/2174/front_es.51.400.jpg",
+      "matched_code": "8402001012174",
+      "matched_name": "Barritas de Espelta Sabor Manzana 0%",
+      "score": 0.6,
+      "query": "Manzana"
+    },
+    {
+      "cod_barra": "100000000039",
+      "nom_producto": "Banana 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/600/398/900/3042/front_en.3.400.jpg",
+      "matched_code": "6003989003042",
+      "matched_name": "LIMPOPO MAGEU BANANA FLAVOURED  1kg",
+      "score": 1.1,
+      "query": "Banana 1Kg"
+    },
+    {
+      "cod_barra": "100000000040",
+      "nom_producto": "Naranja 1Kg",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/037/604/7578/front_es.61.400.jpg",
+      "matched_code": "8410376047578",
+      "matched_name": "Digestive Avena Naranja",
+      "score": 0.6,
+      "query": "Naranja"
+    },
+    {
+      "cod_barra": "100000000041",
+      "nom_producto": "Azúcar 1Kg Ledesma",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/254/025/0450/front_es.8.400.jpg",
+      "matched_code": "7792540250450",
+      "matched_name": "Azúcar Superior",
+      "score": 0.4333,
+      "query": "azucar ledesma"
+    },
+    {
+      "cod_barra": "100000000042",
+      "nom_producto": "Dulce de leche 400g La Serenísima",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/074/214/4607/front_es.21.400.jpg",
+      "matched_code": "7790742144607",
+      "matched_name": "Dulce De Leche",
+      "score": 0.8,
+      "query": "Dulce de leche La Serenísima"
+    },
+    {
+      "cod_barra": "100000000043",
+      "nom_producto": "Mermelada 454g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/058/012/3437/front_es.3.400.jpg",
+      "matched_code": "7790580123437",
+      "matched_name": "Arcor Mermelada de ciruela",
+      "score": 0.7667,
+      "query": "Mermelada Arcor"
+    },
+    {
+      "cod_barra": "100000000044",
+      "nom_producto": "Galletitas dulces 300g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/004/012/6800/front_es.10.400.jpg",
+      "matched_code": "7790040126800",
+      "matched_name": "Galletitas Hogareñas Mix de cereales",
+      "score": 0.35,
+      "query": "Galletitas dulces Arcor"
+    },
+    {
+      "cod_barra": "100000000045",
+      "nom_producto": "Cacao en polvo 180g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/750/223/094/7238/front_es.4.400.jpg",
+      "matched_code": "7502230947238",
+      "matched_name": "Tableta de chocolate con leche &quot;Arcor&quot; Ben 10",
+      "score": 0.35,
+      "query": "Cacao en polvo Arcor"
+    },
+    {
+      "cod_barra": "100000000047",
+      "nom_producto": "Aceite girasol 1.5L Natura",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/027/200/1005/front_es.44.400.jpg",
+      "matched_code": "7790272001005",
+      "matched_name": "Aceite de girasol",
+      "score": 0.5,
+      "query": "Aceite girasol Natura"
+    },
+    {
+      "cod_barra": "100000000048",
+      "nom_producto": "Grasa vacuna 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/773/013/200/1677/front_es.3.400.jpg",
+      "matched_code": "7730132001677",
+      "matched_name": "Grasa vacuna",
+      "score": 0.9667,
+      "query": "Grasa vacuna"
+    },
+    {
+      "cod_barra": "100000000050",
+      "nom_producto": "Yerba mate 1Kg Taragüi",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/038/711/3228/front_fr.3.400.jpg",
+      "matched_code": "7790387113228",
+      "matched_name": "Yerba Mate C / Palo Y Naranja 500GR Taragui Paq",
+      "score": 0.85,
+      "query": "Yerba mate Taragüi"
+    },
+    {
+      "cod_barra": "100000000051",
+      "nom_producto": "Yerba mate 1Kg Amanda",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/271/000/0021/front_fr.13.400.jpg",
+      "matched_code": "7792710000021",
+      "matched_name": "Amanda Yerba Mate",
+      "score": 0.85,
+      "query": "Yerba mate Amanda"
+    },
+    {
+      "cod_barra": "100000000053",
+      "nom_producto": "Café molido 250g La Virginia",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/015/003/7072/front_es.3.400.jpg",
+      "matched_code": "7790150037072",
+      "matched_name": "Café Tostado Molido",
+      "score": 0.6,
+      "query": "Café molido La Virginia"
+    },
+    {
+      "cod_barra": "100000000055",
+      "nom_producto": "Agua mineral 2L",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/204/250/2367/front_es.26.400.jpg",
+      "matched_code": "8412042502367",
+      "matched_name": "Agua mineral",
+      "score": 0.9667,
+      "query": "Agua mineral"
+    },
+    {
+      "cod_barra": "100000000056",
+      "nom_producto": "Agua mineral 500ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/789/490/053/0001/front_pt.30.400.jpg",
+      "matched_code": "7894900530001",
+      "matched_name": "AGUA MIN CRYSTAL S/GAS 500ML",
+      "score": 0.7667,
+      "query": "Agua mineral 500ml"
+    },
+    {
+      "cod_barra": "100000000057",
+      "nom_producto": "Jugo en polvo 18g Arcor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/058/010/6041/front_es.4.400.jpg",
+      "matched_code": "7790580106041",
+      "matched_name": "jugo en polvo limonada",
+      "score": 0.6,
+      "query": "Jugo en polvo Arcor"
+    },
+    {
+      "cod_barra": "100000000058",
+      "nom_producto": "Gaseosa cola 2.25L",
+      "image_url": "https://images.openfoodfacts.org/images/products/775/018/200/1687/front_es.21.400.jpg",
+      "matched_code": "7750182001687",
+      "matched_name": "Gaseosa 2.5 coca cola",
+      "score": 0.85,
+      "query": "Gaseosa cola"
+    },
+    {
+      "cod_barra": "100000000059",
+      "nom_producto": "Gaseosa naranja 2.25L",
+      "image_url": "https://images.openfoodfacts.org/images/products/759/103/100/0228/front_es.3.400.jpg",
+      "matched_code": "7591031000228",
+      "matched_name": "Bebida Gaseosa Sabor a Naranja 2 LT",
+      "score": 0.85,
+      "query": "Gaseosa naranja"
+    },
+    {
+      "cod_barra": "100000000061",
+      "nom_producto": "Desinfectante 1L Ayudín",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/325/300/5221/front_es.3.400.jpg",
+      "matched_code": "7793253005221",
+      "matched_name": "desinfectante",
+      "score": 0.6333,
+      "query": "Desinfectante Ayudín"
+    },
+    {
+      "cod_barra": "100000000072",
+      "nom_producto": "Shampoo 400ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/405/648/982/7184/front_en.3.400.jpg",
+      "matched_code": "4056489827184",
+      "matched_name": "Antischuppen Shampoo",
+      "score": 0.6,
+      "query": "Shampoo"
+    },
+    {
+      "cod_barra": "100000000073",
+      "nom_producto": "Acondicionador 400ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/000/001/221/1111/front_fr.9.400.jpg",
+      "matched_code": "12211111",
+      "matched_name": "acondicionador",
+      "score": 0.8,
+      "query": "Acondicionador"
+    },
+    {
+      "cod_barra": "100000000077",
+      "nom_producto": "Toallitas femeninas",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/077/060/2087/front_en.3.400.jpg",
+      "matched_code": "7790770602087",
+      "matched_name": "Toallitas femeninas calipso",
+      "score": 1.45,
+      "query": "Toallitas femeninas"
+    },
+    {
+      "cod_barra": "100000000083",
+      "nom_producto": "Sal fina 500g",
+      "image_url": "https://images.openfoodfacts.org/images/products/000/002/008/4820/front_es.41.400.jpg",
+      "matched_code": "20084820",
+      "matched_name": "Sal Fina",
+      "score": 0.9667,
+      "query": "Sal fina"
+    },
+    {
+      "cod_barra": "100000000084",
+      "nom_producto": "Vinagre alcohol 1L",
+      "image_url": "https://images.openfoodfacts.org/images/products/750/105/247/5004/front_es.9.400.jpg",
+      "matched_code": "7501052475004",
+      "matched_name": "Vinagre Blanco de Alcohol de Caña",
+      "score": 0.7667,
+      "query": "Vinagre alcohol"
+    },
+    {
+      "cod_barra": "100000000090",
+      "nom_producto": "Arroz parboil 1Kg Gallo",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/007/041/3765/front_es.3.400.jpg",
+      "matched_code": "7790070413765",
+      "matched_name": "Arrroz preparado sabor queso",
+      "score": 0.1,
+      "query": "Arroz parboil Gallo"
+    },
+    {
+      "cod_barra": "100000000092",
+      "nom_producto": "Aceite 900ml Natura",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/017/901/6542/front_es.8.400.jpg",
+      "matched_code": "8410179016542",
+      "matched_name": "Aceite oliva virgen extra eco natura",
+      "score": 0.7667,
+      "query": "Aceite Natura"
+    },
+    {
+      "cod_barra": "100000000093",
+      "nom_producto": "Leche en polvo 400g Sancor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/008/004/4188/front_es.12.400.jpg",
+      "matched_code": "7790080044188",
+      "matched_name": "San Regim",
+      "score": 0.1,
+      "query": "Leche en polvo Sancor"
+    },
+    {
+      "cod_barra": "100000000094",
+      "nom_producto": "Queso rallado 40g Sancor",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/008/001/4709/front_es.11.400.jpg",
+      "matched_code": "7790080014709",
+      "matched_name": "Queso Rallado Reggianito",
+      "score": 0.6,
+      "query": "Queso rallado Sancor"
+    },
+    {
+      "cod_barra": "100000000095",
+      "nom_producto": "Tomate triturado 520g",
+      "image_url": "https://images.openfoodfacts.org/images/products/848/000/016/0447/front_es.52.400.jpg",
+      "matched_code": "8480000160447",
+      "matched_name": "Tomate triturado",
+      "score": 0.9667,
+      "query": "Tomate triturado"
+    },
+    {
+      "cod_barra": "100000000096",
+      "nom_producto": "Atún en lata 170g",
+      "image_url": "https://images.openfoodfacts.org/images/products/841/020/503/2386/front_es.44.400.jpg",
+      "matched_code": "8410205032386",
+      "matched_name": "Atún en lata",
+      "score": 0.9667,
+      "query": "Atún en lata"
+    },
+    {
+      "cod_barra": "100000000098",
+      "nom_producto": "Arvejas en lata 300g",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/229/027/9206/front_es.5.400.jpg",
+      "matched_code": "7792290279206",
+      "matched_name": "Arvejas secas remojadas en lata",
+      "score": 0.7667,
+      "query": "Arvejas en lata"
+    },
+    {
+      "cod_barra": "100000000099",
+      "nom_producto": "Levadura seca 10g",
+      "image_url": "https://images.openfoodfacts.org/images/products/000/004/210/0263/front_es.8.400.jpg",
+      "matched_code": "42100263",
+      "matched_name": "Levadura seca",
+      "score": 0.9667,
+      "query": "Levadura seca"
+    },
+    {
+      "cod_barra": "100000000100",
+      "nom_producto": "Leche chocolatada 1L La Serenísima",
+      "image_url": "https://images.openfoodfacts.org/images/products/779/074/217/2204/front_es.12.400.jpg",
+      "matched_code": "7790742172204",
+      "matched_name": "Leche Protein Chocolate",
+      "score": 0.35,
+      "query": "leche chocolatada serenisima"
+    },
+    {
+      "cod_barra": "100000000012",
+      "nom_producto": "Harina de maíz 1Kg",
+      "image_url": "https://placehold.co/300x300?text=Harina%20de%20ma%C3%ADz%201Kg",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000013",
+      "nom_producto": "Fideos secos spaghetti 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20spaghetti%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000014",
+      "nom_producto": "Fideos secos tirabuzón 500g Matarazzo",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20tirabuz%C3%B3n%20500g%20Matarazzo",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000015",
+      "nom_producto": "Fideos secos mostachol 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20mostachol%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000037",
+      "nom_producto": "Lechuga unidad",
+      "image_url": "https://placehold.co/300x300?text=Lechuga%20unidad",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000046",
+      "nom_producto": "Aceite mezcla 1.5L Cocinero",
+      "image_url": "https://placehold.co/300x300?text=Aceite%20mezcla%201.5L%20Cocinero",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000049",
+      "nom_producto": "Margarina 200g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Margarina%20200g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000052",
+      "nom_producto": "Té 50 saquitos CBSé",
+      "image_url": "https://placehold.co/300x300?text=T%C3%A9%2050%20saquitos%20CBS%C3%A9",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000054",
+      "nom_producto": "Mate cocido 25 saquitos Amanda",
+      "image_url": "https://placehold.co/300x300?text=Mate%20cocido%2025%20saquitos%20Amanda",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000060",
+      "nom_producto": "Lavandina 1L Ayudín",
+      "image_url": "https://placehold.co/300x300?text=Lavandina%201L%20Ayud%C3%ADn",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000062",
+      "nom_producto": "Limpiador piso 900ml Poett",
+      "image_url": "https://placehold.co/300x300?text=Limpiador%20piso%20900ml%20Poett",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000063",
+      "nom_producto": "Detergente cocina 750ml",
+      "image_url": "https://placehold.co/300x300?text=Detergente%20cocina%20750ml",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000064",
+      "nom_producto": "Esponja de cocina",
+      "image_url": "https://placehold.co/300x300?text=Esponja%20de%20cocina",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000065",
+      "nom_producto": "Limpiavidrios 500ml Poett",
+      "image_url": "https://placehold.co/300x300?text=Limpiavidrios%20500ml%20Poett",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000066",
+      "nom_producto": "Jabón en polvo 800g Ala",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20en%20polvo%20800g%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000067",
+      "nom_producto": "Jabón líquido ropa 3L Ala",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20l%C3%ADquido%20ropa%203L%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000068",
+      "nom_producto": "Suavizante 1L Ala",
+      "image_url": "https://placehold.co/300x300?text=Suavizante%201L%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000069",
+      "nom_producto": "Quitamanchas 450ml Ala",
+      "image_url": "https://placehold.co/300x300?text=Quitamanchas%20450ml%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000070",
+      "nom_producto": "Lavandina concentrada 2L Ayudín",
+      "image_url": "https://placehold.co/300x300?text=Lavandina%20concentrada%202L%20Ayud%C3%ADn",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000071",
+      "nom_producto": "Jabón tocador 3x90g",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20tocador%203x90g",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000074",
+      "nom_producto": "Pasta dental 90g Colgate",
+      "image_url": "https://placehold.co/300x300?text=Pasta%20dental%2090g%20Colgate",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000075",
+      "nom_producto": "Cepillo dental Colgate",
+      "image_url": "https://placehold.co/300x300?text=Cepillo%20dental%20Colgate",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000076",
+      "nom_producto": "Desodorante aerosol 150ml",
+      "image_url": "https://placehold.co/300x300?text=Desodorante%20aerosol%20150ml",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000078",
+      "nom_producto": "Papel higiénico 4 rollos Higienol",
+      "image_url": "https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%204%20rollos%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000079",
+      "nom_producto": "Papel higiénico 6 rollos Higienol",
+      "image_url": "https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%206%20rollos%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000080",
+      "nom_producto": "Servilletas 200u Higienol",
+      "image_url": "https://placehold.co/300x300?text=Servilletas%20200u%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000081",
+      "nom_producto": "Pañuelos descartables Higienol",
+      "image_url": "https://placehold.co/300x300?text=Pa%C3%B1uelos%20descartables%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000082",
+      "nom_producto": "Toalla de papel Higienol",
+      "image_url": "https://placehold.co/300x300?text=Toalla%20de%20papel%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000085",
+      "nom_producto": "Caldo cubitos Arcor",
+      "image_url": "https://placehold.co/300x300?text=Caldo%20cubitos%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000086",
+      "nom_producto": "Purè instantáneo 125g Molinos",
+      "image_url": "https://placehold.co/300x300?text=Pur%C3%A8%20instant%C3%A1neo%20125g%20Molinos",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000087",
+      "nom_producto": "Mayonesa 500g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Mayonesa%20500g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000088",
+      "nom_producto": "Mostaza 250g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Mostaza%20250g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000089",
+      "nom_producto": "Fideos guiseros 500g Matarazzo",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20guiseros%20500g%20Matarazzo",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000091",
+      "nom_producto": "Azúcar 1Kg (económica)",
+      "image_url": "https://placehold.co/300x300?text=Az%C3%BAcar%201Kg%20%28econ%C3%B3mica%29",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000097",
+      "nom_producto": "Fideos moñitos 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20mo%C3%B1itos%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    }
+  ],
+  "placeholder_results": [
+    {
+      "cod_barra": "100000000012",
+      "nom_producto": "Harina de maíz 1Kg",
+      "image_url": "https://placehold.co/300x300?text=Harina%20de%20ma%C3%ADz%201Kg",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000013",
+      "nom_producto": "Fideos secos spaghetti 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20spaghetti%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000014",
+      "nom_producto": "Fideos secos tirabuzón 500g Matarazzo",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20tirabuz%C3%B3n%20500g%20Matarazzo",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000015",
+      "nom_producto": "Fideos secos mostachol 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20secos%20mostachol%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000037",
+      "nom_producto": "Lechuga unidad",
+      "image_url": "https://placehold.co/300x300?text=Lechuga%20unidad",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000046",
+      "nom_producto": "Aceite mezcla 1.5L Cocinero",
+      "image_url": "https://placehold.co/300x300?text=Aceite%20mezcla%201.5L%20Cocinero",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000049",
+      "nom_producto": "Margarina 200g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Margarina%20200g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000052",
+      "nom_producto": "Té 50 saquitos CBSé",
+      "image_url": "https://placehold.co/300x300?text=T%C3%A9%2050%20saquitos%20CBS%C3%A9",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000054",
+      "nom_producto": "Mate cocido 25 saquitos Amanda",
+      "image_url": "https://placehold.co/300x300?text=Mate%20cocido%2025%20saquitos%20Amanda",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000060",
+      "nom_producto": "Lavandina 1L Ayudín",
+      "image_url": "https://placehold.co/300x300?text=Lavandina%201L%20Ayud%C3%ADn",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000062",
+      "nom_producto": "Limpiador piso 900ml Poett",
+      "image_url": "https://placehold.co/300x300?text=Limpiador%20piso%20900ml%20Poett",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000063",
+      "nom_producto": "Detergente cocina 750ml",
+      "image_url": "https://placehold.co/300x300?text=Detergente%20cocina%20750ml",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000064",
+      "nom_producto": "Esponja de cocina",
+      "image_url": "https://placehold.co/300x300?text=Esponja%20de%20cocina",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000065",
+      "nom_producto": "Limpiavidrios 500ml Poett",
+      "image_url": "https://placehold.co/300x300?text=Limpiavidrios%20500ml%20Poett",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000066",
+      "nom_producto": "Jabón en polvo 800g Ala",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20en%20polvo%20800g%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000067",
+      "nom_producto": "Jabón líquido ropa 3L Ala",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20l%C3%ADquido%20ropa%203L%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000068",
+      "nom_producto": "Suavizante 1L Ala",
+      "image_url": "https://placehold.co/300x300?text=Suavizante%201L%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000069",
+      "nom_producto": "Quitamanchas 450ml Ala",
+      "image_url": "https://placehold.co/300x300?text=Quitamanchas%20450ml%20Ala",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000070",
+      "nom_producto": "Lavandina concentrada 2L Ayudín",
+      "image_url": "https://placehold.co/300x300?text=Lavandina%20concentrada%202L%20Ayud%C3%ADn",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000071",
+      "nom_producto": "Jabón tocador 3x90g",
+      "image_url": "https://placehold.co/300x300?text=Jab%C3%B3n%20tocador%203x90g",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000074",
+      "nom_producto": "Pasta dental 90g Colgate",
+      "image_url": "https://placehold.co/300x300?text=Pasta%20dental%2090g%20Colgate",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000075",
+      "nom_producto": "Cepillo dental Colgate",
+      "image_url": "https://placehold.co/300x300?text=Cepillo%20dental%20Colgate",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000076",
+      "nom_producto": "Desodorante aerosol 150ml",
+      "image_url": "https://placehold.co/300x300?text=Desodorante%20aerosol%20150ml",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000078",
+      "nom_producto": "Papel higiénico 4 rollos Higienol",
+      "image_url": "https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%204%20rollos%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000079",
+      "nom_producto": "Papel higiénico 6 rollos Higienol",
+      "image_url": "https://placehold.co/300x300?text=Papel%20higi%C3%A9nico%206%20rollos%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000080",
+      "nom_producto": "Servilletas 200u Higienol",
+      "image_url": "https://placehold.co/300x300?text=Servilletas%20200u%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000081",
+      "nom_producto": "Pañuelos descartables Higienol",
+      "image_url": "https://placehold.co/300x300?text=Pa%C3%B1uelos%20descartables%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000082",
+      "nom_producto": "Toalla de papel Higienol",
+      "image_url": "https://placehold.co/300x300?text=Toalla%20de%20papel%20Higienol",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000085",
+      "nom_producto": "Caldo cubitos Arcor",
+      "image_url": "https://placehold.co/300x300?text=Caldo%20cubitos%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000086",
+      "nom_producto": "Purè instantáneo 125g Molinos",
+      "image_url": "https://placehold.co/300x300?text=Pur%C3%A8%20instant%C3%A1neo%20125g%20Molinos",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000087",
+      "nom_producto": "Mayonesa 500g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Mayonesa%20500g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000088",
+      "nom_producto": "Mostaza 250g Arcor",
+      "image_url": "https://placehold.co/300x300?text=Mostaza%20250g%20Arcor",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000089",
+      "nom_producto": "Fideos guiseros 500g Matarazzo",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20guiseros%20500g%20Matarazzo",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000091",
+      "nom_producto": "Azúcar 1Kg (económica)",
+      "image_url": "https://placehold.co/300x300?text=Az%C3%BAcar%201Kg%20%28econ%C3%B3mica%29",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    },
+    {
+      "cod_barra": "100000000097",
+      "nom_producto": "Fideos moñitos 500g Lucchetti",
+      "image_url": "https://placehold.co/300x300?text=Fideos%20mo%C3%B1itos%20500g%20Lucchetti",
+      "matched_code": "",
+      "matched_name": "",
+      "score": 0,
+      "query": "placeholder",
+      "source": "placeholder"
+    }
+  ],
+  "unresolved": []
+}
