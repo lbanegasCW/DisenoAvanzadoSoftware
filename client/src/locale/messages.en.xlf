@@ -127,28 +127,8 @@
         <target>Clear</target>
       </trans-unit>
       <trans-unit id="catalogo.info_categorias_filtradas" datatype="html">
-        <source>Mostrando categorías del rubro seleccionado.</source>
-        <target>Showing categories of the selected section.</target>
-      </trans-unit>
-      <trans-unit id="catalogo.count_resultados" datatype="html">
-        <source>{totalResultados, plural, =0 {0 resultados} =1 {1 resultado} other {<x id="INTERPOLATION" equiv-text="# resultados"/> resultados}}</source>
-        <target>{VAR_PLURAL, plural, =0 {0 results} =1 {1 result} other {# results}}</target>
-      </trans-unit>
-      <trans-unit id="catalogo.badge_rubro_filtrado" datatype="html">
-        <source> · Rubro filtrado</source>
-        <target> · Section filtered</target>
-      </trans-unit>
-      <trans-unit id="catalogo.badge_categoria_filtrada" datatype="html">
-        <source> · Categoría filtrada</source>
-        <target> · Category filtered</target>
-      </trans-unit>
-      <trans-unit id="catalogo.btn_limpiar_todo" datatype="html">
-        <source>Limpiar todo</source>
-        <target>Clear all</target>
-      </trans-unit>
-      <trans-unit id="catalogo.btn_ver_carrito" datatype="html">
-        <source>Ver carrito</source>
-        <target>View cart</target>
+        <source> Mostrando categorías del rubro seleccionado. </source>
+        <target> Showing categories of the selected section. </target>
       </trans-unit>
       <trans-unit id="catalogo.btn_agregar" datatype="html">
         <source>Agregar</source>
@@ -209,6 +189,74 @@
       <trans-unit id="catalogo.count_resultados_n" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ totalResultados }}"/> resultados</source>
         <target>{$INTERPOLATION} results</target>
+      </trans-unit>
+      <trans-unit id="header.aria_principal" datatype="html">
+        <source>Principal</source>
+        <target state="new">Home</target>
+      </trans-unit>
+      <trans-unit id="catalogo.subtitle" datatype="html">
+        <source>Explorá productos y armá tu carrito para comparar precios.</source>
+        <target state="new">Browse products and build your cart to compare prices.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.ean_label" datatype="html">
+        <source>EAN:</source>
+        <target state="new">EAN:</target>
+      </trans-unit>
+      <trans-unit id="comparador.title" datatype="html">
+        <source>Comparador de precios</source>
+        <target state="new">Price comparison</target>
+      </trans-unit>
+      <trans-unit id="comparador.subtitle" datatype="html">
+        <source> Visualizá rápidamente dónde conviene comprar tu carrito en la localidad seleccionada. </source>
+        <target state="new"> Quickly see where it’s best to buy your cart in the selected location. </target>
+      </trans-unit>
+      <trans-unit id="comparador.loading" datatype="html">
+        <source>Cargando comparación…</source>
+        <target state="new">Loading comparison…</target>
+      </trans-unit>
+      <trans-unit id="comparador.col_producto" datatype="html">
+        <source>Producto</source>
+        <target state="new">Product</target>
+      </trans-unit>
+      <trans-unit id="comparador.col_categoria" datatype="html">
+        <source>Categoría</source>
+        <target state="new">Category</target>
+      </trans-unit>
+      <trans-unit id="comparador.cheapest" datatype="html">
+        <source>🏆 Más barato</source>
+        <target state="new">🏆 Cheapest</target>
+      </trans-unit>
+      <trans-unit id="comparador.ean_label" datatype="html">
+        <source>EAN</source>
+        <target state="new">EAN</target>
+      </trans-unit>
+      <trans-unit id="comparador.total" datatype="html">
+        <source>TOTAL</source>
+        <target state="new">TOTAL</target>
+      </trans-unit>
+      <trans-unit id="comparador.incomplete" datatype="html">
+        <source>Incompleto</source>
+        <target state="new">Incomplete</target>
+      </trans-unit>
+      <trans-unit id="comparador.empty_results" datatype="html">
+        <source> No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad. </source>
+        <target state="new"> No results to compare. Check that your cart has products available in the selected location. </target>
+      </trans-unit>
+      <trans-unit id="supermercados.subtitle" datatype="html">
+        <source> Explorá cadenas adheridas y consultá sucursales disponibles por provincia y localidad. </source>
+        <target state="new"> Browse participating chains and view available stores by province and city. </target>
+      </trans-unit>
+      <trans-unit id="supermercados.loading" datatype="html">
+        <source>Cargando...</source>
+        <target state="new">Loading...</target>
+      </trans-unit>
+      <trans-unit id="supermercados.no_phone" datatype="html">
+        <source>Sin teléfono informado</source>
+        <target state="new">No phone number provided</target>
+      </trans-unit>
+      <trans-unit id="supermercados.empty_state" datatype="html">
+        <source> Seleccioná un supermercado para ver las sucursales disponibles. </source>
+        <target state="new"> Select a supermarket to see the available stores. </target>
       </trans-unit>
     </body>
   </file>

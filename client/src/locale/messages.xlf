@@ -143,6 +143,57 @@
       <trans-unit id="catalogo.count_resultados_n" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ totalResultados }}"/> resultados</source>
       </trans-unit>
+      <trans-unit id="catalogo.ean_label" datatype="html">
+        <source>EAN:</source>
+      </trans-unit>
+      <trans-unit id="catalogo.subtitle" datatype="html">
+        <source>Explorá productos y armá tu carrito para comparar precios.</source>
+      </trans-unit>
+      <trans-unit id="comparador.cheapest" datatype="html">
+        <source>🏆 Más barato</source>
+      </trans-unit>
+      <trans-unit id="comparador.col_categoria" datatype="html">
+        <source>Categoría</source>
+      </trans-unit>
+      <trans-unit id="comparador.col_producto" datatype="html">
+        <source>Producto</source>
+      </trans-unit>
+      <trans-unit id="comparador.ean_label" datatype="html">
+        <source>EAN</source>
+      </trans-unit>
+      <trans-unit id="comparador.empty_results" datatype="html">
+        <source> No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad. </source>
+      </trans-unit>
+      <trans-unit id="comparador.incomplete" datatype="html">
+        <source>Incompleto</source>
+      </trans-unit>
+      <trans-unit id="comparador.loading" datatype="html">
+        <source>Cargando comparación…</source>
+      </trans-unit>
+      <trans-unit id="comparador.subtitle" datatype="html">
+        <source> Visualizá rápidamente dónde conviene comprar tu carrito en la localidad seleccionada. </source>
+      </trans-unit>
+      <trans-unit id="comparador.title" datatype="html">
+        <source>Comparador de precios</source>
+      </trans-unit>
+      <trans-unit id="comparador.total" datatype="html">
+        <source>TOTAL</source>
+      </trans-unit>
+      <trans-unit id="header.aria_principal" datatype="html">
+        <source>Principal</source>
+      </trans-unit>
+      <trans-unit id="supermercados.empty_state" datatype="html">
+        <source> Seleccioná un supermercado para ver las sucursales disponibles. </source>
+      </trans-unit>
+      <trans-unit id="supermercados.loading" datatype="html">
+        <source>Cargando...</source>
+      </trans-unit>
+      <trans-unit id="supermercados.no_phone" datatype="html">
+        <source>Sin teléfono informado</source>
+      </trans-unit>
+      <trans-unit id="supermercados.subtitle" datatype="html">
+        <source> Explorá cadenas adheridas y consultá sucursales disponibles por provincia y localidad. </source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
