@@ -2,6 +2,7 @@ import {
   Component,
   HostListener,
   computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
 
 import { IndecService, Producto } from '@/app/services/indec.service';
 import { CartCodesService } from '@/app/services/cart-codes.service';
+import { LocalizacionStore } from '@/app/store/localizacion.store';
 
 type FacetId = number | null;
 
@@ -30,6 +32,7 @@ interface Facet {
 export class CatalogoProductosComponent {
   private readonly indec = inject(IndecService);
   readonly cart = inject(CartCodesService);
+  readonly locStore = inject(LocalizacionStore);
 
   readonly all = signal<Producto[]>([]);
   readonly loading = signal(false);
@@ -88,7 +91,10 @@ export class CatalogoProductosComponent {
   });
 
   constructor() {
-    this.loadProductos();
+    effect(() => {
+      this.locStore.localidad();
+      this.loadProductos();
+    });
   }
 
   get totalResultados(): number {
@@ -143,7 +149,13 @@ export class CatalogoProductosComponent {
 
   private loadProductos(): void {
     this.loading.set(true);
-    this.indec.getProductosCatalogo().subscribe({
+    const { codProvincia, nroLocalidad } = this.locStore.localidad();
+    const filters: Record<string, string | number> = {};
+
+    if (codProvincia) filters['provinciaId'] = codProvincia;
+    if (nroLocalidad) filters['localidadId'] = nroLocalidad;
+
+    this.indec.getProductosCatalogo(filters).subscribe({
       next: (rows) => {
         this.all.set(rows);
       },

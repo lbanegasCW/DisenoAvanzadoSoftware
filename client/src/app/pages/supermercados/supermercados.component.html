@@ -15,48 +15,17 @@
 </section>
 
 <section class="page-container pb-6">
-  <div class="card">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-      <div>
-        <label class="mb-1.5 block text-sm font-medium text-slate-700" i18n="@@supermercados.label_provincia">
-          Provincia
-        </label>
-        <select
-          [(ngModel)]="selectedProvincia"
-          (change)="onProvinciaChange()"
-          class="input-control"
-        >
-          <option value="" i18n="@@supermercados.option_todas_provincias">Todas las provincias</option>
-          <option *ngFor="let provincia of provincias" [value]="provincia.codProvincia">
-            {{ provincia.nomProvincia }}
-          </option>
-        </select>
-      </div>
-
-      <div>
-        <label class="mb-1.5 block text-sm font-medium text-slate-700" i18n="@@supermercados.label_localidad">
-          Localidad
-        </label>
-        <select
-          [(ngModel)]="selectedLocalidad"
-          (change)="onLocalidadChange()"
-          [disabled]="!selectedProvincia"
-          class="input-control"
-        >
-          <option value="" i18n="@@supermercados.option_todas_localidades">Todas las localidades</option>
-          <option *ngFor="let localidad of localidades" [value]="localidad.nroLocalidad">
-            {{ localidad.nomLocalidad }}
-          </option>
-        </select>
-      </div>
-
-      <div class="flex items-end">
-        <button (click)="updateSucursales()" class="btn-primary w-full" i18n="@@supermercados.btn_buscar_cercanas">
-          <span class="material-icons text-base">location_on</span>
-          Buscar cercanas
-        </button>
-      </div>
-    </div>
+  <div class="card flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+    <p>
+      Filtro activo:
+      <strong>
+        {{ locStore.localidad().nomLocalidad || locStore.localidad().codProvincia || 'Todas las sucursales' }}
+      </strong>
+    </p>
+    <button (click)="updateSucursales()" class="btn-primary" i18n="@@supermercados.btn_buscar_cercanas">
+      <span class="material-icons text-base">refresh</span>
+      Actualizar listado
+    </button>
   </div>
 </section>
 
