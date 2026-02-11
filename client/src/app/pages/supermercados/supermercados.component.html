@@ -8,8 +8,8 @@
 <!-- Header Section -->
 <div class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900">
-      {{ currentLang === "es" ? "Supermercados" : "Supermarkets" }}
+    <h1 class="text-3xl font-bold text-gray-900" i18n="@@supermercados.title">
+      Supermercados
     </h1>
   </div>
 </div>
@@ -20,18 +20,16 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-black">
       <!-- Province Select -->
       <div>
-        <label class="block text-sm font-medium text-black mb-1">
-          {{ currentLang === "es" ? "Provincia" : "Province" }}
+        <label class="block text-sm font-medium text-black mb-1" i18n="@@supermercados.label_provincia">
+          Provincia
         </label>
         <select
           [(ngModel)]="selectedProvincia"
           (change)="onProvinciaChange()"
           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         >
-          <option value="">
-            {{
-              currentLang === "es" ? "Todas las provincias" : "All provinces"
-            }}
+          <option value="" i18n="@@supermercados.option_todas_provincias">
+            Todas las provincias
           </option>
           <option
             *ngFor="let provincia of provincias"
@@ -44,8 +42,8 @@
 
       <!-- Location Select -->
       <div>
-        <label class="block text-sm font-medium text-black mb-1">
-          {{ currentLang === "es" ? "Localidad" : "Location" }}
+        <label class="block text-sm font-medium text-black mb-1" i18n="@@supermercados.label_localidad">
+          Localidad
         </label>
         <select
           [(ngModel)]="selectedLocalidad"
@@ -53,10 +51,8 @@
           [disabled]="!selectedProvincia"
           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-black"
         >
-          <option value="">
-            {{
-              currentLang === "es" ? "Todas las localidades" : "All locations"
-            }}
+          <option value="" i18n="@@supermercados.option_todas_localidades">
+            Todas las localidades
           </option>
           <option
             *ngFor="let localidad of localidades"
@@ -74,7 +70,7 @@
           class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-black"
         >
           <span class="material-icons mr-2">location_on</span>
-          {{ currentLang === "es" ? "Buscar cercanas" : "Search nearby" }}
+          <ng-container i18n="@@supermercados.btn_buscar_cercanas">Buscar cercanas</ng-container>
         </button>
       </div>
     </div>
@@ -87,8 +83,8 @@
     <!-- Supermarkets List -->
     <div class="lg:col-span-1 bg-white rounded-lg shadow-md overflow-hidden">
       <div class="p-4 border-b">
-        <h2 class="text-lg font-semibold text-gray-900">
-          {{ currentLang === "es" ? "Supermercados" : "Supermarkets" }}
+        <h2 class="text-lg font-semibold text-gray-900" i18n="@@supermercados.heading_lista">
+          Supermercados
         </h2>
         <div class="mt-2">
           <div class="relative">
@@ -97,7 +93,8 @@
               [(ngModel)]="searchTerm"
               (input)="filterSupermercados()"
               class="w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500"
-              [placeholder]="currentLang === 'es' ? 'Buscar...' : 'Search...'"
+              placeholder="Buscar..."
+              i18n-placeholder="@@supermercados.placeholder_buscar"
             />
             <span class="material-icons absolute left-3 top-2.5 text-gray-400"
               >search</span
@@ -129,8 +126,8 @@
     <div class="lg:col-span-2">
       <div class="bg-white rounded-lg shadow-md">
         <div class="p-4 border-b">
-          <h2 class="text-lg font-semibold text-gray-900">
-            {{ currentLang === "es" ? "Sucursales" : "Branches" }}
+          <h2 class="text-lg font-semibold text-gray-900" i18n="@@supermercados.heading_sucursales">
+            Sucursales
           </h2>
         </div>
         <div class="p-4">
@@ -159,8 +156,8 @@
 
                 @if (sucursal.serviciosDisponibles) {
                 <div class="mt-3">
-                  <h4 class="text-sm font-medium text-gray-900">
-                    {{ currentLang === "es" ? "Servicios" : "Services" }}
+                  <h4 class="text-sm font-medium text-gray-900" i18n="@@supermercados.heading_servicios">
+                    Servicios
                   </h4>
                   <div class="mt-2 flex flex-wrap gap-2">
                     @for (servicio of sucursal.serviciosDisponibles.split(',');
@@ -190,7 +187,7 @@
                     class="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800"
                   >
                     <span class="material-icons text-sm mr-1">map</span>
-                    {{ currentLang === "es" ? "Ver en mapa" : "View on map" }}
+                    <ng-container i18n="@@supermercados.link_ver_mapa">Ver en mapa</ng-container>
                   </a>
                   }
                 </div>
@@ -201,12 +198,8 @@
           } @else {
           <div class="text-center py-12">
             <span class="material-icons text-gray-400 text-6xl">store</span>
-            <p class="mt-4 text-black">
-              {{
-                currentLang === "es"
-                  ? "Selecciona un supermercado para ver sus sucursales"
-                  : "Select a supermarket to view its branches"
-              }}
+            <p class="mt-4 text-black" i18n="@@supermercados.empty_state">
+              Selecciona un supermercado para ver sus sucursales
             </p>
           </div>
           }

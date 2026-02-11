@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-AR" target-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <!-- index.html -->
+      <trans-unit id="app.title" datatype="html">
+        <source>INDEC - Comparador de Precios</source>
+        <target>INDEC - Price Comparator</target>
+      </trans-unit>
+
+      <!-- header.component.html -->
+      <trans-unit id="header.nav_supermercados" datatype="html">
+        <source>Supermercados</source>
+        <target>Supermarkets</target>
+      </trans-unit>
+      <trans-unit id="header.nav_productos" datatype="html">
+        <source>Productos</source>
+        <target>Products</target>
+      </trans-unit>
+      <trans-unit id="header.placeholder_provincia" datatype="html">
+        <source>Provincia...</source>
+        <target>Province...</target>
+      </trans-unit>
+      <trans-unit id="header.placeholder_localidad" datatype="html">
+        <source>Localidad...</source>
+        <target>Location...</target>
+      </trans-unit>
+
+      <!-- supermercados.component.html -->
+      <trans-unit id="supermercados.title" datatype="html">
+        <source>Supermercados</source>
+        <target>Supermarkets</target>
+      </trans-unit>
+      <trans-unit id="supermercados.label_provincia" datatype="html">
+        <source>Provincia</source>
+        <target>Province</target>
+      </trans-unit>
+      <trans-unit id="supermercados.option_todas_provincias" datatype="html">
+        <source>Todas las provincias</source>
+        <target>All provinces</target>
+      </trans-unit>
+      <trans-unit id="supermercados.label_localidad" datatype="html">
+        <source>Localidad</source>
+        <target>Location</target>
+      </trans-unit>
+      <trans-unit id="supermercados.option_todas_localidades" datatype="html">
+        <source>Todas las localidades</source>
+        <target>All locations</target>
+      </trans-unit>
+      <trans-unit id="supermercados.btn_buscar_cercanas" datatype="html">
+        <source>Buscar cercanas</source>
+        <target>Search nearby</target>
+      </trans-unit>
+      <trans-unit id="supermercados.heading_lista" datatype="html">
+        <source>Supermercados</source>
+        <target>Supermarkets</target>
+      </trans-unit>
+      <trans-unit id="supermercados.placeholder_buscar" datatype="html">
+        <source>Buscar...</source>
+        <target>Search...</target>
+      </trans-unit>
+      <trans-unit id="supermercados.heading_sucursales" datatype="html">
+        <source>Sucursales</source>
+        <target>Branches</target>
+      </trans-unit>
+      <trans-unit id="supermercados.heading_servicios" datatype="html">
+        <source>Servicios</source>
+        <target>Services</target>
+      </trans-unit>
+      <trans-unit id="supermercados.link_ver_mapa" datatype="html">
+        <source>Ver en mapa</source>
+        <target>View on map</target>
+      </trans-unit>
+      <trans-unit id="supermercados.empty_state" datatype="html">
+        <source>Selecciona un supermercado para ver sus sucursales</source>
+        <target>Select a supermarket to view its branches</target>
+      </trans-unit>
+
+      <!-- inicio.component.ts ($localize) -->
+      <trans-unit id="inicio.hero_title" datatype="html">
+        <source>Comprá más inteligente</source>
+        <target>Shop smarter</target>
+      </trans-unit>
+      <trans-unit id="inicio.hero_subtitle" datatype="html">
+        <source>Compará precios en tiempo real de los principales supermercados</source>
+        <target>Compare real-time prices from major supermarkets</target>
+      </trans-unit>
+      <trans-unit id="inicio.hero_cta" datatype="html">
+        <source>Comenzar a comparar</source>
+        <target>Start comparing</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_daily_title" datatype="html">
+        <source>Actualización Diaria</source>
+        <target>Daily Updates</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_daily_desc" datatype="html">
+        <source>Precios actualizados todos los días para mantener la información precisa</source>
+        <target>Prices updated every day to maintain accurate information</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_comparison_title" datatype="html">
+        <source>Comparación Sencilla</source>
+        <target>Easy Comparison</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_comparison_desc" datatype="html">
+        <source>Interfaz intuitiva para comparar precios entre diferentes supermercados</source>
+        <target>Intuitive interface to compare prices between different supermarkets</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_location_title" datatype="html">
+        <source>Basado en Ubicación</source>
+        <target>Location Based</target>
+      </trans-unit>
+      <trans-unit id="inicio.feature_location_desc" datatype="html">
+        <source>Encontrá los mejores precios en tu zona</source>
+        <target>Find the best prices in your area</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_title" datatype="html">
+        <source>Comparador de Precios</source>
+        <target>Price Comparison</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_desc" datatype="html">
+        <source>Comprá inteligente a través de nuestro comparador de precios. Encontrá las mejores ofertas en productos de la canasta básica comparando precios entre diferentes supermercados.</source>
+        <target>Shop smart with our price comparison tool. Find the best deals on basic basket products by comparing prices between different supermarkets.</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_comparador_link" datatype="html">
+        <source>Ir al comparador</source>
+        <target>Go to comparator</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_title" datatype="html">
+        <source>Supermercados Adheridos</source>
+        <target>Participating Supermarkets</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_desc" datatype="html">
+        <source>Conocé los supermercados que participan en nuestra plataforma. Encontrá información detallada sobre sucursales, horarios y servicios disponibles.</source>
+        <target>Learn about the supermarkets participating in our platform. Find detailed information about branches, schedules and available services.</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_supermercados_link" datatype="html">
+        <source>Ver supermercados</source>
+        <target>View supermarkets</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_carrito_title" datatype="html">
+        <source>Carrito de Compras</source>
+        <target>Shopping Cart</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_carrito_desc" datatype="html">
+        <source>Armá tu lista de compras y compará precios entre diferentes supermercados para encontrar la mejor opción.</source>
+        <target>Create your shopping list and compare prices between different supermarkets to find the best option.</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_carrito_link" datatype="html">
+        <source>Crear carrito</source>
+        <target>Create cart</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_categorias_title" datatype="html">
+        <source>Categorías de Productos</source>
+        <target>Product Categories</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_categorias_desc" datatype="html">
+        <source>Explorá nuestra amplia variedad de productos organizados por categorías para facilitar tu búsqueda.</source>
+        <target>Explore our wide variety of products organized by categories to facilitate your search.</target>
+      </trans-unit>
+      <trans-unit id="inicio.section_categorias_link" datatype="html">
+        <source>Ver categorías</source>
+        <target>View categories</target>
+      </trans-unit>
+
+      <!-- comparador-de-precios.component -->
+      <trans-unit id="comparador.error_sin_localidad" datatype="html">
+        <source>Seleccioná una localidad desde el navbar.</source>
+        <target>Select a location from the navbar.</target>
+      </trans-unit>
+      <trans-unit id="comparador.error_carrito_vacio" datatype="html">
+        <source>Tu carrito está vacío. Agregá productos para comparar.</source>
+        <target>Your cart is empty. Add products to compare.</target>
+      </trans-unit>
+      <trans-unit id="comparador.error_carga" datatype="html">
+        <source>Error al cargar la comparación.</source>
+        <target>Error loading the comparison.</target>
+      </trans-unit>
+      <trans-unit id="comparador.loading" datatype="html">
+        <source>Cargando comparación…</source>
+        <target>Loading comparison…</target>
+      </trans-unit>
+      <trans-unit id="comparador.th_producto" datatype="html">
+        <source>Producto</source>
+        <target>Product</target>
+      </trans-unit>
+      <trans-unit id="comparador.th_categoria" datatype="html">
+        <source>Categoría</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="comparador.sin_resultados" datatype="html">
+        <source>No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad.</source>
+        <target>No results to compare. Check that your cart has products available in the location.</target>
+      </trans-unit>
+
+      <!-- catalogo-productos.component -->
+      <trans-unit id="catalogo.error_carga" datatype="html">
+        <source>No pudimos cargar el catálogo.</source>
+        <target>We could not load the catalog.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.title" datatype="html">
+        <source>Catálogo de productos</source>
+        <target>Product catalog</target>
+      </trans-unit>
+      <trans-unit id="catalogo.loading" datatype="html">
+        <source>Cargando…</source>
+        <target>Loading…</target>
+      </trans-unit>
+      <trans-unit id="catalogo.placeholder_buscar" datatype="html">
+        <source>Buscar producto, marca, código…</source>
+        <target>Search product, brand, code…</target>
+      </trans-unit>
+      <trans-unit id="catalogo.heading_rubros" datatype="html">
+        <source>Rubros</source>
+        <target>Sections</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_rubro" datatype="html">
+        <source>Limpiar</source>
+        <target>Clear</target>
+      </trans-unit>
+      <trans-unit id="catalogo.heading_categorias" datatype="html">
+        <source>Categorías</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_categoria" datatype="html">
+        <source>Limpiar</source>
+        <target>Clear</target>
+      </trans-unit>
+      <trans-unit id="catalogo.info_categorias_filtradas" datatype="html">
+        <source>Mostrando categorías del rubro seleccionado.</source>
+        <target>Showing categories of the selected section.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados" datatype="html">
+        <source>{totalResultados, plural, =0 {0 resultados} =1 {1 resultado} other {<x id="INTERPOLATION" equiv-text="# resultados"/> resultados}}</source>
+        <target>{totalResultados, plural, =0 {0 results} =1 {1 result} other {<x id="INTERPOLATION" equiv-text="# resultados"/> results}}</target>
+      </trans-unit>
+      <trans-unit id="catalogo.badge_rubro_filtrado" datatype="html">
+        <source> · Rubro filtrado</source>
+        <target> · Section filtered</target>
+      </trans-unit>
+      <trans-unit id="catalogo.badge_categoria_filtrada" datatype="html">
+        <source> · Categoría filtrada</source>
+        <target> · Category filtered</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_todo" datatype="html">
+        <source>Limpiar todo</source>
+        <target>Clear all</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_ver_carrito" datatype="html">
+        <source>Ver carrito</source>
+        <target>View cart</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_agregar" datatype="html">
+        <source>Agregar</source>
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_quitar" datatype="html">
+        <source>Quitar</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="catalogo.sin_resultados" datatype="html">
+        <source>No hay productos que coincidan con los filtros.</source>
+        <target>No products match the filters.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_title" datatype="html">
+        <source>Tu carrito</source>
+        <target>Your cart</target>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_vacio" datatype="html">
+        <source>No agregaste productos.</source>
+        <target>You haven't added products.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.drawer_btn_quitar" datatype="html">
+        <source>Quitar</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_vaciar" datatype="html">
+        <source>Vaciar</source>
+        <target>Empty</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_comparar" datatype="html">
+        <source>Comparar</source>
+        <target>Compare</target>
+      </trans-unit>
+      <trans-unit id="catalogo.aria_carrito" datatype="html">
+        <source>Carrito</source>
+        <target>Cart</target>
+      </trans-unit>
+      <trans-unit id="catalogo.aria_cerrar" datatype="html">
+        <source>Cerrar</source>
+        <target>Close</target>
+      </trans-unit>
+      <trans-unit id="catalogo.aria_ver_carrito" datatype="html">
+        <source>Ver carrito</source>
+        <target>View cart</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

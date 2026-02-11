@@ -41,7 +41,7 @@ export class CatalogoProductosComponent {
       next: rows => { this.all.set(rows); this.loading.set(false); },
       error: err => {
         console.error('[Catálogo] error', err);
-        this.errorMsg.set('No pudimos cargar el catálogo.');
+        this.errorMsg.set($localize`:@@catalogo.error_carga:No pudimos cargar el catálogo.`);
         this.loading.set(false);
       }
     });
@@ -93,6 +93,9 @@ export class CatalogoProductosComponent {
       return true;
     }).sort((a, b) => a.nomProducto.localeCompare(b.nomProducto, 'es'));
   });
+
+  // Getter para ICU plural en template
+  get totalResultados(): number { return this.productos().length; }
 
   // Productos en carrito (para el drawer)
   seleccionados = computed<Producto[]>(() => {

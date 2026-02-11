@@ -1,12 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { IndecService, Supermercado, ComparadorRow } from '@/app/services/indec.service';
 import { CartCodesService } from '@/app/services/cart-codes.service';
 import { LocalizacionStore } from '@/app/store/localizacion.store';
-
-type VmRow = ComparadorRow & {
-  pricesBySup: Record<string, any>; // raw
-};
 
 @Component({
   selector: 'app-comparador-precios',
@@ -15,16 +11,17 @@ type VmRow = ComparadorRow & {
   templateUrl: './comparador-de-precios.component.html'
 })
 export class ComparadorPreciosComponent {
-  loading = false;
-  errorMsg: string | null = null;
+  // estado
+  loading = signal(false);
+  errorMsg = signal<string | null>(null);
 
-  supermercados: Supermercado[] = [];
+  // datos
+  rows!: ComparadorRow[];
+  supermercados = signal<Supermercado[]>([]);
 
-  colIds: number[] = [];
-  vmRows: VmRow[] = [];
-
+  // map id -> razonSocial para header
   supName = (id: number) => {
-    const s = this.supermercados.find(x => x.nroSupermercado === id);
+    const s = this.supermercados().find(x => x.nroSupermercado === id);
     return s?.razonSocial ?? `Super ${id}`;
   };
 
@@ -36,77 +33,90 @@ export class ComparadorPreciosComponent {
 
   ngOnInit() {
     this.indec.getSupermercados().subscribe({
-      next: ss => (this.supermercados = ss ?? []),
-      error: () => (this.supermercados = []),
+      next: ss => this.supermercados.set(ss ?? []),
+      error: () => this.supermercados.set([]),
     });
-
     this.comparar();
   }
 
   comparar() {
     const loc = this.locStore.localidad();
-    const nroLocalidad = loc?.nroLocalidad ?? 0;
+    const nroLocalidad = loc.nroLocalidad ?? 0;
     const codes = this.cart.codes();
 
-    this.errorMsg = null;
+    this.errorMsg.set(null);
 
     if (!nroLocalidad) {
-      this.errorMsg = 'Seleccioná una localidad desde el navbar.';
-      this.vmRows = [];
-      this.colIds = [];
+      this.errorMsg.set($localize`:@@comparador.error_sin_localidad:Seleccioná una localidad desde el navbar.`);
+      this.rows = [];
       return;
     }
     if (!codes.length) {
-      this.errorMsg = 'Tu carrito está vacío. Agregá productos para comparar.';
-      this.vmRows = [];
-      this.colIds = [];
+      this.errorMsg.set($localize`:@@comparador.error_carrito_vacio:Tu carrito está vacío. Agregá productos para comparar.`);
+      this.rows = [];
       return;
     }
 
-    this.loading = true;
-
+    this.loading.set(true);
     this.indec.compareByLocalidad(nroLocalidad, codes).subscribe({
       next: data => {
-        const rows = data ?? [];
-
-        // columnas desde lo que viene
-        this.colIds = this.buildColIds(rows);
-
-        // armamos mapa raw por super
-        this.vmRows = rows.map(r => {
-          const pricesBySup: Record<string, any> = {};
-
-          for (const id of this.colIds) pricesBySup[String(id)] = null;
-
-          for (const o of (r.ofertas ?? [])) {
-            pricesBySup[String(o.nroSupermercado)] = o.precio; // ✅ RAW TAL CUAL
-          }
-
-          return { ...r, pricesBySup };
-        });
-
-        console.log('[DEBUG] colIds:', this.colIds);
-        console.log('[DEBUG] vmRows[0]:', this.vmRows[0]);
-
-        this.loading = false;
+        console.log('[comparar] recibido -> filas:', data?.length, data);
+        this.rows = data ?? [];
+        this.loading.set(false);
       },
-      error: err => {
-        this.errorMsg = err?.message || 'Error al cargar la comparación.';
-        this.vmRows = [];
-        this.colIds = [];
-        this.loading = false;
+      error: (err) => {
+        this.errorMsg.set($localize`:@@comparador.error_carga:Error al cargar la comparación.`);
+        this.rows = [];
+        this.loading.set(false);
       }
     });
   }
 
-  private buildColIds(rows: ComparadorRow[]): number[] {
-    const set = new Set<number>();
-    for (const r of rows) {
-      for (const o of (r.ofertas ?? [])) set.add(Number(o.nroSupermercado));
+  private toNumber(v: any): number | null {
+    if (v === null || v === undefined || v === '') return null;
+    // normaliza: saca espacios, quita separadores de miles, cambia coma decimal por punto
+    let s = String(v).trim().replace(/\s+/g, '');
+    // si hay ambas , y . intentá detectar decimal por la última aparición
+    const lastComma = s.lastIndexOf(',');
+    const lastDot   = s.lastIndexOf('.');
+    if (lastComma > -1 && lastDot > -1) {
+      // Considerá como separador decimal el que aparece último
+      const decimalSep = lastComma > lastDot ? ',' : '.';
+      const thousandSep = decimalSep === ',' ? '.' : ',';
+      s = s.replace(new RegExp('\\' + thousandSep, 'g'), '').replace(decimalSep, '.');
+    } else {
+      // Solo hay uno o ninguno: quita puntos de miles y cambia coma por punto
+      s = s.replace(/\./g, '').replace(',', '.');
     }
-    return Array.from(set).filter(Number.isFinite).sort((a, b) => a - b);
+    const n = Number(s);
+    return Number.isFinite(n) ? n : null;
   }
 
-  trackCol = (_: number, id: number) => id;
-  trackRow = (_: number, r: VmRow) => r.codBarra;
+  priceFor(r: ComparadorRow, supId: number): number | null {
+    const f = r?.ofertas?.find(o => {
+      // por si o.nroSupermercado viene como string
+      const id = this.toNumber(o.nroSupermercado);
+      return id !== null && id === supId;
+    });
+    return f ? this.toNumber(f.precio) : null;
+  }
+
+  minPrice(r: ComparadorRow): number | null {
+    const arr = (r?.ofertas ?? [])
+      .map(o => this.toNumber(o.precio))
+      .filter((n): n is number => n !== null);
+    return arr.length ? Math.min(...arr) : null;
+  }
+
+  colIds = computed<number[]>(() => {
+    const set = new Set<number>();
+    for (const r of this.rows) {
+      for (const o of (r.ofertas ?? [])) {
+        const id = this.toNumber(o.nroSupermercado);
+        if (id !== null) set.add(id);
+      }
+    }
+    return Array.from(set).sort((a, b) => a - b);
+  });
+
 }

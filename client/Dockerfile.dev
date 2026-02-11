@@ -16,6 +16,7 @@ COPY . .
 
 # Expone el puerto para el servidor de Angular
 EXPOSE 4200
+EXPOSE 4201
 
 # Comando para iniciar la aplicación en modo de desarrollo
 # CMD ["ng", "serve", "--host", "0.0.0.0"]

@@ -3,16 +3,16 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="text-center">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4">
-        {{ getText(config.pages.home.hero.title) }}
+        {{ heroTitle }}
       </h1>
       <p class="text-xl sm:text-2xl mb-8 text-blue-100">
-        {{ getText(config.pages.home.hero.subtitle) }}
+        {{ heroSubtitle }}
       </p>
       <a
-        [routerLink]="config.pages.home.hero.cta.link"
+        [routerLink]="heroCtaLink"
         class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition duration-150 ease-in-out"
       >
-        {{ getText(config.pages.home.hero.cta.text) }}
+        {{ heroCta }}
       </a>
     </div>
   </div>
@@ -23,17 +23,17 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div
-        *ngFor="let feature of config.pages.home.features"
+        *ngFor="let feature of features"
         class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
       >
         <span class="material-icons text-4xl text-blue-600 mb-4">
           {{ feature.icon }}
         </span>
         <h3 class="text-xl font-semibold mb-2 text-black">
-          {{ getText(feature.title) }}
+          {{ feature.title }}
         </h3>
         <p class="text-gray-600">
-          {{ getText(feature.description) }}
+          {{ feature.description }}
         </p>
       </div>
     </div>
@@ -45,29 +45,29 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="space-y-24">
       <div
-        *ngFor="let section of config.pages.home.sections; let i = index"
+        *ngFor="let section of sections; let i = index"
         class="flex flex-col md:flex-row items-center gap-12"
         [ngClass]="{ 'md:flex-row-reverse': i % 2 !== 0 }"
       >
         <div class="flex-1">
           <h2 class="text-3xl font-bold mb-4 text-gray-900">
-            {{ getText(section.title) }}
+            {{ section.title }}
           </h2>
           <p class="text-lg text-gray-600 mb-6">
-            {{ getText(section.description) }}
+            {{ section.description }}
           </p>
           <a
             [routerLink]="section.link.route"
             class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
           >
-            {{ getText(section.link.text) }}
+            {{ section.link.text }}
             <span class="material-icons ml-2">arrow_forward</span>
           </a>
         </div>
         <div class="flex-1">
           <img
             [src]="section.image"
-            [alt]="getText(section.title)"
+            [alt]="section.title"
             class="w-full h-auto rounded-lg shadow-lg"
           />
         </div>

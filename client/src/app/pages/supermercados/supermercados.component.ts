@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { NotificationComponent } from '../../components/notificacion/notificacion.component';
 import { IndecService } from '../../services/indec.service';
 import { Subject, takeUntil, catchError, of } from 'rxjs';
@@ -65,11 +64,9 @@ interface NotificationType {
 })
 export class SupermercadosComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  private readonly translateService = inject(TranslateService);
   private readonly indecService = inject(IndecService);
 
   // Properties
-  currentLang = this.translateService.currentLang || 'es';
   selectedProvincia = '';
   selectedLocalidad: number | null = null;
   searchTerm = '';
@@ -90,13 +87,6 @@ export class SupermercadosComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    // Subscribe to language changes
-    this.translateService.onLangChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((event) => {
-        this.currentLang = event.lang;
-      });
-
     this.loadInitialData();
   }
 

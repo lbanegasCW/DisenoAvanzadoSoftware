@@ -132,35 +132,22 @@ export class IndecService {
     }
   }
 
-  compareByLocalidad(nroLocalidad: number, codigos: string[]) {
-    const body = { nroLocalidad, codigos };
+  // IndecService
+  compareByLocalidad(nroLocalidad: number, codigos: string[]): Observable<ComparadorRow[]> {
+    const body = { nroLocalidad, codigos }; // <- ambos en el body
 
     return this.http.post<any[]>(
       `${this.API_URL}/productosPrecios`,
       body
     ).pipe(
-      map(rows => {
-        console.log('[SERVICE] raw rows del backend:', rows);
-
-        const mapped = (rows ?? []).map(r => {
-          console.log('[SERVICE] preciosPorSupermercado raw:', r.preciosPorSupermercado);
-
-          const ofertas = this.parseOfertas(r.preciosPorSupermercado);
-
-          console.log('[SERVICE] ofertas parseadas:', ofertas);
-
-          return {
-            codBarra: r.codBarra,
-            nomProducto: r.nomProducto,
-            nomCategoria: r.nomCategoria,
-            fechaUltActualizacion: r.fechaUltActualizacion,
-            ofertas,
-          } as ComparadorRow;
-        });
-
-        console.log('[SERVICE] rows finales:', mapped);
-        return mapped;
-      })
+      map(rows => (rows ?? []).map(r => ({
+        codBarra: r.codBarra,
+        nomProducto: r.nomProducto,
+        nomCategoria: r.nomCategoria,
+        fechaUltActualizacion: r.fechaUltActualizacion,
+        ofertas: this.parseOfertas(r.preciosPorSupermercado),
+      } as ComparadorRow))),
+      catchError(this.handleError)
     );
   }
 

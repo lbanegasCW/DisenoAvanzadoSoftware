@@ -1,40 +1,56 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-  <div *ngIf="loading" class="text-gray-600 mb-3">Cargando comparación…</div>
-
-  <div *ngIf="errorMsg" class="mb-3 rounded border border-red-300 bg-red-50 p-3 text-red-900">
-    {{ errorMsg }}
+  <div *ngIf="loading()" class="text-gray-600 mb-3" i18n="@@comparador.loading">Cargando comparación…</div>
+  <div *ngIf="errorMsg()" class="mb-3 rounded border border-red-300 bg-red-50 p-3 text-red-900">
+    {{ errorMsg() }}
   </div>
 
-  <div class="overflow-x-auto bg-white border rounded-lg" *ngIf="!loading && vmRows.length">
+  <div class="overflow-x-auto bg-white border rounded-lg" *ngIf="!loading() && rows.length">
     <table class="min-w-full text-sm">
       <thead class="bg-gray-50">
       <tr>
-        <th class="text-left px-3 py-2 w-1/3">Producto</th>
-        <th class="text-left px-3 py-2">Categoría</th>
-
-        <th class="px-3 py-2" *ngFor="let id of colIds; trackBy: trackCol">
+        <th class="text-left px-3 py-2 w-1/3" i18n="@@comparador.th_producto">Producto</th>
+        <th class="text-left px-3 py-2" i18n="@@comparador.th_categoria">Categoría</th>
+        <!-- <th class="px-3 py-2" *ngFor="let id of colIds(); trackBy: trackCol">
           {{ supName(id) }}
         </th>
+        -->
       </tr>
       </thead>
 
       <tbody>
-      <tr *ngFor="let r of vmRows; trackBy: trackRow" class="border-t">
+      <tr *ngFor="let r of rows; let i = index;" class="border-t">
         <td class="px-3 py-2 align-top">
           <div class="font-medium text-gray-900">{{ r.nomProducto }}</div>
           <div class="text-xs text-gray-500">EAN {{ r.codBarra }}</div>
+          <!-- DEBUG: ver exactamente qué trae r -->
+          <pre class="text-[10px] text-gray-500 bg-gray-50 border mt-1 p-1 overflow-auto">
+            {{ r | json }}
+          </pre>
         </td>
-
         <td class="px-3 py-2 align-top">
           {{ r.nomCategoria }}
         </td>
 
-        <!-- ✅ RAW: sin pipes, sin parse -->
-        <td class="px-3 py-2 text-center" *ngFor="let id of colIds; trackBy: trackCol">
-          {{ r.pricesBySup[id] ?? '—' }}
+        <!-- columnas dinámicas por supermercado
+        <td class="px-3 py-2 text-center" *ngFor="let id of colIds(); trackBy: trackCol">
+          <ng-container [ngSwitch]="priceFor(r, id)">
+            <span *ngSwitchCase="null" class="text-gray-400">—</span>
+
+            <span *ngSwitchDefault
+                  class="inline-block px-2 py-1 rounded border"
+                  [class.bg-green-50]="minPrice(r) !== null && priceFor(r, id) === minPrice(r)"
+                  [class.border-green-300]="minPrice(r) !== null && priceFor(r, id) === minPrice(r)">
+                  {{ priceFor(r, id)! | currency:'ARS':'symbol':'1.2-2':'es-AR' }}
+            </span>
+          </ng-container>
         </td>
+        -->
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="!loading() && !rows.length && !errorMsg()" class="text-gray-500" i18n="@@comparador.sin_resultados">
+    No hay resultados para comparar. Verificá que tu carrito tenga productos disponibles en la localidad.
   </div>
 </div>

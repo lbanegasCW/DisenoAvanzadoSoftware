@@ -7,13 +7,15 @@
 
         <a routerLink="/supermercados"
            routerLinkActive="bg-blue-700"
-           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+           i18n="@@header.nav_supermercados">
           Supermercados
         </a>
 
         <a routerLink="/catalogo"
            routerLinkActive="bg-blue-700"
-           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+           class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+           i18n="@@header.nav_productos">
           Productos
         </a>
       </div>
@@ -23,7 +25,7 @@
         <select class="bg-white text-gray-800 text-sm rounded-md px-2 py-1"
                 [ngModel]="codProvinciaSel"
                 (ngModelChange)="onProvinciaChange($event)">
-          <option [ngValue]="null">Provincia...</option>
+          <option [ngValue]="null" i18n="@@header.placeholder_provincia">Provincia...</option>
           <option *ngFor="let p of provincias" [value]="p.codProvincia">
             {{ p.nomProvincia }}
           </option>
@@ -34,7 +36,7 @@
                 [disabled]="!codProvinciaSel"
                 [ngModel]="nroLocalidadSel"
                 (ngModelChange)="onLocalidadChange($event)">
-          <option [ngValue]="null">Localidad...</option>
+          <option [ngValue]="null" i18n="@@header.placeholder_localidad">Localidad...</option>
           <option *ngFor="let l of localidades" [value]="l.nroLocalidad">
             {{ l.nomLocalidad }}
           </option>

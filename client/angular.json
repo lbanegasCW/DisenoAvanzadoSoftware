@@ -9,6 +9,12 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": { "code": "es-AR", "baseHref": "/" },
+        "locales": {
+          "en": { "translation": "src/locale/messages.en.xlf", "baseHref": "/" }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -17,7 +23,8 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -33,6 +40,8 @@
           },
           "configurations": {
             "production": {
+              "localize": true,
+              "i18nMissingTranslation": "error",
               "budgets": [
                 {
                   "type": "initial",
@@ -51,6 +60,20 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "es-AR": {
+              "localize": ["es-AR"],
+              "i18nMissingTranslation": "error",
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "en": {
+              "localize": ["en"],
+              "i18nMissingTranslation": "error",
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -63,19 +86,32 @@
             },
             "development": {
               "buildTarget": "client:build:development"
+            },
+            "es-AR": {
+              "buildTarget": "client:build:es-AR"
+            },
+            "en": {
+              "buildTarget": "client:build:en"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+          "options": {
+            "buildTarget": "client:build",
+            "format": "xlf",
+            "outputPath": "src/locale",
+            "targetFiles": ["messages.en.xlf"]
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [

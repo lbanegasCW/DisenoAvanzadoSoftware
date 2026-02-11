@@ -1,13 +1,13 @@
 <div class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900">
-      {{ "Catálogo de productos" }}
+    <h1 class="text-3xl font-bold text-gray-900" i18n="@@catalogo.title">
+      Catálogo de productos
     </h1>
   </div>
 </div>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-  <div *ngIf="loading()" class="text-gray-600 mb-4">Cargando…</div>
+  <div *ngIf="loading()" class="text-gray-600 mb-4" i18n="@@catalogo.loading">Cargando…</div>
   <div *ngIf="errorMsg()" class="mb-4 rounded border border-red-300 bg-red-50 p-3 text-red-900">
     {{ errorMsg() }}
   </div>
@@ -23,6 +23,7 @@
           type="search"
           class="w-full border rounded-md px-3 py-2 text-gray-600"
           placeholder="Buscar producto, marca, código…"
+          i18n-placeholder="@@catalogo.placeholder_buscar"
           [ngModel]="texto()"
           (ngModelChange)="texto.set($event)" />
       </div>
@@ -30,8 +31,8 @@
       <!-- Rubros -->
       <div class="mb-6 border rounded-lg p-3 bg-white">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="font-medium text-black">Rubros</h2>
-          <button class="text-sm text-blue-700 hover:underline" *ngIf="rubroSel()" (click)="limpiarRubro()">Limpiar</button>
+          <h2 class="font-medium text-black" i18n="@@catalogo.heading_rubros">Rubros</h2>
+          <button class="text-sm text-blue-700 hover:underline" *ngIf="rubroSel()" (click)="limpiarRubro()" i18n="@@catalogo.btn_limpiar_rubro">Limpiar</button>
         </div>
         <ul class="max-h-64 overflow-auto space-y-1">
           <li *ngFor="let r of rubros()">
@@ -49,8 +50,8 @@
       <!-- Categorías -->
       <div class="mb-6 border rounded-lg p-3 bg-white">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="font-medium text-black">Categorías</h2>
-          <button class="text-sm text-blue-700 hover:underline" *ngIf="categoriaSel()" (click)="limpiarCategoria()">Limpiar</button>
+          <h2 class="font-medium text-black" i18n="@@catalogo.heading_categorias">Categorías</h2>
+          <button class="text-sm text-blue-700 hover:underline" *ngIf="categoriaSel()" (click)="limpiarCategoria()" i18n="@@catalogo.btn_limpiar_categoria">Limpiar</button>
         </div>
         <ul class="max-h-64 overflow-auto space-y-1">
           <li *ngFor="let c of categorias()">
@@ -63,7 +64,7 @@
             </button>
           </li>
         </ul>
-        <div class="text-xs text-gray-500 mt-2" *ngIf="rubroSel()">Mostrando categorías del rubro seleccionado.</div>
+        <div class="text-xs text-gray-500 mt-2" *ngIf="rubroSel()" i18n="@@catalogo.info_categorias_filtradas">Mostrando categorías del rubro seleccionado.</div>
       </div>
     </aside>
 
@@ -71,20 +72,25 @@
     <section class="col-span-12 md:col-span-9">
       <div class="flex items-center justify-between mb-3">
         <div class="text-sm text-gray-600">
-          {{ productos().length }} resultados
-          <span *ngIf="rubroSel()">· Rubro filtrado</span>
-          <span *ngIf="categoriaSel()">· Categoría filtrada</span>
+          <ng-container i18n="@@catalogo.count_resultados">{totalResultados, plural,
+            =0 {0 resultados}
+            =1 {1 resultado}
+            other {# resultados}
+          }</ng-container>
+          <span *ngIf="rubroSel()" i18n="@@catalogo.badge_rubro_filtrado"> · Rubro filtrado</span>
+          <span *ngIf="categoriaSel()" i18n="@@catalogo.badge_categoria_filtrada"> · Categoría filtrada</span>
         </div>
         <div class="flex items-center gap-2">
           <button class="text-sm px-2 py-1 rounded border hover:bg-gray-50 text-gray-600"
-                  (click)="texto.set(''); limpiarCategoria(); limpiarRubro()">
+                  (click)="texto.set(''); limpiarCategoria(); limpiarRubro()"
+                  i18n="@@catalogo.btn_limpiar_todo">
             Limpiar todo
           </button>
 
           <!-- abre el drawer -->
           <button class="text-sm px-3 py-1.5 rounded-lg border bg-white hover:bg-gray-50 text-gray-600"
                   (click)="toggleCart()">
-            Ver carrito ({{ cart.count() }})
+            <ng-container i18n="@@catalogo.btn_ver_carrito">Ver carrito</ng-container> ({{ cart.count() }})
           </button>
         </div>
       </div>
@@ -112,23 +118,24 @@
 
           <!-- Agregar/Quitar: abre el drawer cuando agrega -->
           <div class="mt-3 flex justify-end">
-            <button
-              class="px-3 py-1.5 rounded-lg border text-sm transition text-black"
-              [class.bg-blue-600]="!cart.has(p.codBarra)"
-              [class.text-white]="!cart.has(p.codBarra)"
-              [class.hover\\:bg-blue-700]="!cart.has(p.codBarra)"
-              [class.bg-red-50]="cart.has(p.codBarra)"
-              [class.border-red-300]="cart.has(p.codBarra)"
-              (click)="onToggleCartFor(p.codBarra)">
-              {{ cart.has(p.codBarra) ? 'Quitar' : 'Agregar' }}
-            </button>
+            @if (cart.has(p.codBarra)) {
+              <button
+                class="px-3 py-1.5 rounded-lg border text-sm transition text-black bg-red-50 border-red-300"
+                (click)="onToggleCartFor(p.codBarra)"
+                i18n="@@catalogo.btn_quitar">Quitar</button>
+            } @else {
+              <button
+                class="px-3 py-1.5 rounded-lg border text-sm transition text-white bg-blue-600 hover:bg-blue-700"
+                (click)="onToggleCartFor(p.codBarra)"
+                i18n="@@catalogo.btn_agregar">Agregar</button>
+            }
           </div>
         </div>
 
       </div>
 
       <ng-template #sinResultados>
-        <div class="text-gray-500">No hay productos que coincidan con los filtros.</div>
+        <div class="text-gray-500" i18n="@@catalogo.sin_resultados">No hay productos que coincidan con los filtros.</div>
       </ng-template>
     </section>
   </div>
@@ -147,17 +154,19 @@
   class="fixed top-0 right-0 h-full w-full sm:w-[28rem] bg-white z-50 shadow-2xl transform transition-transform duration-300"
   [class.translate-x-full]="!cartOpen()"
   [class.translate-x-0]="cartOpen()"
-  role="dialog" aria-label="Carrito">
+  role="dialog"
+  aria-label="Carrito"
+  i18n-aria-label="@@catalogo.aria_carrito">
 
   <!-- Header -->
   <div class="sticky top-0 bg-white border-b px-4 py-3 flex items-center justify-between">
-    <h2 class="text-lg font-semibold text-black">Tu carrito ({{ cart.count() }})</h2>
-    <button class="p-2 rounded hover:bg-gray-100" (click)="closeCart()" aria-label="Cerrar">✕</button>
+    <h2 class="text-lg font-semibold text-black"><ng-container i18n="@@catalogo.drawer_title">Tu carrito</ng-container> ({{ cart.count() }})</h2>
+    <button class="p-2 rounded hover:bg-gray-100" (click)="closeCart()" aria-label="Cerrar" i18n-aria-label="@@catalogo.aria_cerrar">✕</button>
   </div>
 
   <!-- Body -->
   <div class="p-4 overflow-y-auto h-[calc(100vh-9rem)]">
-    <div *ngIf="!cart.count()" class="text-sm text-gray-500">No agregaste productos.</div>
+    <div *ngIf="!cart.count()" class="text-sm text-gray-500" i18n="@@catalogo.drawer_vacio">No agregaste productos.</div>
 
     <ul class="divide-y" *ngIf="cart.count()">
       <li *ngFor="let p of seleccionados()" class="py-3 flex items-center gap-3">
@@ -169,7 +178,8 @@
           <div class="text-xs text-gray-500 truncate" *ngIf="p.nomMarca">{{ p.nomMarca }}</div>
         </div>
         <button class="text-xs px-2 py-1 rounded border hover:bg-gray-50 text-black"
-                (click)="cart.remove(p.codBarra)">
+                (click)="cart.remove(p.codBarra)"
+                i18n="@@catalogo.drawer_btn_quitar">
           Quitar
         </button>
       </li>
@@ -179,11 +189,12 @@
   <!-- Footer -->
   <div class="sticky bottom-0 bg-white border-t px-4 py-3">
     <div class="flex items-center justify-start gap-2">
-      <button class="px-3 py-2 rounded-lg border hover:bg-gray-50 text-black" (click)="cart.clear()" *ngIf="cart.count()">Vaciar</button>
+      <button class="px-3 py-2 rounded-lg border hover:bg-gray-50 text-black" (click)="cart.clear()" *ngIf="cart.count()" i18n="@@catalogo.btn_vaciar">Vaciar</button>
       <a class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white"
          [class.pointer-events-none]="!cart.count()"
          [attr.aria-disabled]="!cart.count()"
-         [routerLink]="['/comparador']">
+         [routerLink]="['/comparador']"
+         i18n="@@catalogo.btn_comparar">
           Comparar
       </a>
     </div>
@@ -194,6 +205,7 @@
 <button
   class="fixed bottom-5 right-5 z-50 rounded-full shadow-lg border bg-white px-4 py-3 flex items-center gap-2 hover:bg-gray-50"
   (click)="toggleCart()"
-  aria-label="Ver carrito">
+  aria-label="Ver carrito"
+  i18n-aria-label="@@catalogo.aria_ver_carrito">
   🛒 <span class="text-sm font-medium text-gray-600">{{ cart.count() }}</span>
 </button>
