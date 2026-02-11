@@ -14,7 +14,15 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(
+        origins = {
+                "http://localhost:4200",
+                "http://localhost:4201",
+                "http://127.0.0.1:4200",
+                "http://127.0.0.1:4201"
+        },
+        maxAge = 3600
+)
 public class IndecResource {
 
     @Autowired

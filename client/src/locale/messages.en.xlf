@@ -127,8 +127,28 @@
         <target>Clear</target>
       </trans-unit>
       <trans-unit id="catalogo.info_categorias_filtradas" datatype="html">
-        <source> Mostrando categorías del rubro seleccionado. </source>
-        <target> Showing categories of the selected section. </target>
+        <source>Mostrando categorías del rubro seleccionado.</source>
+        <target>Showing categories of the selected section.</target>
+      </trans-unit>
+      <trans-unit id="catalogo.count_resultados" datatype="html">
+        <source>{totalResultados, plural, =0 {0 resultados} =1 {1 resultado} other {<x id="INTERPOLATION" equiv-text="# resultados"/> resultados}}</source>
+        <target>{VAR_PLURAL, plural, =0 {0 results} =1 {1 result} other {# results}}</target>
+      </trans-unit>
+      <trans-unit id="catalogo.badge_rubro_filtrado" datatype="html">
+        <source> · Rubro filtrado</source>
+        <target> · Section filtered</target>
+      </trans-unit>
+      <trans-unit id="catalogo.badge_categoria_filtrada" datatype="html">
+        <source> · Categoría filtrada</source>
+        <target> · Category filtered</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_limpiar_todo" datatype="html">
+        <source>Limpiar todo</source>
+        <target>Clear all</target>
+      </trans-unit>
+      <trans-unit id="catalogo.btn_ver_carrito" datatype="html">
+        <source>Ver carrito</source>
+        <target>View cart</target>
       </trans-unit>
       <trans-unit id="catalogo.btn_agregar" datatype="html">
         <source>Agregar</source>

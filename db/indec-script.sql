@@ -571,6 +571,10 @@ BEGIN
 END
 GO
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE OR ALTER PROCEDURE dbo.sp_upsert_sucursales
     @nro_supermercado INT,          -- ID del Supermercado
     @formato          NVARCHAR(10), -- 'REST' | 'SOAP'
@@ -842,6 +846,10 @@ END
 GO
 
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE OR ALTER PROCEDURE dbo.sp_upsert_productos
     @nro_supermercado INT,          -- ID del Supermercado
     @formato          NVARCHAR(10), -- 'REST' | 'SOAP'
