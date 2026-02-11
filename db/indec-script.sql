@@ -497,7 +497,7 @@ BEGIN
              INNER JOIN dbo.rubros_productos r
                         ON r.nro_rubro = c.nro_rubro
              LEFT JOIN dbo.tipos_productos tp
-                       ON tp.nro_tipo_producto = c.nro_tipo_producto
+                       ON tp.nro_tipo_producto = p.nro_tipo_producto
              LEFT JOIN dbo.idiomas_categorias_productos icp
                        ON icp.nro_categoria = c.nro_categoria
                       AND icp.cod_idioma = @cod_idioma
