@@ -20,7 +20,7 @@ API principal del sistema. Consolida información geográfica y de supermercados
   - Filtros opcionales: `supermercadoId`, `localidadId`, `provinciaId`, `paisId`
 - `GET /productos`
   - Filtros opcionales: `lang`
-- `GET /productosPrecios`
+- `POST /productosPrecios`
 
 ### Sincronización con APIs de supermercados
 
