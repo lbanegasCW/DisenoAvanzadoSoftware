@@ -1,6 +1,23 @@
-# LLAMADA DE EJEMPLO SUCURSALES
-http://localhost:8081/ws/sucursales.wsdl
+# API Super3 (SOAP)
 
+Servicio SOAP del supermercado 3.
+
+## Base URL
+
+- Servicio: `http://localhost:8083/ws`
+- WSDL sucursales: `http://localhost:8083/ws/sucursales.wsdl`
+- WSDL productos: `http://localhost:8083/ws/productos.wsdl`
+
+## Autenticación
+
+WS-Security UsernameToken:
+
+- Usuario: `libertad`
+- Password: `b3s1x8fg4`
+
+## Ejemplo: obtener sucursales
+
+```xml
 <soapenv:Envelope
     xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
     xmlns:web="http://services.super3.das.ubp.edu.ar/"
@@ -8,21 +25,20 @@ http://localhost:8081/ws/sucursales.wsdl
     <soapenv:Header>
         <wsse:Security>
             <wsse:UsernameToken>
-                <wsse:Username>carrefour</wsse:Username>
-                <wsse:Password>a5s1d7fg4</wsse:Password>
+                <wsse:Username>libertad</wsse:Username>
+                <wsse:Password>b3s1x8fg4</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
-   </soapenv:Header>
-   <soapenv:Body>
-      <web:obtenerSucursales>
-      </web:obtenerSucursales>
-   </soapenv:Body>
+    </soapenv:Header>
+    <soapenv:Body>
+        <web:obtenerSucursales/>
+    </soapenv:Body>
 </soapenv:Envelope>
+```
 
+## Ejemplo: obtener productos
 
-# LLAMADA DE EJEMPLO PRODUCTOS
-http://localhost:8081/ws/productos.wsdl
-
+```xml
 <soapenv:Envelope
     xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
     xmlns:web="http://services.super3.das.ubp.edu.ar/"
@@ -30,13 +46,13 @@ http://localhost:8081/ws/productos.wsdl
     <soapenv:Header>
         <wsse:Security>
             <wsse:UsernameToken>
-                <wsse:Username>carrefour</wsse:Username>
-                <wsse:Password>a5s1d7fg4</wsse:Password>
+                <wsse:Username>libertad</wsse:Username>
+                <wsse:Password>b3s1x8fg4</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
-   </soapenv:Header>
-   <soapenv:Body>
-      <web:obtenerProductos>
-      </web:obtenerProductos>
-   </soapenv:Body>
+    </soapenv:Header>
+    <soapenv:Body>
+        <web:obtenerProductos/>
+    </soapenv:Body>
 </soapenv:Envelope>
+```

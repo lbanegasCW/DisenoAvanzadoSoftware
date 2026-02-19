@@ -1,157 +1,129 @@
-# Información útil para el proyecto
+# ComparadorDePrecios
 
-## Prerequisitos
+Monorepo del proyecto **Comparador de Precios**. Incluye:
 
--   Docker y Docker Compose
+- `api-indec`: API principal (REST) que consolida países, provincias, localidades, supermercados, sucursales y productos.
+- `api-super1` y `api-super3`: servicios SOAP de supermercados.
+- `api-super2` y `api-super4`: servicios REST de supermercados.
+- `client`: frontend Angular (ES/EN).
+- `db`: base SQL Server y scripts de inicialización.
+- `docker/dev`: entorno de desarrollo con Docker Compose.
 
-Docker se encarga de proveer los demás requisitos en contenedores aislados:
+## Requisitos
 
--   Java 17 o superior
--   Maven
--   Node.js y npm para el frontend
--   SQL Server 2019 o superior
+- Docker
+- Docker Compose
 
-## Comandos útiles para desarrollo
+> El resto de dependencias (Java 17, Maven, Node.js, SQL Server) se ejecutan dentro de contenedores.
 
-### Construcción de proyectos dentro de contenedores
+## Levantar el entorno local
 
-```bash
-# Construir api-indec
-docker-compose exec api-indec ./mvnw clean install
-
-# Construir api-super1
-docker-compose exec api-super1 ./mvnw clean install
-
-# Construir api-super2
-docker-compose exec api-super2 ./mvnw clean install
-
-# Instalar dependencias del cliente Angular
-docker-compose exec client npm install
-```
-
-### Operaciones con Docker Compose
+Desde la raíz del repo:
 
 ```bash
-# Levantar todos los servicios
-docker-compose up -d
-
-# Levantar un servicio específico
-docker-compose up -d api-indec
-docker-compose up -d api-super1
-docker-compose up -d api-super2
-docker-compose up -d client
-docker-compose up -d sqlserver
-
-# Detener los servicios
-docker-compose down
-
-# Ver logs
-docker-compose logs -f api-indec
-docker-compose logs -f api-super1
-docker-compose logs -f api-super2
-docker-compose logs -f client
-docker-compose logs -f sqlserver
-
-# Reconstruir servicios
-docker-compose build api-indec
-docker-compose build api-super1
-docker-compose build api-super2
-docker-compose build client
+docker compose -f docker/dev/docker-compose.yml up -d --build
 ```
 
-## Puertos de los servicios
+Para bajar el entorno:
 
--   API INDEC: http://localhost:8080
--   API Super1 (SOAP): http://localhost:8081
--   API Super2 (REST): http://localhost:8082
--   Cliente Angular: http://localhost:4200
--   SQL Server: localhost:1433
+```bash
+docker compose -f docker/dev/docker-compose.yml down
+```
 
-## Debugging
+## Servicios y puertos
 
-Los servicios Java tienen habilitado el debugging remoto en los siguientes puertos:
+- API INDEC: `http://localhost:8080/api/v1`
+- API Super1 (SOAP): `http://localhost:8081/ws`
+- API Super2 (REST): `http://localhost:8082/api/v1`
+- API Super3 (SOAP): `http://localhost:8083/ws`
+- API Super4 (REST): `http://localhost:8084/api/v1`
+- Client ES: `http://localhost:4200`
+- Client EN: `http://localhost:4201`
+- SQL Server: `localhost:1433`
 
--   api-indec: 5005
--   api-super1: 5006
--   api-super2: 5007
+## Comandos útiles
 
-### Configurar debug en IDE
+### Build dentro de contenedores
 
-Para Visual Studio Code, agregar esta configuración en launch.json:
+```bash
+docker compose -f docker/dev/docker-compose.yml exec api-indec ./mvnw clean install
+docker compose -f docker/dev/docker-compose.yml exec api-super1 ./mvnw clean install
+docker compose -f docker/dev/docker-compose.yml exec api-super2 ./mvnw clean install
+docker compose -f docker/dev/docker-compose.yml exec api-super3 ./mvnw clean install
+docker compose -f docker/dev/docker-compose.yml exec api-super4 ./mvnw clean install
+docker compose -f docker/dev/docker-compose.yml exec client-es npm install
+```
+
+### Logs por servicio
+
+```bash
+docker compose -f docker/dev/docker-compose.yml logs -f api-indec
+docker compose -f docker/dev/docker-compose.yml logs -f api-super1
+docker compose -f docker/dev/docker-compose.yml logs -f api-super2
+docker compose -f docker/dev/docker-compose.yml logs -f api-super3
+docker compose -f docker/dev/docker-compose.yml logs -f api-super4
+docker compose -f docker/dev/docker-compose.yml logs -f client-es
+docker compose -f docker/dev/docker-compose.yml logs -f client-en
+docker compose -f docker/dev/docker-compose.yml logs -f sqlserver
+```
+
+## Debug remoto (Java)
+
+- `api-indec`: `5005`
+- `api-super1`: `5006`
+- `api-super2`: `5007`
+- `api-super3`: `5008`
+- `api-super4`: `5009`
+
+Ejemplo `launch.json` (VS Code):
 
 ```json
 {
-	"type": "java",
-	"name": "Debug api-indec",
-	"request": "attach",
-	"hostName": "localhost",
-	"port": 5005
+  "type": "java",
+  "name": "Debug api-indec",
+  "request": "attach",
+  "hostName": "localhost",
+  "port": 5005
 }
 ```
 
 ## Base de datos
 
-### Credenciales por defecto
+Credenciales por defecto:
 
--   Usuario: sa
--   Password: Admin123!
--   Base de datos:
-    -   indec
-    -   supermercado1
-    -   supermercado2
+- Usuario: `sa`
+- Password: `Admin123!`
 
-### Restaurar la base de datos
+Bases utilizadas:
 
-Los scripts de inicialización se ejecutan automáticamente al levantar el contenedor de SQL Server por primera vez.
+- `indec`
+- `supermercado1`
+- `supermercado2`
+- `supermercado3`
+- `supermercado4`
 
-## Servicios disponibles
+Los scripts iniciales se aplican al crear el contenedor de SQL Server por primera vez.
 
-### API INDEC
+## Estructura
 
--   Gestión de países, provincias y localidades
--   Gestión de supermercados y sucursales
--   Gestión de productos y precios
--   Actualización automática de servicios
-
-### API Super1 (SOAP)
-
--   Gestión de sucursales
--   Web Services en http://localhost:8081/ws/supermercado.wsdl
--   Autenticación mediante credenciales: carrefour/a5s1d7fg4
-
-### API Super2 (REST)
-
--   Gestión de sucursales
--   API REST en http://localhost:8082/api/v1
--   Autenticación mediante credenciales: changoMas/c1h2s4f
-
-## Estructura de carpetas
-
-```
+```text
 .
-├── api-indec/          # API principal INDEC
-├── api-super1/         # API SOAP Supermercado 1
-├── api-super2/         # API REST Supermercado 2
-├── client/            # Frontend Angular
-├── db/                # Scripts y config de BD
-└── docker/           # Configuración Docker
+├── api-indec/
+├── api-super1/
+├── api-super2/
+├── api-super3/
+├── api-super4/
+├── client/
+├── db/
+├── docker/dev/
+└── docs/
 ```
 
-## Problemas comunes y soluciones
+## Readmes por módulo
 
-1. Error al conectar a SQL Server
-
-    - Verificar que el contenedor sqlserver esté corriendo
-    - Verificar credenciales en .env
-    - Esperar a que la BD termine de inicializarse (~30s)
-
-2. Error al construir los proyectos Java
-
-    - Limpiar carpeta target: `./mvnw clean`
-    - Verificar versión de Java (17)
-    - Verificar dependencias en pom.xml
-
-3. Error al iniciar el cliente Angular
-    - Verificar node_modules: `npm install`
-    - Limpiar cache: `npm cache clean --force`
-    - Verificar versión de Node.js y npm
+- `api-indec/README`
+- `api-super1/README`
+- `api-super2/README.md`
+- `api-super3/README`
+- `api-super4/README.md`
+- `client/README.md`
