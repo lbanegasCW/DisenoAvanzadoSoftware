@@ -10,38 +10,23 @@ API principal del sistema. Consolida información geográfica y de supermercados
 
 ### Países, provincias y localidades
 
-- `GET /paises`
-- `GET /paises/{cod_pais}`
 - `GET /provincias`
-- `GET /provincias/{cod_provincia}?codPais={cod_pais}`
-- `GET /paises/{cod_pais}/provincias`
-- `GET /localidades`
-- `GET /localidades/{nro_localidad}`
 - `GET /provincias/{cod_provincia}/localidades?codPais={cod_pais}`
 
 ### Supermercados y sucursales
 
 - `GET /supermercados`
-- `GET /supermercados/{nro_supermercado}`
 - `GET /sucursales`
   - Filtros opcionales: `supermercadoId`, `localidadId`, `provinciaId`, `paisId`
-- `GET /sucursales/{nro_sucursal}?supermercadoId={nro_supermercado}`
-- `GET /supermercados/{nro_supermercado}/sucursales?provincia={cod_provincia}`
-- `GET /sucursales/cerca?lat={lat}&lon={lon}&radio={km}`
+- `GET /productos`
+  - Filtros opcionales: `lang`
+- `GET /productosPrecios`
 
 ### Sincronización con APIs de supermercados
 
-- `POST /sucursales/actualizar`
+- Se debe ejecutar batch Consumidor.java
 
 Actualiza estado de servicios y refresca datos de sucursales/productos desde Super1, Super2, Super3 y Super4.
-
-## Ejemplos
-
-```bash
-curl http://localhost:8080/api/v1/paises
-curl "http://localhost:8080/api/v1/sucursales?provinciaId=CBA"
-curl "http://localhost:8080/api/v1/sucursales/cerca?lat=-31.4201&lon=-64.1888&radio=5"
-```
 
 ## Notas
 
