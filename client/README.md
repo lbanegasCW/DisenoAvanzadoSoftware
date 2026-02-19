@@ -1,27 +1,45 @@
-# Client
+# Client (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.9.
+Frontend de **ComparadorDePrecios** desarrollado con Angular 18.
 
-## Development server
+## Requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js 18+
+- npm
 
-## Code scaffolding
+## Instalación
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+npm install
+```
 
-## Build
+## Modos de ejecución
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Español (es-AR)
 
-## Running unit tests
+```bash
+npm run start:es
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Disponible en `http://localhost:4200`.
 
-## Running end-to-end tests
+### Inglés (en)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm run start:en
+```
 
-## Further help
+Disponible en `http://localhost:4201`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Scripts útiles
+
+```bash
+npm run build        # build estándar
+npm run build:i18n   # build con localización
+npm run test         # tests unitarios (Karma)
+npm run extract-i18n # extraer mensajes para traducción
+```
+
+## Integración con backend
+
+En entorno Docker de desarrollo, el frontend consume la API INDEC en `http://localhost:8080/api/v1`.
